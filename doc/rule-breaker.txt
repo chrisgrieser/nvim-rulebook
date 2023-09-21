@@ -4,7 +4,6 @@
 Table of Contents                             *rule-breaker-table-of-contents*
 
 1. nvim-rulebook                                 |rule-breaker-nvim-rulebook-|
-  - Features                            |rule-breaker-nvim-rulebook--features|
   - Supported Sources          |rule-breaker-nvim-rulebook--supported-sources|
   - Installation                    |rule-breaker-nvim-rulebook--installation|
   - Configuration                  |rule-breaker-nvim-rulebook--configuration|
@@ -14,58 +13,64 @@ Table of Contents                             *rule-breaker-table-of-contents*
 ==============================================================================
 1. nvim-rulebook                                 *rule-breaker-nvim-rulebook-*
 
-Add inline-comments to rules. Lookup rule documentation online.
+Lookup rule documentation online. Add inline-comments that ignore diagnostic
+rules, like `// eslint-disable-line [ruleName]`.
 
 Some LSPs provide code actions for to do that – this plugin adds commands for
-linters and LSPs that don’t.
+linters and LSPs that do not.
 
-- |rule-breaker-features|
+------------------------------------------------------------------------------
 - |rule-breaker-supported-sources|
-    - |rule-breaker-for-adding-ignore-comments|
-    - |rule-breaker-for-looking-up-rule-documentation|
+    - |rule-breaker-adding-ignore-comments|
+    - |rule-breaker-looking-up-rule-documentation|
 - |rule-breaker-installation|
 - |rule-breaker-configuration|
 - |rule-breaker-limitations|
 - |rule-breaker-credits|
 
 
-FEATURES                                *rule-breaker-nvim-rulebook--features*
-
-- Add inline-comments that ignore diagnostic rules.
-- Location of the ignore comment, like next line or previous line, is configurable.
-- Perform a web search for a diagnostic rule.
-- Requires diagnostics provided by a source that supports neovim’s builtin diagnostics system (`vim.diagnostic`). nvim’s builtin LSP client and nvim-lint <https://github.com/mfussenegger/nvim-lint> are such sources.
-
-
 SUPPORTED SOURCES              *rule-breaker-nvim-rulebook--supported-sources*
 
 You easily add a custom source via the |rule-breaker-plugin-configuration|.
-However, please consider making a PR to add support for a linter if it is
+Though, please consider making a PR to add support for a linter if it is
 missing.
 
-Ignore Rule Data for the supported linters <./lua/rulebook/ignoreRuleData.lua>
+Rule Data for the supported linters <./lua/rulebook/rule-data.lua>
 
 
-FOR ADDING IGNORE COMMENTS ~
+ADDING IGNORE COMMENTS ~
 
 - selene
 - shellcheck
 - vale
+- LTeX
 - yamllint
 - stylelint
-- LTeX
 - typescript
+- eslint
+- biome
 - pylint
+- Pyright
 
 
-FOR LOOKING UP RULE DOCUMENTATION ~
+LOOKING UP RULE DOCUMENTATION ~
 
 - selene
 - shellcheck
+- biome
+- yamllint
+- stylelint
+- eslint
+- Lua Diagnostics
 - pylint
+- fallback
 
 
 INSTALLATION                        *rule-breaker-nvim-rulebook--installation*
+
+This plugin requires diagnostics provided by a source that supports neovim’s
+builtin diagnostics system. (nvim’s builtin LSP client or nvim-lint
+<https://github.com/mfussenegger/nvim-lint> are such sources.)
 
 >lua
     -- lazy.nvim
@@ -128,16 +133,15 @@ CONFIGURATION                      *rule-breaker-nvim-rulebook--configuration*
     }
 <
 
+The plugin uses |vim.ui.select| so the appearance of the rule selection can be
+customized by using a ui-plugin like dressing.nvim
+<https://github.com/stevearc/dressing.nvim>.
 
-  [!NOTE] The plugin uses `vim.ui.select()`, so the appearance of the rule
-  selection can be customized by using a ui-plugin like dressing.nvim
-  <https://github.com/stevearc/dressing.nvim>.
 
 LIMITATIONS                          *rule-breaker-nvim-rulebook--limitations*
 
 - The diagnostics have to contain the necessary data, |that is a diagnostic code and diagnostic source|. Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined errorformat). Please open an issue at the diagnostics provider to fix.
-- This plugin does _not_ hook into `vim.lsp.buf.code_action`, but provides its own independent selector.
-- As opposed to null-ls <https://github.com/jose-elias-alvarez/null-ls.nvim>’s code action feature, this plugin does not support arbitrary code actions, but only actions based on a diagnostic.
+- This plugin does _not_ hook into `vim.lsp.buf.code_action`, but provides its own selector.
 
 
 CREDITS                                  *rule-breaker-nvim-rulebook--credits*
