@@ -1,28 +1,28 @@
 ---@class ruleIgnoreConfig
 ---@field comment string|string[] with %s for the rule id
----@field type "sameLine"|"nextLine"|"enclose"
+---@field location "sameLine"|"nextLine"|"encloseLine"
 
 ---@type table<string, ruleIgnoreConfig>
 local data = {
 	shellcheck = {
 		comment = "# shellcheck disable=%s",
-		type = "nextLine",
+		location = "nextLine",
 	},
 	selene = {
 		comment = "-- selene: allow(%s)",
-		type = "nextLine",
+		location = "nextLine",
 	},
 	vale = {
 		comment = { "<!-- vale %s = NO -->", "<!-- vale %s = YES -->" },
-		type = "enclose",
+		location = "encloseLine",
 	},
 	yamllint = {
 		comment = "# yamllint disable-line rule:%s",
-		type = "nextLine",
+		location = "nextLine",
 	},
 	stylelint = {
 		comment = "/* stylelint-disable-next-line %s */",
-		type = "nextLine",
+		location = "nextLine",
 	},
 }
 

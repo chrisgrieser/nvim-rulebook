@@ -20,26 +20,6 @@ local function notify(msg, level)
 	vim.notify(msg, vim.log.levels[level:upper()], { title = pluginName })
 end
 
----Selects a rule in the current line. If one rule, automatically selects it
----@param operation function(diag)
-local function selectRuleInCurrentLine(operation)
-	local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
-	local curLineDiags = vim.diagnostic.get(0, { lnum = lnum })
-	if #curLineDiags == 0 then
-		notify("No diagnostics found", "warn")
-	elseif #curLineDiags == 1 then
-		operation(curLineDiags[1])
-	else
-		vim.ui.select(curLineDiags, {
-			prompt = "Select Rule:",
-			format_item = function(diag) return diag.message end,
-		}, function(diag)
-			if not diag then return end -- aborted input
-			operation(diag)
-		end)
-	end
-end
-
 ---@param diag diagnostic
 ---@return boolean whether rule is valid
 local function validDiagObj(diag)
@@ -81,14 +61,6 @@ end
 ---@param diag diagnostic
 local function addIgnoreComment(diag)
 	if not validDiagObj(diag) then return end
-	if not ignoreRuleData[diag.source] then
-		notify(
-			("There is no ignore rule configuration for %s %s."):format(diag.source, diag.code)
-				.. "\nPlease make a PR to add support for it.",
-			"warn"
-		)
-		return
-	end
 
 	-- add rule id and indentation into comment
 	local currentIndent = vim.api.nvim_get_current_line():match("^%s*")
@@ -98,20 +70,56 @@ local function addIgnoreComment(diag)
 		ignoreComment[i] = currentIndent .. ignoreComment[i]:format(diag.code)
 	end
 
-	-- add comment
-	local ignoreType = ignoreRuleData[diag.source].type
-	if ignoreType == "nextLine" then
+	-- insert the comment
+	local ignoreLocation = ignoreRuleData[diag.source].location
+	if ignoreLocation == "nextLine" then
 		local prevLineNum = vim.api.nvim_win_get_cursor(0)[1] - 1
 		vim.api.nvim_buf_set_lines(0, prevLineNum, prevLineNum, false, ignoreComment)
-	elseif ignoreType == "sameLine" then
+	elseif ignoreLocation == "sameLine" then
 		local currentLine = vim.api.nvim_get_current_line():gsub("%s+$", "")
 		vim.api.nvim_set_current_line(currentLine .. " " .. ignoreComment[1])
-	elseif ignoreType == "enclose" then
+	elseif ignoreLocation == "encloseLine" then
 		local prevLineNum = vim.api.nvim_win_get_cursor(0)[1] - 1
 		local nextLineNum = vim.api.nvim_win_get_cursor(0)[1]
-		vim.api.nvim_buf_set_lines(0, nextLineNum, nextLineNum, false, {ignoreComment[2]})
-		vim.api.nvim_buf_set_lines(0, prevLineNum, prevLineNum, false, {ignoreComment[1]})
+		vim.api.nvim_buf_set_lines(0, nextLineNum, nextLineNum, false, { ignoreComment[2] })
+		vim.api.nvim_buf_set_lines(0, prevLineNum, prevLineNum, false, { ignoreComment[1] })
 	end
+end
+
+--------------------------------------------------------------------------------
+
+---Selects a rule in the current line. If one rule, automatically selects it
+---@param operation function(diag)
+local function selectRuleInCurrentLine(operation)
+	local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+	local curLineDiags = vim.diagnostic.get(0, { lnum = lnum })
+
+	-- filter diagnostics for which there are no ignore comments defined
+	if operation == addIgnoreComment then
+		curLineDiags = vim.tbl_filter(
+			function(diag) return ignoreRuleData[diag.source] ~= nil end,
+			curLineDiags
+		)
+	end
+
+	-- one or zero diagnostics
+	if #curLineDiags == 0 then
+		notify("No supported diagnostics found in current line.", "warn")
+		return
+	elseif #curLineDiags == 1 then
+		operation(curLineDiags[1])
+		return
+	end
+
+	-- select from multiple diagnostics
+	local title = operation == addIgnoreComment and "Ignore Rule:" or "Lookup Rule:"
+	vim.ui.select(curLineDiags, {
+		prompt = title,
+		format_item = function(diag) return diag.source .. ": " .. diag.code end,
+	}, function(diag)
+		if not diag then return end
+		operation(diag)
+	end)
 end
 
 --------------------------------------------------------------------------------
