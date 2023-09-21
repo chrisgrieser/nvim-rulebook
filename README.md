@@ -1,19 +1,39 @@
- <!-- LTeX: enabled=false -->
+<!-- LTeX: enabled=false -->
 # nvim-rule-breaker <!-- LTeX: enabled=true -->
 <!-- TODO uncomment shields when available in dotfyle.com -->
 <!-- <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rule-breaker"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rule-breaker/shield" /></a> -->
 
 Add inline-comments to locally disable diagnostic rules.
 
+Most LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that don't. (As such, this plugin is partially a replacement for [null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim/)'s code action feature.)
+
 <!--toc:start-->
 - [Features](#features)
+- [Supported Linters for adding ignore-comments](#supported-linters-for-adding-ignore-comments)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Limitations](#limitations)
 - [Credits](#credits)
 <!--toc:end-->
 
 ## Features
+- Add inline-comments that ignore diagnostic rules.
+- Location of the ignore comment, like next line or previous line, is configurable.
+- Perform a web search for a diagnostic rule.
+- Requires diagnostics provided by a source that supports neovim's builtin diagnostics system (`vim.diagnostic`). nvim's builtin LSP client and [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.
+
+## Supported Linters for adding ignore-comments
+<!-- list-of-supported-linters start -->
+- selene
+- shellcheck
+- vale
+- yamllint
+- stylelint
+- LTeX
+<!-- list-of-supported-linters end -->
+
+You easily add a custom via the [plugin configuration](#configuration). However, please consider making a PR to add support for a linter if it is missing.
+
+[Ignore Rule Data for the supported linters](./lua/rule-breaker/ignoreRuleData.lua)
 
 ## Installation
 
@@ -21,32 +41,50 @@ Add inline-comments to locally disable diagnostic rules.
 -- lazy.nvim
 {
 	"chrisgrieser/nvim-rule-breaker",
-	opts = {
-		
-	},
+	keys = {
+		{ "<leader>i", function() require("rule-breaker").ignoreRule() end },
+		{ "<leader>l", function() require("rule-breaker").lookupRule() end },
+	}
 },
+```
 
+```lua
 -- packer
-use {
-	"chrisgrieser/nvim-rule-breaker",
-	config = function () 
-		require("rule-breaker").setup ({
-			
-		})
-	end,
-}
+use { "chrisgrieser/nvim-rule-breaker" }
+
+-- in your config
+vim.keymap.set("n", "<leader>i", function() require("rule-breaker").ignoreRule() end)
+vim.keymap.set("n", "<leader>l", function() require("rule-breaker").lookupRule() end)
 ```
 
 ## Configuration
 
 ```lua
--- default values
-opts = {
+defaultConfig = {
+	ignoreRuleComments = {
+		selene = {
+			comment = "-- selene: allow(%s)",
+			location = "prevLine",
+		},
+		-- full list of builtin-linters found in README
+		yourLinter = {
+			-- %s will be replaced with rule-id
+			-- if location is "encloseLine", needs to be a list of two strings
+			comment = "// disabling-comment %s",
 
+			-- "prevLine"|"sameLine"|"encloseLine"
+			location = "prevLine",
+		}
+	},
+
+	-- searchUrl for rule lookup. Default is the DuckDuckGo 
+	-- "Ducky Search" (automatically opening first result)
+	searchUrl = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
 }
 ```
 
-## Limitations
+> [!NOTE]
+> The plugin uses `vim.ui.select()`, so the appearance of the rule selection can be customized by using a ui-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
 ## Credits
 <!-- vale Google.FirstPerson = NO -->

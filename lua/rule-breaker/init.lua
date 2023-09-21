@@ -32,11 +32,12 @@ end
 ---@param diag diagnostic
 ---@return boolean whether rule is valid
 local function validDiagObj(diag)
+	local issuePlea = "\nPlease open an issue at the plugin that provides the diagnostics."
 	if not diag.code then
-		notify("Diagnostic is missing a code (rule id)", "warn")
+		notify("Diagnostic is missing a code (rule id). " .. issuePlea, "warn")
 		return false
 	elseif not diag.source then
-		notify("Diagnostic is missing a source", "warn")
+		notify("Diagnostic is missing a source" .. issuePlea, "warn")
 		return false
 	end
 	return true
@@ -81,7 +82,7 @@ local function addIgnoreComment(diag)
 
 	-- insert the comment
 	local ignoreLocation = ignoreRuleData[diag.source].location
-	if ignoreLocation == "nextLine" then
+	if ignoreLocation == "prevLine" then
 		local prevLineNum = vim.api.nvim_win_get_cursor(0)[1] - 1
 		vim.api.nvim_buf_set_lines(0, prevLineNum, prevLineNum, false, ignoreComment)
 	elseif ignoreLocation == "sameLine" then
