@@ -48,7 +48,7 @@ end
 local function searchForTheRule(diag)
 	if not validDiagObj(diag) then return end
 	local query = (diag.code .. " " .. diag.source)
-	local escapedQuery = query:gsub(" ", "+") -- valid escaping for DuckDuckGo
+	local escapedQuery = query:gsub(" ", "%%20")
 
 	fn.setreg("+", query)
 	local url = config.searchUrl:format(escapedQuery)
