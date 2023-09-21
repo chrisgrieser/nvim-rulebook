@@ -136,7 +136,13 @@ local function selectRuleInCurrentLine(operation)
 	local title = operation == addIgnoreComment and "Ignore Rule:" or "Lookup Rule:"
 	vim.ui.select(curLineDiags, {
 		prompt = title,
-		format_item = function(diag) return diag.source .. ": " .. diag.code end,
+		format_item = function(diag)
+			local source = diag.source and "[" .. diag.source .. "] " or ""
+			local code = diag.code or ""
+			local display = source .. code
+			if display == "" then display = diag.message end
+			return display
+		end,
 	}, function(diag)
 		if not diag then return end
 		operation(diag)
