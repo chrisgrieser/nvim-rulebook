@@ -12,8 +12,8 @@ local fn = vim.fn
 local defaultConfig = {
 	ignoreComments = require("rulebook.rule-data").ignoreComments,
 	ruleDocs = require("rulebook.rule-data").ruleDocs,
+	forwSearchLines = 10,
 }
-defaultConfig.ruleDocs.fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us"
 
 -- if user does not call setup, use default
 local config = defaultConfig
@@ -45,6 +45,18 @@ local function validDiagObj(diag)
 		return false
 	end
 	return true
+end
+
+---@param lnum number
+---@param operationIsIgnore boolean
+local function getDiagsInCurLine(lnum, operationIsIgnore)
+	local diags = vim.diagnostic.get(0, { lnum = lnum })
+	-- INFO for rule search, there is no need to filter the diagnostics, since there
+	-- is a fallback mechanic
+	if operationIsIgnore then
+		diags = vim.tbl_filter(function(d) return config.ignoreComments[d.source] ~= nil end, diags)
+	end
+	return diags
 end
 
 --------------------------------------------------------------------------------
@@ -79,7 +91,6 @@ end
 ---@param diag diagnostic
 local function addIgnoreComment(diag)
 	if not validDiagObj(diag) then return end
-	-- INFO no need to check that source has rule-data, since filtered beforehand
 
 	local ignoreData = config.ignoreComments
 
@@ -109,32 +120,43 @@ end
 
 --------------------------------------------------------------------------------
 
----Selects a rule in the current line. If one rule, automatically selects it
+---Selects a diagnostic in the current line. If one diagnostic, automatically
+---selects it. If no diagnostic found, searches in the next lines.
 ---@param operation function(diag)
-local function selectRuleInCurrentLine(operation)
+local function selectRule(operation)
+	local operationIsIgnore = operation == addIgnoreComment
 	local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
-	local curLineDiags = vim.diagnostic.get(0, { lnum = lnum })
+	local startLine = lnum
+	local lastLine = vim.api.nvim_buf_line_count(0)
 
-	-- filter diagnostics for which there are no ignore comments defined
-	if operation == addIgnoreComment then
-		curLineDiags = vim.tbl_filter(
-			function(diag) return config.ignoreComments[diag.source] ~= nil end,
-			curLineDiags
-		)
+	local diagsAtLine = getDiagsInCurLine(lnum, operationIsIgnore)
+
+	-- no diagnostic -> search the next lines
+	while #diagsAtLine == 0 do
+		lnum = lnum + 1
+		if lnum > lastLine or lnum > startLine + config.forwSearchLines then
+			local msg = ("No diagnostics found in the next %s lines."):format(config.forwSearchLines)
+			notify(msg, "warn")
+			return
+		end
+		diagsAtLine = getDiagsInCurLine(lnum, operationIsIgnore)
 	end
 
-	-- one or zero diagnostics
-	if #curLineDiags == 0 then
-		notify("No supported diagnostics found in current line.", "warn")
-		return
-	elseif #curLineDiags == 1 then
-		operation(curLineDiags[1])
+	-- move cursor when adding comment
+	if operationIsIgnore and startLine ~= lnum then
+		vim.api.nvim_win_set_cursor(0, { lnum + 1, 0 }) -- +1 cause indexing difference
+		vim.cmd("normal! ^")
+	end
+
+	-- autoselect if one diagnostics
+	if #diagsAtLine == 1 then
+		operation(diagsAtLine[1])
 		return
 	end
 
 	-- select from multiple diagnostics
-	local title = operation == addIgnoreComment and "Ignore Rule:" or "Lookup Rule:"
-	vim.ui.select(curLineDiags, {
+	local title = operationIsIgnore and "Ignore Rule:" or "Lookup Rule:"
+	vim.ui.select(diagsAtLine, {
 		prompt = title,
 		format_item = function(diag)
 			local source = diag.source and "[" .. diag.source .. "] " or ""
@@ -153,9 +175,9 @@ end
 -- COMMANDS FOR USER
 
 ---Search via DuckDuckGo for the rule
-function M.lookupRule() selectRuleInCurrentLine(searchForTheRule) end
+function M.lookupRule() selectRule(searchForTheRule) end
 
 ---Add ignore comment for the rule
-function M.ignoreRule() selectRuleInCurrentLine(addIgnoreComment) end
+function M.ignoreRule() selectRule(addIgnoreComment) end
 
 return M

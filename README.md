@@ -100,6 +100,10 @@ defaultConfig = {
 		-- Default is the DDG "Ducky Search" (automatically opening first result).
 		fallback = "https://duckduckgo.com/?q=%s+%21ducky&kl=en-us",
 	}
+
+	-- If no diagnostic is found, in current line, search this meany lines 
+	-- forward for diagnostics before aborting.
+	forwSearchLines = 10,
 }
 ```
 

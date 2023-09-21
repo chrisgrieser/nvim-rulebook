@@ -86,6 +86,9 @@ M.ruleDocs = {
 
 	-- urls unfortunately use the rule-name, not the rule-id :/
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
+
+	-- INFO used when no docs found for the diagnostics source
+	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us"
 }
 
 --------------------------------------------------------------------------------
