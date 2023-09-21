@@ -86,6 +86,11 @@ defaultConfig = {
 > [!NOTE]
 > The plugin uses `vim.ui.select()`, so the appearance of the rule selection can be customized by using a ui-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
+## Limitations
+- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with certain linters). Please open an issue at the diagnostics provider to fix.
+- This plugin does *not* hook into `vim.lsp.buf.code_action`, but provides its own independent selector.
+- As opposed to [null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim)'s code action feature, this plugin does not support arbitrary code actions, but only actions based on a diagnostic.
+
 ## Credits
 <!-- vale Google.FirstPerson = NO -->
 __About Me__  
