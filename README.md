@@ -3,15 +3,18 @@
 <!-- TODO uncomment shields when available in dotfyle.com -->
 <!-- <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a> -->
 
-Add inline-comments to locally disable diagnostic rules.
+Add inline-comments to rules. Lookup rule documentation online.
 
-Most LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that don't. (As such, this plugin is partially a replacement for [null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim/)'s code action feature.)
+Some LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that don't. 
 
 <!--toc:start-->
 - [Features](#features)
-- [Supported Linters for adding ignore-comments](#supported-linters-for-adding-ignore-comments)
+- [Supported Sources](#supported-sources)
+	- [For adding ignore comments](#for-adding-ignore-comments)
+	- [For looking up rule documentation](#for-looking-up-rule-documentation)
 - [Installation](#installation)
 - [Configuration](#configuration)
+- [Limitations](#limitations)
 - [Credits](#credits)
 <!--toc:end-->
 
@@ -21,9 +24,13 @@ Most LSPs provide code actions for to do that – this plugin adds commands for 
 - Perform a web search for a diagnostic rule.
 - Requires diagnostics provided by a source that supports neovim's builtin diagnostics system (`vim.diagnostic`). nvim's builtin LSP client and [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.
 
-## Supported Linters for adding ignore-comments
-<!-- TODO: AUTO-GENERATED this list -->
-<!-- supported-linters start -->
+## Supported Sources
+You easily add a custom source via the [plugin configuration](#configuration). However, please consider making a PR to add support for a linter if it is missing.
+
+[Ignore Rule Data for the supported linters](./lua/rulebook/ignoreRuleData.lua)
+
+### For adding ignore comments
+<!-- TODO: auto-generate this list -->
 - selene
 - shellcheck
 - vale
@@ -32,11 +39,11 @@ Most LSPs provide code actions for to do that – this plugin adds commands for 
 - LTeX
 - typescript
 - pylint
-<!-- supported-linters end -->
 
-You easily add a custom via the [plugin configuration](#configuration). However, please consider making a PR to add support for a linter if it is missing.
-
-[Ignore Rule Data for the supported linters](./lua/rulebook/ignoreRuleData.lua)
+### For looking up rule documentation
+- selene
+- shellcheck
+- pylint
 
 ## Installation
 
@@ -69,7 +76,8 @@ defaultConfig = {
 			comment = "-- selene: allow(%s)",
 			location = "prevLine",
 		},
-		-- full list of builtin linters found in README
+		-- ... (full list of supported sources can be found in the README)
+
 		yourCustomSource = {
 			-- %s will be replaced with rule-id
 			-- if location is "encloseLine", needs to be a list of two strings
@@ -80,9 +88,18 @@ defaultConfig = {
 		}
 	},
 
-	-- searchUrl for rule lookup. Default is the DuckDuckGo 
-	-- "Ducky Search" (automatically opening first result)
-	searchUrl = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+	-- %s will be replaced with rule-id
+	ruleDocumentations = {
+		selene = "https://kampfkarren.github.io/selene/lints/%s.html"
+		-- ... (full list of supported sources can be found in the README)
+
+		yourCustomSource = "https://my-docs/%s.hthml"
+
+		-- Search URL when no documentation definition is available for a
+		-- diagnostic source. "%s" will be replaced with the diagnostic source & code.
+		-- Default is the DDG "Ducky Search" (automatically opening first result).
+		fallback = "https://duckduckgo.com/?q=%s+%21ducky&kl=en-us",
+	}
 }
 ```
 
@@ -90,7 +107,7 @@ defaultConfig = {
 > The plugin uses `vim.ui.select()`, so the appearance of the rule selection can be customized by using a ui-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
 ## Limitations
-- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with certain linters). Please open an issue at the diagnostics provider to fix.
+- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined errorformat). Please open an issue at the diagnostics provider to fix.
 - This plugin does *not* hook into `vim.lsp.buf.code_action`, but provides its own independent selector.
 - As opposed to [null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim)'s code action feature, this plugin does not support arbitrary code actions, but only actions based on a diagnostic.
 

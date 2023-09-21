@@ -5,15 +5,18 @@ local fn = vim.fn
 -- CONFIG
 
 ---@class pluginConfig for this plugin
----@field ignoreRuleComments table<string, ruleIgnoreConfig>
----@field searchUrl string
+---@field ignoreComments table<string, ruleIgnoreConfig>
+---@field ruleDocs table<string, string>
 
 ---@type pluginConfig
 local defaultConfig = {
-	ignoreRuleComments = require("rule-breaker.ignoreRuleData"),
-	searchUrl = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+	ignoreComments = require("rulebook.rule-data").ignoreComments,
+	ruleDocs = require("rulebook.rule-data").ruleDocs,
 }
-local config = defaultConfig -- if user does not call setup, use default
+defaultConfig.ruleDocs.fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us"
+
+-- if user does not call setup, use default
+local config = defaultConfig
 
 ---@param userConfig table
 function M.setup(userConfig) config = vim.tbl_deep_extend("force", defaultConfig, userConfig) end
@@ -25,10 +28,11 @@ function M.setup(userConfig) config = vim.tbl_deep_extend("force", defaultConfig
 ---@param level? "info"|"trace"|"debug"|"warn"|"error"
 local function notify(msg, level)
 	if not level then level = "info" end
-	local pluginName = "nvim-rule-breaker"
+	local pluginName = "nvim-rulebook"
 	vim.notify(msg, vim.log.levels[level:upper()], { title = pluginName })
 end
 
+---checks whether rule has id and source, as prescribed in nvim diagnostic structure
 ---@param diag diagnostic
 ---@return boolean whether rule is valid
 local function validDiagObj(diag)
@@ -48,11 +52,16 @@ end
 ---@param diag diagnostic
 local function searchForTheRule(diag)
 	if not validDiagObj(diag) then return end
-	local query = (diag.code .. " " .. diag.source)
-	local escapedQuery = query:gsub(" ", "%%20")
 
-	fn.setreg("+", query)
-	local url = config.searchUrl:format(escapedQuery)
+	-- determine url to open
+	local docsUrl = config.ruleDocs[diag.source]
+	local urlToOpen
+	if docsUrl then
+		urlToOpen = docsUrl:format(diag.code)
+	else
+		local escapedQuery = (diag.code .. " " .. diag.source):gsub(" ", "%%20")
+		urlToOpen = config.ruleDocs.fallback:format(escapedQuery)
+	end
 
 	-- open with the OS-specific shell command
 	local opener
@@ -63,25 +72,27 @@ local function searchForTheRule(diag)
 	elseif fn.has("win64") == 1 or fn.has("win32") == 1 then
 		opener = "start"
 	end
-	local openCommand = string.format("%s '%s' >/dev/null 2>&1", opener, url)
+	local openCommand = string.format("%s '%s' >/dev/null 2>&1", opener, urlToOpen)
 	fn.system(openCommand)
 end
 
 ---@param diag diagnostic
 local function addIgnoreComment(diag)
 	if not validDiagObj(diag) then return end
-	local ignoreRuleData = config.ignoreRuleComments
+	-- INFO no need to check that source has rule-data, since filtered beforehand
+
+	local ignoreData = config.ignoreComments
 
 	-- add rule id and indentation into comment
 	local currentIndent = vim.api.nvim_get_current_line():match("^%s*")
-	local ignoreComment = ignoreRuleData[diag.source].comment
+	local ignoreComment = ignoreData[diag.source].comment
 	if type(ignoreComment) == "string" then ignoreComment = { ignoreComment } end
 	for i = 1, #ignoreComment, 1 do
 		ignoreComment[i] = currentIndent .. ignoreComment[i]:format(diag.code)
 	end
 
 	-- insert the comment
-	local ignoreLocation = ignoreRuleData[diag.source].location
+	local ignoreLocation = ignoreData[diag.source].location
 	if ignoreLocation == "prevLine" then
 		local prevLineNum = vim.api.nvim_win_get_cursor(0)[1] - 1
 		vim.api.nvim_buf_set_lines(0, prevLineNum, prevLineNum, false, ignoreComment)
@@ -107,7 +118,7 @@ local function selectRuleInCurrentLine(operation)
 	-- filter diagnostics for which there are no ignore comments defined
 	if operation == addIgnoreComment then
 		curLineDiags = vim.tbl_filter(
-			function(diag) return config.ignoreRuleComments[diag.source] ~= nil end,
+			function(diag) return config.ignoreComments[diag.source] ~= nil end,
 			curLineDiags
 		)
 	end
