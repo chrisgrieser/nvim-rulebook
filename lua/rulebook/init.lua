@@ -160,6 +160,7 @@ local function selectRule(operation)
 	local title = operationIsIgnore and "Ignore Rule:" or "Lookup Rule:"
 	vim.ui.select(diagsAtLine, {
 		prompt = title,
+		kind = "rule_selection",
 		format_item = function(diag)
 			local source = diag.source and "[" .. diag.source .. "] " or ""
 			local code = diag.code or ""
