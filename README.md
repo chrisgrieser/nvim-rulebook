@@ -1,5 +1,5 @@
 <!-- LTeX: enabled=false -->
-# nvim-rulebook <!-- LTeX: enabled=true -->
+# nvim-rulebook 📖 <!-- LTeX: enabled=true -->
 <!-- TODO uncomment shields when available in dotfyle.com -->
 <!-- <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a> -->
 
