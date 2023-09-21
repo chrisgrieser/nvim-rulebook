@@ -1,14 +1,22 @@
+local M = {}
+--------------------------------------------------------------------------------
+
 ---@class ruleIgnoreConfig
 ---@field comment string|string[] "%s" will be replaced with the rule id
 ---@field location "sameLine"|"prevLine"|"encloseLine"
----@field docs? string only needed for auto-generated docs
+---@field docs? string used for auto-generated docs
 
 -- INFO "encloseLine" is a list with two strings, one to be inserted before and
 -- one to be inserted after. (prevLine or sameLine comments are obviously
 -- preferred, but some linters to do support that.)
 
 ---@type table<string, ruleIgnoreConfig>
-local data = {
+M.ignoreComments = {
+	Pyright = {
+		comment = "# pyright: ignore %s",
+		location = "sameLine",
+		docs = "https://microsoft.github.io/pyright/#/comments",
+	},
 	shellcheck = {
 		comment = "# shellcheck disable=%s",
 		location = "prevLine",
@@ -39,13 +47,22 @@ local data = {
 		location = "encloseLine",
 		docs = "https://vale.sh/docs/topics/config/#markup-based-configuration",
 	},
-	pylint ={
+	pylint = {
 		comment = "# pylint: disable=%s",
 		location = "sameLine",
 		docs = "https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html",
 	},
-	-- tsserver
-	typescript = {
+	eslint = {
+		comment = "// eslint-disable-line %s",
+		location = "sameLine",
+		docs = "https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1",
+	},
+	biome = {
+		comment = "// biome-ignore %s: <explanation>",
+		location = "sameLine",
+		docs = "https://biomejs.dev/linter/#ignoring-code",
+	},
+	typescript = { -- tsserver
 		comment = "// @ts-ignore",
 		location = "prevLine",
 		docs = "https://www.typescriptlang.org/", -- no docs found that are more specific
@@ -54,4 +71,22 @@ local data = {
 
 --------------------------------------------------------------------------------
 
-return data
+-- "%s" will be replaced with the rule id
+---@type table<string, string>
+M.ruleDocs = {
+	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
+	shellcheck = "https://www.shellcheck.net/wiki/SC%s",
+	biome = "https://biomejs.dev/linter/rules/%s",
+	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
+	stylelint = "https://stylelint.io/user-guide/rules/%s",
+	eslint = "https://eslint.org/docs/latest/rules/%s",
+
+	-- source name for lua_ls
+	["Lua Diagnostics"] = "https://luals.github.io/wiki/diagnostics/#%s", 
+
+	-- urls unfortunately use the rule-name, not the rule-id :/
+	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
+}
+
+--------------------------------------------------------------------------------
+return M
