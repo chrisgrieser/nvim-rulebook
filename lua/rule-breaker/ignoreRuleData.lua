@@ -2,6 +2,10 @@
 ---@field comment string|string[] with %s for the rule id
 ---@field location "sameLine"|"nextLine"|"encloseLine"
 
+-- INFO "encloseLine" is a list with two strings, one to be inserted before and
+-- one to be inserted after. (nextLine or sameLine comments are obviously
+-- preferred, but some linters to do support that.)
+
 ---@type table<string, ruleIgnoreConfig>
 local data = {
 	shellcheck = {
@@ -25,5 +29,7 @@ local data = {
 		location = "nextLine",
 	},
 }
+
+--------------------------------------------------------------------------------
 
 return data

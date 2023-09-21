@@ -1,7 +1,16 @@
 local M = {}
 local fn = vim.fn
 
-local ignoreRuleData = require("rule-breaker.ignoreRuleData")
+--------------------------------------------------------------------------------
+-- CONFIG
+local defaultConfig = {
+	ignoreRuleComments = require("rule-breaker.ignoreRuleData"),
+	searchUrl = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+}
+local config = defaultConfig -- if user does not call setup, use default
+
+---@param userConfig table
+function M.setup(userConfig) config = vim.tbl_deep_extend("force", defaultConfig, userConfig) end
 
 --------------------------------------------------------------------------------
 
@@ -42,8 +51,7 @@ local function searchForTheRule(diag)
 	local escapedQuery = query:gsub(" ", "+") -- valid escaping for DuckDuckGo
 
 	fn.setreg("+", query)
-
-	local url = ("https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us"):format(escapedQuery)
+	local url = config.searchUrl:format(escapedQuery)
 
 	-- open with the OS-specific shell command
 	local opener
@@ -61,6 +69,7 @@ end
 ---@param diag diagnostic
 local function addIgnoreComment(diag)
 	if not validDiagObj(diag) then return end
+	local ignoreRuleData = config.ignoreRuleComments
 
 	-- add rule id and indentation into comment
 	local currentIndent = vim.api.nvim_get_current_line():match("^%s*")
@@ -97,7 +106,7 @@ local function selectRuleInCurrentLine(operation)
 	-- filter diagnostics for which there are no ignore comments defined
 	if operation == addIgnoreComment then
 		curLineDiags = vim.tbl_filter(
-			function(diag) return ignoreRuleData[diag.source] ~= nil end,
+			function(diag) return config.ignoreRuleComments[diag.source] ~= nil end,
 			curLineDiags
 		)
 	end
@@ -123,6 +132,7 @@ local function selectRuleInCurrentLine(operation)
 end
 
 --------------------------------------------------------------------------------
+-- COMMANDS FOR USER
 
 ---Search via DuckDuckGo for the rule
 function M.lookupRule() selectRuleInCurrentLine(searchForTheRule) end
