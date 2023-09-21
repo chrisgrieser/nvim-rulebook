@@ -3,49 +3,55 @@
 <!-- TODO uncomment shields when available in dotfyle.com -->
 <!-- <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a> -->
 
-Add inline-comments to rules. Lookup rule documentation online.
+Lookup rule documentation online. Add inline-comments that ignore diagnostic rules, like `// eslint-disable-line [ruleName]`.
 
-Some LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that don't. 
+Some LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that do not. 
+
+---
 
 <!--toc:start-->
-- [Features](#features)
 - [Supported Sources](#supported-sources)
-	- [For adding ignore comments](#for-adding-ignore-comments)
-	- [For looking up rule documentation](#for-looking-up-rule-documentation)
+	- [Adding ignore comments](#adding-ignore-comments)
+	- [Looking up rule documentation](#looking-up-rule-documentation)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Limitations](#limitations)
 - [Credits](#credits)
 <!--toc:end-->
 
-## Features
-- Add inline-comments that ignore diagnostic rules.
-- Location of the ignore comment, like next line or previous line, is configurable.
-- Perform a web search for a diagnostic rule.
-- Requires diagnostics provided by a source that supports neovim's builtin diagnostics system (`vim.diagnostic`). nvim's builtin LSP client and [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.
-
 ## Supported Sources
-You easily add a custom source via the [plugin configuration](#configuration). However, please consider making a PR to add support for a linter if it is missing.
+You easily add a custom source via the [plugin configuration](#configuration). Though, please consider making a PR to add support for a linter if it is missing.
 
-[Ignore Rule Data for the supported linters](./lua/rulebook/ignoreRuleData.lua)
+[Rule Data for the supported linters](./lua/rulebook/rule-data.lua)
 
-### For adding ignore comments
+### Adding ignore comments
 <!-- TODO: auto-generate this list -->
 - selene
 - shellcheck
 - vale
+- LTeX
 - yamllint
 - stylelint
-- LTeX
 - typescript
+- eslint
+- biome
 - pylint
+- Pyright
 
-### For looking up rule documentation
-- selene
-- shellcheck
-- pylint
+### Looking up rule documentation
+<!-- TODO: auto-generate this list -->
+- selene 
+- shellcheck 
+- biome 
+- yamllint 
+- stylelint 
+- eslint 
+- Lua Diagnostics
+- pylint 
+- fallback 
 
 ## Installation
+This plugin requires diagnostics provided by a source that supports neovim's builtin diagnostics system. (nvim's builtin LSP client or [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
 
 ```lua
 -- lazy.nvim
@@ -107,13 +113,11 @@ defaultConfig = {
 }
 ```
 
-> [!NOTE]
-> The plugin uses `vim.ui.select()`, so the appearance of the rule selection can be customized by using a ui-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
+The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()) so the appearance of the rule selection can be customized by using a ui-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
 ## Limitations
 - The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined errorformat). Please open an issue at the diagnostics provider to fix.
-- This plugin does *not* hook into `vim.lsp.buf.code_action`, but provides its own independent selector.
-- As opposed to [null-ls](https://github.com/jose-elias-alvarez/null-ls.nvim)'s code action feature, this plugin does not support arbitrary code actions, but only actions based on a diagnostic.
+- This plugin does *not* hook into `vim.lsp.buf.code_action`, but provides its own selector.
 
 ## Credits
 <!-- vale Google.FirstPerson = NO -->

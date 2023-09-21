@@ -12,11 +12,6 @@ local M = {}
 
 ---@type table<string, ruleIgnoreConfig>
 M.ignoreComments = {
-	Pyright = {
-		comment = "# pyright: ignore %s",
-		location = "sameLine",
-		docs = "https://microsoft.github.io/pyright/#/comments",
-	},
 	shellcheck = {
 		comment = "# shellcheck disable=%s",
 		location = "prevLine",
@@ -52,6 +47,11 @@ M.ignoreComments = {
 		location = "sameLine",
 		docs = "https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html",
 	},
+	Pyright = {
+		comment = "# pyright: ignore %s",
+		location = "sameLine",
+		docs = "https://microsoft.github.io/pyright/#/comments",
+	},
 	eslint = {
 		comment = "// eslint-disable-line %s",
 		location = "sameLine",
@@ -76,9 +76,10 @@ M.ignoreComments = {
 M.ruleDocs = {
 	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
 	shellcheck = "https://www.shellcheck.net/wiki/SC%s",
-	biome = "https://biomejs.dev/linter/rules/%s",
 	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
+
 	stylelint = "https://stylelint.io/user-guide/rules/%s",
+	biome = "https://biomejs.dev/linter/rules/%s",
 	eslint = "https://eslint.org/docs/latest/rules/%s",
 
 	-- source name for lua_ls
