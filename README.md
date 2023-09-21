@@ -22,14 +22,17 @@ Most LSPs provide code actions for to do that – this plugin adds commands for 
 - Requires diagnostics provided by a source that supports neovim's builtin diagnostics system (`vim.diagnostic`). nvim's builtin LSP client and [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.
 
 ## Supported Linters for adding ignore-comments
-<!-- list-of-supported-linters start -->
+<!-- AUTO-GENERATED – DO NOT CHANGE -->
+<!-- supported-linters start -->
 - selene
 - shellcheck
 - vale
 - yamllint
 - stylelint
 - LTeX
-<!-- list-of-supported-linters end -->
+- typescript
+- pylint
+<!-- supported-linters end -->
 
 You easily add a custom via the [plugin configuration](#configuration). However, please consider making a PR to add support for a linter if it is missing.
 

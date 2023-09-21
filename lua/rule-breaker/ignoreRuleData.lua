@@ -1,7 +1,7 @@
 ---@class ruleIgnoreConfig
 ---@field comment string|string[] with %s for the rule id
 ---@field location "sameLine"|"prevLine"|"encloseLine"
----@field docs string
+---@field docs? string url to documentation elaborating how ignore comments work for the linter
 
 -- INFO "encloseLine" is a list with two strings, one to be inserted before and
 -- one to be inserted after. (prevLine or sameLine comments are obviously
@@ -30,8 +30,6 @@ local data = {
 		docs = "https://stylelint.io/user-guide/ignore-code/",
 	},
 	LTeX = {
-		-- ltex does not allow disabling individual rules, so it has to be
-		-- enabled/disables completely
 		comment = { "<!-- LTeX: enabled=false -->", "<!-- LTeX: enabled=true -->" },
 		location = "encloseLine",
 		docs = "https://valentjn.github.io/ltex/advanced-usage.html",
@@ -40,6 +38,17 @@ local data = {
 		comment = { "<!-- vale %s = NO -->", "<!-- vale %s = YES -->" },
 		location = "encloseLine",
 		docs = "https://vale.sh/docs/topics/config/#markup-based-configuration",
+	},
+	pylint ={
+		comment = "# pylint: disable=%s",
+		location = "sameLine",
+		docs = "https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html",
+	},
+	-- tsserver
+	typescript = {
+		comment = "// @ts-ignore",
+		location = "prevLine",
+		docs = "https://www.typescriptlang.org/", -- no docs found that are more specific
 	},
 }
 
