@@ -86,8 +86,8 @@ CONFIGURATION                  *rule-breaker-nvim-rule-breaker--configuration*
                 comment = "-- selene: allow(%s)",
                 location = "prevLine",
             },
-            -- full list of builtin-linters found in README
-            yourLinter = {
+            -- full list of builtin linters found in README
+            yourCustomSource = {
                 -- %s will be replaced with rule-id
                 -- if location is "encloseLine", needs to be a list of two strings
                 comment = "// disabling-comment %s",
