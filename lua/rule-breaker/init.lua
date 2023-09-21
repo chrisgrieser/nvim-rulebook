@@ -1,34 +1,7 @@
 local M = {}
 local fn = vim.fn
---------------------------------------------------------------------------------
 
----@class ruleIgnoreConfig
----@field comment string|string[] with %s for the rule id
----@field type "sameLine"|"nextLine"|"enclose"
-
----@type table<string, ruleIgnoreConfig>
-local ignoreRuleData = {
-	shellcheck = {
-		comment = "# shellcheck disable=%s",
-		type = "nextLine",
-	},
-	selene = {
-		comment = "-- selene: allow(%s)",
-		type = "nextLine",
-	},
-	vale = {
-		comment = { "<!-- vale %s = NO -->", "<!-- vale %s = YES -->" },
-		type = "enclose",
-	},
-	yamllint = {
-		comment = "# yamllint disable-line rule:%s",
-		type = "nextLine",
-	},
-	stylelint = {
-		comment = "/* stylelint-disable-next-line %s */",
-		type = "nextLine",
-	},
-}
+local ignoreRuleData = require("rule-breaker.ignoreRuleData")
 
 --------------------------------------------------------------------------------
 
@@ -117,7 +90,7 @@ local function addIgnoreComment(diag)
 		return
 	end
 
-	-- insert rule id and indentation into comment
+	-- add rule id and indentation into comment
 	local currentIndent = vim.api.nvim_get_current_line():match("^%s*")
 	local ignoreComment = ignoreRuleData[diag.source].comment
 	if type(ignoreComment) == "string" then ignoreComment = { ignoreComment } end
