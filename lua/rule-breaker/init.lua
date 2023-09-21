@@ -3,6 +3,12 @@ local fn = vim.fn
 
 --------------------------------------------------------------------------------
 -- CONFIG
+
+---@class pluginConfig for this plugin
+---@field ignoreRuleComments table<string, ruleIgnoreConfig>
+---@field searchUrl string
+
+---@type pluginConfig
 local defaultConfig = {
 	ignoreRuleComments = require("rule-breaker.ignoreRuleData"),
 	searchUrl = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
@@ -13,12 +19,6 @@ local config = defaultConfig -- if user does not call setup, use default
 function M.setup(userConfig) config = vim.tbl_deep_extend("force", defaultConfig, userConfig) end
 
 --------------------------------------------------------------------------------
-
----@class diagnostic nvim diagnostic https://neovim.io/doc/user/diagnostic.html#diagnostic-structure
----@field message string
----@field source string -- linter of LSP name
----@field code string -- rule id
----@field bufnr number
 
 ---Send notification
 ---@param msg string
