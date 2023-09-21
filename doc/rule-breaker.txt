@@ -3,62 +3,109 @@
 ==============================================================================
 Table of Contents                             *rule-breaker-table-of-contents*
 
-  - Features                                           |rule-breaker-features|
-  - Installation                                   |rule-breaker-installation|
-  - Configuration                                 |rule-breaker-configuration|
-  - Limitations                                     |rule-breaker-limitations|
-  - Credits                                             |rule-breaker-credits|
-# nvim-rule-breaker
+1. nvim-rule-breaker                         |rule-breaker-nvim-rule-breaker-|
+  - Features                        |rule-breaker-nvim-rule-breaker--features|
+  - Supported Linters for adding ignore-comments|rule-breaker-nvim-rule-breaker--supported-linters-for-adding-ignore-comments|
+  - Installation                |rule-breaker-nvim-rule-breaker--installation|
+  - Configuration              |rule-breaker-nvim-rule-breaker--configuration|
+  - Credits                          |rule-breaker-nvim-rule-breaker--credits|
+
+==============================================================================
+1. nvim-rule-breaker                         *rule-breaker-nvim-rule-breaker-*
 
 Add inline-comments to locally disable diagnostic rules.
 
+Most LSPs provide code actions for to do that – this plugin adds commands for
+linters and LSPs that don’t. (As such, this plugin is partially a replacement
+for null-ls <https://github.com/jose-elias-alvarez/null-ls.nvim/>’s code
+action feature.)
+
 - |rule-breaker-features|
+- |rule-breaker-supported-linters-for-adding-ignore-comments|
 - |rule-breaker-installation|
 - |rule-breaker-configuration|
-- |rule-breaker-limitations|
 - |rule-breaker-credits|
 
 
-FEATURES                                               *rule-breaker-features*
+FEATURES                            *rule-breaker-nvim-rule-breaker--features*
+
+- Add inline-comments that ignore diagnostic rules.
+- Location of the ignore comment, like next line or previous line, is configurable.
+- Perform a web search for a diagnostic rule.
+- Requires diagnostics provided by a source that supports neovim’s builtin diagnostics system (`vim.diagnostic`). nvim’s builtin LSP client and nvim-lint <https://github.com/mfussenegger/nvim-lint> are such sources.
 
 
-INSTALLATION                                       *rule-breaker-installation*
+SUPPORTED LINTERS FOR ADDING IGNORE-COMMENTS*rule-breaker-nvim-rule-breaker--supported-linters-for-adding-ignore-comments*
+
+- selene
+- shellcheck
+- vale
+- yamllint
+- stylelint
+- LTeX
+
+You easily add a custom via the |rule-breaker-plugin-configuration|. However,
+please consider making a PR to add support for a linter if it is missing.
+
+Ignore Rule Data for the supported linters
+<./lua/rule-breaker/ignoreRuleData.lua>
+
+
+INSTALLATION                    *rule-breaker-nvim-rule-breaker--installation*
 
 >lua
     -- lazy.nvim
     {
         "chrisgrieser/nvim-rule-breaker",
-        opts = {
-            
-        },
+        keys = {
+            { "<leader>i", function() require("rule-breaker").ignoreRule() end },
+            { "<leader>l", function() require("rule-breaker").lookupRule() end },
+        }
     },
-    
-    -- packer
-    use {
-        "chrisgrieser/nvim-rule-breaker",
-        config = function () 
-            require("rule-breaker").setup ({
-                
-            })
-        end,
-    }
 <
-
-
-CONFIGURATION                                     *rule-breaker-configuration*
 
 >lua
-    -- default values
-    opts = {
+    -- packer
+    use { "chrisgrieser/nvim-rule-breaker" }
     
+    -- in your config
+    vim.keymap.set("n", "<leader>i", function() require("rule-breaker").ignoreRule() end)
+    vim.keymap.set("n", "<leader>l", function() require("rule-breaker").lookupRule() end)
+<
+
+
+CONFIGURATION                  *rule-breaker-nvim-rule-breaker--configuration*
+
+>lua
+    defaultConfig = {
+        ignoreRuleComments = {
+            selene = {
+                comment = "-- selene: allow(%s)",
+                location = "prevLine",
+            },
+            -- full list of builtin-linters found in README
+            yourLinter = {
+                -- %s will be replaced with rule-id
+                -- if location is "encloseLine", needs to be a list of two strings
+                comment = "// disabling-comment %s",
+    
+                -- "prevLine"|"sameLine"|"encloseLine"
+                location = "prevLine",
+            }
+        },
+    
+        -- searchUrl for rule lookup. Default is the DuckDuckGo 
+        -- "Ducky Search" (automatically opening first result)
+        searchUrl = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
     }
 <
 
 
-LIMITATIONS                                         *rule-breaker-limitations*
+  [!NOTE] The plugin uses `vim.ui.select()`, so the appearance of the rule
+  selection can be customized by using a ui-plugin like dressing.nvim
+  <https://github.com/stevearc/dressing.nvim>.
 
-
-CREDITS                                                 *rule-breaker-credits*
+CREDITS                              *rule-breaker-nvim-rule-breaker--credits*
 
 **About Me** In my day job, I am a sociologist studying the social mechanisms
 underlying the digital economy. For my PhD project, I investigate the
