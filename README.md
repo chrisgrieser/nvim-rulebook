@@ -22,7 +22,7 @@ Most LSPs provide code actions for to do that – this plugin adds commands for 
 - Requires diagnostics provided by a source that supports neovim's builtin diagnostics system (`vim.diagnostic`). nvim's builtin LSP client and [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.
 
 ## Supported Linters for adding ignore-comments
-<!-- AUTO-GENERATED – DO NOT CHANGE -->
+<!-- TODO: AUTO-GENERATED this list -->
 <!-- supported-linters start -->
 - selene
 - shellcheck
@@ -69,8 +69,8 @@ defaultConfig = {
 			comment = "-- selene: allow(%s)",
 			location = "prevLine",
 		},
-		-- full list of builtin-linters found in README
-		yourLinter = {
+		-- full list of builtin linters found in README
+		yourCustomSource = {
 			-- %s will be replaced with rule-id
 			-- if location is "encloseLine", needs to be a list of two strings
 			comment = "// disabling-comment %s",

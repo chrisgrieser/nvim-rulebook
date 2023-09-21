@@ -1,7 +1,7 @@
 ---@class ruleIgnoreConfig
----@field comment string|string[] with %s for the rule id
+---@field comment string|string[] "%s" will be replaced with the rule id
 ---@field location "sameLine"|"prevLine"|"encloseLine"
----@field docs? string url to documentation elaborating how ignore comments work for the linter
+---@field docs? string only needed for auto-generated docs
 
 -- INFO "encloseLine" is a list with two strings, one to be inserted before and
 -- one to be inserted after. (prevLine or sameLine comments are obviously
