@@ -8,6 +8,7 @@ Table of Contents                             *rule-breaker-table-of-contents*
   - Supported Linters for adding ignore-comments|rule-breaker-nvim-rule-breaker--supported-linters-for-adding-ignore-comments|
   - Installation                |rule-breaker-nvim-rule-breaker--installation|
   - Configuration              |rule-breaker-nvim-rule-breaker--configuration|
+  - Limitations                  |rule-breaker-nvim-rule-breaker--limitations|
   - Credits                          |rule-breaker-nvim-rule-breaker--credits|
 
 ==============================================================================
@@ -43,6 +44,8 @@ SUPPORTED LINTERS FOR ADDING IGNORE-COMMENTS*rule-breaker-nvim-rule-breaker--sup
 - yamllint
 - stylelint
 - LTeX
+- typescript
+- pylint
 
 You easily add a custom via the |rule-breaker-plugin-configuration|. However,
 please consider making a PR to add support for a linter if it is missing.
@@ -104,6 +107,13 @@ CONFIGURATION                  *rule-breaker-nvim-rule-breaker--configuration*
   [!NOTE] The plugin uses `vim.ui.select()`, so the appearance of the rule
   selection can be customized by using a ui-plugin like dressing.nvim
   <https://github.com/stevearc/dressing.nvim>.
+
+LIMITATIONS                      *rule-breaker-nvim-rule-breaker--limitations*
+
+- The diagnostics have to contain the necessary data, |that is a diagnostic code and diagnostic source|. Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with certain linters). Please open an issue at the diagnostics provider to fix.
+- This plugin does _not_ hook into `vim.lsp.buf.code_action`, but provides its own independent selector.
+- As opposed to null-ls <https://github.com/jose-elias-alvarez/null-ls.nvim>’s code action feature, this plugin does not support arbitrary code actions, but only actions based on a diagnostic.
+
 
 CREDITS                              *rule-breaker-nvim-rule-breaker--credits*
 
