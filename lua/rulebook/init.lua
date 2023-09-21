@@ -35,6 +35,7 @@ end
 ---checks whether rule has id and source, as prescribed in nvim diagnostic structure
 ---@param diag diagnostic
 ---@return boolean whether rule is valid
+---@nodiscard
 local function validDiagObj(diag)
 	local issuePlea = "\nPlease open an issue at the plugin that provides the diagnostics."
 	if not diag.code then
@@ -49,6 +50,7 @@ end
 
 ---@param lnum number
 ---@param operationIsIgnore boolean
+---@nodiscard
 local function getDiagsInCurLine(lnum, operationIsIgnore)
 	local diags = vim.diagnostic.get(0, { lnum = lnum })
 	-- INFO for rule search, there is no need to filter the diagnostics, since there
