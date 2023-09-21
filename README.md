@@ -1,7 +1,7 @@
 <!-- LTeX: enabled=false -->
-# nvim-rule-breaker <!-- LTeX: enabled=true -->
+# nvim-rulebook <!-- LTeX: enabled=true -->
 <!-- TODO uncomment shields when available in dotfyle.com -->
-<!-- <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rule-breaker"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rule-breaker/shield" /></a> -->
+<!-- <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a> -->
 
 Add inline-comments to locally disable diagnostic rules.
 
@@ -36,28 +36,28 @@ Most LSPs provide code actions for to do that – this plugin adds commands for 
 
 You easily add a custom via the [plugin configuration](#configuration). However, please consider making a PR to add support for a linter if it is missing.
 
-[Ignore Rule Data for the supported linters](./lua/rule-breaker/ignoreRuleData.lua)
+[Ignore Rule Data for the supported linters](./lua/rulebook/ignoreRuleData.lua)
 
 ## Installation
 
 ```lua
 -- lazy.nvim
 {
-	"chrisgrieser/nvim-rule-breaker",
+	"chrisgrieser/nvim-rulebook",
 	keys = {
-		{ "<leader>i", function() require("rule-breaker").ignoreRule() end },
-		{ "<leader>l", function() require("rule-breaker").lookupRule() end },
+		{ "<leader>i", function() require("rulebook").ignoreRule() end },
+		{ "<leader>l", function() require("rulebook").lookupRule() end },
 	}
 },
 ```
 
 ```lua
 -- packer
-use { "chrisgrieser/nvim-rule-breaker" }
+use { "chrisgrieser/nvim-rulebook" }
 
 -- in your config
-vim.keymap.set("n", "<leader>i", function() require("rule-breaker").ignoreRule() end)
-vim.keymap.set("n", "<leader>l", function() require("rule-breaker").lookupRule() end)
+vim.keymap.set("n", "<leader>i", function() require("rulebook").ignoreRule() end)
+vim.keymap.set("n", "<leader>l", function() require("rulebook").lookupRule() end)
 ```
 
 ## Configuration
