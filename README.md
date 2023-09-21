@@ -1,9 +1,9 @@
  <!-- LTeX: enabled=false -->
-# {{plugin-name}} <!-- LTeX: enabled=true -->
+# nvim-rule-breaker <!-- LTeX: enabled=true -->
 <!-- TODO uncomment shields when available in dotfyle.com -->
-<!-- <a href="https://dotfyle.com/plugins/chrisgrieser/{{plugin-name}}"><img src="https://dotfyle.com/plugins/chrisgrieser/{{plugin-name}}/shield" /></a> -->
+<!-- <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rule-breaker"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rule-breaker/shield" /></a> -->
 
-{{plugin-desc}}
+Add inline-comments to locally disable diagnostic rules.
 
 <!--toc:start-->
 - [Features](#features)
@@ -20,7 +20,7 @@
 ```lua
 -- lazy.nvim
 {
-	"chrisgrieser/{{plugin-name}}",
+	"chrisgrieser/nvim-rule-breaker",
 	opts = {
 		
 	},
@@ -28,9 +28,9 @@
 
 -- packer
 use {
-	"chrisgrieser/{{plugin-name}}",
+	"chrisgrieser/nvim-rule-breaker",
 	config = function () 
-		require("{{plugin-name-short}}").setup ({
+		require("rule-breaker").setup ({
 			
 		})
 	end,
