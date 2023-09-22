@@ -21,8 +21,8 @@ linters and LSPs that do not.
 
 ------------------------------------------------------------------------------
 - |rule-breaker-supported-sources|
-    - |rule-breaker-adding-ignore-comments|
-    - |rule-breaker-looking-up-rule-documentation|
+    - |rule-breaker-rule-lookup|
+    - |rule-breaker-add-ignore-comments|
 - |rule-breaker-installation|
 - |rule-breaker-configuration|
 - |rule-breaker-limitations|
@@ -38,32 +38,31 @@ missing.
 Rule Data for the supported linters <./lua/rulebook/rule-data.lua>
 
 
-ADDING IGNORE COMMENTS ~
+RULE LOOKUP ~
 
-- selene
-- shellcheck
-- vale
-- LTeX
-- yamllint
-- stylelint
-- typescript
-- eslint
-- biome
-- pylint
-- Pyright
+- `selene`
+- `pylint`
+- `yamllint`
+- `stylelint`
+- `Lua Diagnostics`
+- `eslint`
+- `shellcheck`
+- `biome`
 
 
-LOOKING UP RULE DOCUMENTATION ~
+ADD IGNORE COMMENTS ~
 
-- selene
-- shellcheck
-- biome
-- yamllint
-- stylelint
-- eslint
-- Lua Diagnostics
-- pylint
-- fallback
+- selene <https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file>
+- pylint <https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html>
+- yamllint <https://yamllint.readthedocs.io/en/stable/disable_with_comments.html>
+- Pyright <https://microsoft.github.io/pyright/#/comments>
+- stylelint <https://stylelint.io/user-guide/ignore-code/>
+- eslint <https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1>
+- LTeX <https://valentjn.github.io/ltex/advanced-usage.html>
+- shellcheck <https://www.shellcheck.net/wiki/Ignore>
+- biome <https://biomejs.dev/linter/#ignoring-code>
+- vale <https://vale.sh/docs/topics/config/#markup-based-configuration>
+- typescript <https://www.typescriptlang.org/>
 
 
 INSTALLATION                        *rule-breaker-nvim-rulebook--installation*
