@@ -95,28 +95,26 @@ local function addIgnoreComment(diag)
 	if not validDiagObj(diag) then return end
 
 	local ignoreData = config.ignoreComments
-
-	-- add rule id and indentation into comment
-	local currentIndent = vim.api.nvim_get_current_line():match("^%s*")
+	local indent = vim.api.nvim_get_current_line():match("^%s*")
 	local ignoreComment = ignoreData[diag.source].comment
-	if type(ignoreComment) == "string" then ignoreComment = { ignoreComment } end
-	for i = 1, #ignoreComment, 1 do
-		ignoreComment[i] = currentIndent .. ignoreComment[i]:format(diag.code)
-	end
+	local ignoreLocation = ignoreData[diag.source].location
 
 	-- insert the comment
-	local ignoreLocation = ignoreData[diag.source].location
 	if ignoreLocation == "prevLine" then
-		local prevLineNum = vim.api.nvim_win_get_cursor(0)[1] - 1
-		vim.api.nvim_buf_set_lines(0, prevLineNum, prevLineNum, false, ignoreComment)
+		ignoreComment = indent .. ignoreComment:format(diag.code)
+		local prevLnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+		vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { ignoreComment })
 	elseif ignoreLocation == "sameLine" then
-		local currentLine = vim.api.nvim_get_current_line():gsub("%s+$", "")
-		vim.api.nvim_set_current_line(currentLine .. " " .. ignoreComment[1])
+		ignoreComment = ignoreComment:format(diag.code)
+		local curLine = vim.api.nvim_get_current_line():gsub("%s+$", "")
+		vim.api.nvim_set_current_line(curLine .. " " .. ignoreComment)
 	elseif ignoreLocation == "encloseLine" then
-		local prevLineNum = vim.api.nvim_win_get_cursor(0)[1] - 1
-		local nextLineNum = vim.api.nvim_win_get_cursor(0)[1]
-		vim.api.nvim_buf_set_lines(0, nextLineNum, nextLineNum, false, { ignoreComment[2] })
-		vim.api.nvim_buf_set_lines(0, prevLineNum, prevLineNum, false, { ignoreComment[1] })
+		ignoreComment[1] = indent .. ignoreComment[1]:format(diag.code)
+		ignoreComment[2] = indent .. ignoreComment[2]:format(diag.code)
+		local prevLnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+		local nextLnum = vim.api.nvim_win_get_cursor(0)[1]
+		vim.api.nvim_buf_set_lines(0, nextLnum, nextLnum, false, { ignoreComment[2] })
+		vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { ignoreComment[1] })
 	end
 end
 
