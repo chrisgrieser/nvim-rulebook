@@ -40,7 +40,6 @@ Rule Data for the supported linters <./lua/rulebook/rule-data.lua>
 
 RULE LOOKUP ~
 
-- `Lua Diagnostics`
 - `eslint`
 - `shellcheck`
 - `biome`
@@ -48,6 +47,7 @@ RULE LOOKUP ~
 - `pylint`
 - `yamllint`
 - `stylelint`
+- `Lua Diagnostics`
 
 
 ADD IGNORE COMMENTS ~
