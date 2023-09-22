@@ -5,14 +5,14 @@
 
 Lookup rule documentation online. Add inline-comments that ignore diagnostic rules, like `// eslint-disable-line [ruleName]`.
 
-Some LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that do not. 
+Some LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that do not.
 
 ---
 
 <!--toc:start-->
 - [Supported Sources](#supported-sources)
-	- [Adding ignore comments](#adding-ignore-comments)
-	- [Looking up rule documentation](#looking-up-rule-documentation)
+	- [Rule Lookup](#rule-lookup)
+	- [Add Ignore Comments](#add-ignore-comments)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Limitations](#limitations)
@@ -24,31 +24,31 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 
 [Rule Data for the supported linters](./lua/rulebook/rule-data.lua)
 
-### Adding ignore comments
-<!-- TODO: auto-generate this list -->
-- selene
-- shellcheck
-- vale
-- LTeX
-- yamllint
-- stylelint
-- typescript
-- eslint
-- biome
-- pylint
-- Pyright
+<!-- INFO use `make update_readme` to automatically update this section -->
+<!-- auto-generated: start -->
+### Rule Lookup
+- `selene`
+- `pylint`
+- `yamllint`
+- `stylelint`
+- `Lua Diagnostics`
+- `eslint`
+- `shellcheck`
+- `biome`
 
-### Looking up rule documentation
-<!-- TODO: auto-generate this list -->
-- selene 
-- shellcheck 
-- biome 
-- yamllint 
-- stylelint 
-- eslint 
-- Lua Diagnostics
-- pylint 
-- fallback 
+### Add Ignore Comments
+- [selene](https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file)
+- [pylint](https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html)
+- [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
+- [Pyright](https://microsoft.github.io/pyright/#/comments)
+- [stylelint](https://stylelint.io/user-guide/ignore-code/)
+- [eslint](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1)
+- [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
+- [shellcheck](https://www.shellcheck.net/wiki/Ignore)
+- [biome](https://biomejs.dev/linter/#ignoring-code)
+- [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
+- [typescript](https://www.typescriptlang.org/)
+<!-- auto-generated: end -->
 
 ## Installation
 This plugin requires diagnostics provided by a source that supports neovim's builtin diagnostics system. (nvim's builtin LSP client or [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
