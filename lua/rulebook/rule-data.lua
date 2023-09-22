@@ -10,6 +10,7 @@ local M = {}
 -- one to be inserted after. (prevLine or sameLine comments are obviously
 -- preferred, but some linters to do support that.)
 
+---INFO the key must be named exactly like diagnostic.source (case-sensitive!) 
 ---@type table<string, ruleIgnoreConfig>
 M.ignoreComments = {
 	shellcheck = {
@@ -71,6 +72,7 @@ M.ignoreComments = {
 
 --------------------------------------------------------------------------------
 
+---INFO the key must be named exactly like diagnostic.source (case-sensitive!) 
 -- "%s" will be replaced with the rule id
 ---@type table<string, string>
 M.ruleDocs = {
