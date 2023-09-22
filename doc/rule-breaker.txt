@@ -19,7 +19,6 @@ rules, like `// eslint-disable-line [ruleName]`.
 Some LSPs provide code actions for to do that – this plugin adds commands for
 linters and LSPs that do not.
 
-------------------------------------------------------------------------------
 - |rule-breaker-supported-sources|
     - |rule-breaker-rule-lookup|
     - |rule-breaker-add-ignore-comments|
@@ -32,7 +31,7 @@ linters and LSPs that do not.
 SUPPORTED SOURCES              *rule-breaker-nvim-rulebook--supported-sources*
 
 You easily add a custom source via the |rule-breaker-plugin-configuration|.
-Though, please consider making a PR to add support for a linter if it is
+Though, please consider making a PR to add support for a source if it is
 missing.
 
 Rule Data for the supported linters <./lua/rulebook/rule-data.lua>
