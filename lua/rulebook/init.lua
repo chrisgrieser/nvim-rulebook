@@ -148,7 +148,7 @@ local function selectRule(operation)
 		vim.cmd("normal! ^")
 	end
 
-	-- autoselect if one diagnostics
+	-- autoselect if only one diagnostic
 	if #diagsAtLine == 1 then
 		operation(diagsAtLine[1])
 		return
@@ -160,10 +160,10 @@ local function selectRule(operation)
 		prompt = title,
 		kind = "rule_selection",
 		format_item = function(diag)
-			local source = diag.source and "[" .. diag.source .. "] " or ""
-			local code = diag.code or ""
-			local display = source .. code
-			if display == "" then display = diag.message end
+			local source = diag.source .. ": " or ""
+			local desc = diag.code or diag.message
+			local display = source .. desc
+			if not (diag.code and diag.source) then display = " " .. display end
 			return display
 		end,
 	}, function(diag)
