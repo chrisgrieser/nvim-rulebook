@@ -3,14 +3,16 @@ local M = {}
 
 ---@class ruleIgnoreConfig
 ---@field comment string|string[] "%s" will be replaced with the rule id
----@field location "sameLine"|"prevLine"|"encloseLine"
+---@field location "prevLine"|"sameLine"|"encloseLine"
 ---@field docs? string used for auto-generated docs
 
 -- INFO "encloseLine" is a list with two strings, one to be inserted before and
--- one to be inserted after. (prevLine or sameLine comments are obviously
--- preferred, but some linters to do support that.)
+-- one to be inserted after. Preferred Priority if multiple locations are supported:
+-- 1. prevLine
+-- 2. sameLine
+-- 3. encloseLine
 
----INFO the key must be named exactly like diagnostic.source (case-sensitive!) 
+---INFO the key must be named exactly like diagnostic.source (case-sensitive!)
 ---@type table<string, ruleIgnoreConfig>
 M.ignoreComments = {
 	shellcheck = {
@@ -54,13 +56,13 @@ M.ignoreComments = {
 		docs = "https://microsoft.github.io/pyright/#/comments",
 	},
 	eslint = {
-		comment = "// eslint-disable-line %s",
-		location = "sameLine",
+		comment = "// eslint-disable-next-line %s",
+		location = "prevLine",
 		docs = "https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1",
 	},
 	biome = {
 		comment = "// biome-ignore %s: <explanation>",
-		location = "sameLine",
+		location = "prevLine",
 		docs = "https://biomejs.dev/linter/#ignoring-code",
 	},
 	typescript = { -- tsserver
@@ -72,7 +74,7 @@ M.ignoreComments = {
 
 --------------------------------------------------------------------------------
 
----INFO the key must be named exactly like diagnostic.source (case-sensitive!) 
+---INFO the key must be named exactly like diagnostic.source (case-sensitive!)
 -- "%s" will be replaced with the rule id
 ---@type table<string, string>
 M.ruleDocs = {
@@ -85,7 +87,7 @@ M.ruleDocs = {
 	eslint = "https://eslint.org/docs/latest/rules/%s",
 
 	-- source name for lua_ls
-	["Lua Diagnostics"] = "https://luals.github.io/wiki/diagnostics/#%s", 
+	["Lua Diagnostics"] = "https://luals.github.io/wiki/diagnostics/#%s",
 
 	-- urls unfortunately use the rule-name, not the rule-id :/
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
