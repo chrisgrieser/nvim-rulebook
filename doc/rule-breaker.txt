@@ -1,4 +1,4 @@
-*rule-breaker.txt*        For NVIM v0.8.0       Last change: 2023 September 21
+*rule-breaker.txt*        For NVIM v0.8.0       Last change: 2023 September 22
 
 ==============================================================================
 Table of Contents                             *rule-breaker-table-of-contents*
