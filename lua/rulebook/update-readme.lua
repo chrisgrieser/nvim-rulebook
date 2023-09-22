@@ -1,5 +1,7 @@
 -- INFO has to be run from lua subdirectory when called via `nvim -l`
 -- `cd lua && nvim -l rulebook/update-readme.lua`
+-- (it is not indented to be used for other purposes)
+--------------------------------------------------------------------------------
 
 -- CONFIG
 local readmePath = "../README.md" -- relative to lua directory
@@ -18,26 +20,12 @@ local function writeToFile(filePath, str)
 	file:close()
 end
 
----read the full file
----@param filePath string
----@nodiscard
----@return string|nil nil on error
-local function readFile(filePath)
-	local file, _ = io.open(filePath, "r")
-	if not file then return end
-	local content = file:read("*a")
-	file:close()
-	return content
-end
-
 --------------------------------------------------------------------------------
-
-local readmeContent = assert(readFile(readmePath), "README.md not found")
 
 -- remove old lines
 local beforePart, afterPart = {}, {}
 local removeActive = nil
-for line in readmeContent:gmatch("(.-)[\r\n]") do
+for line in io.lines(readmePath) do
 	if removeActive == nil then table.insert(beforePart, line) end
 	if removeActive == false then table.insert(afterPart, line) end
 	if line == markerStart then
