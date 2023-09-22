@@ -7,8 +7,6 @@ Lookup rule documentation online. Add inline-comments that ignore diagnostic rul
 
 Some LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that do not.
 
----
-
 <!--toc:start-->
 - [Supported Sources](#supported-sources)
 	- [Rule Lookup](#rule-lookup)
@@ -20,7 +18,7 @@ Some LSPs provide code actions for to do that – this plugin adds commands for 
 <!--toc:end-->
 
 ## Supported Sources
-You easily add a custom source via the [plugin configuration](#configuration). Though, please consider making a PR to add support for a linter if it is missing.
+You easily add a custom source via the [plugin configuration](#configuration). Though, please consider making a PR to add support for a source if it is missing.
 
 [Rule Data for the supported linters](./lua/rulebook/rule-data.lua)
 
