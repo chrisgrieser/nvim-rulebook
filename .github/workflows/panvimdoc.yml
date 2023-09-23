@@ -12,7 +12,7 @@ jobs:
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
-          vimdoc: rule-breaker
+          vimdoc: rulebook
           toc: true
           demojify: true
           treesitter: true
