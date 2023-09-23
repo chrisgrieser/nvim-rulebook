@@ -13,11 +13,12 @@ Table of Contents                                 *rulebook-table-of-contents*
 ==============================================================================
 1. nvim-rulebook                                     *rulebook-nvim-rulebook-*
 
-Lookup rule documentation online. Add inline-comments that ignore diagnostic
-rules, like `// eslint-disable-line [ruleName]`.
 
-Some LSPs provide code actions for to do that – this plugin adds commands for
-linters and LSPs that do not.
+
+Add inline-comments to ignore rules, or lookup rule documentation online.
+
+Some LSPs provide code actions for that – this plugin adds commands for
+linters and LSPs that don’t.
 
 - |rulebook-supported-sources|
     - |rulebook-rule-lookup|
