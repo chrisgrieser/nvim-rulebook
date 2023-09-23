@@ -1,11 +1,10 @@
 <!-- LTeX: enabled=false -->
 # nvim-rulebook 📖 <!-- LTeX: enabled=true -->
-<!-- TODO uncomment shields when available in dotfyle.com -->
-<!-- <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a> -->
+<a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a>
 
-Lookup rule documentation online. Add inline-comments that ignore diagnostic rules, like `// eslint-disable-line [ruleName]`.
+Add inline-comments to ignore rules, or lookup rule documentation online.
 
-Some LSPs provide code actions for to do that – this plugin adds commands for linters and LSPs that do not.
+Some LSPs provide code actions for that – this plugin adds commands for linters and LSPs that don't.
 
 <!--toc:start-->
 - [Supported Sources](#supported-sources)
