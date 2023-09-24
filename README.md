@@ -105,7 +105,7 @@ defaultConfig = {
 		-- Search URL when no documentation definition is available for a
 		-- diagnostic source. "%s" will be replaced with the diagnostic source & code.
 		-- Default is the DDG "Ducky Search" (automatically opening first result).
-		fallback = "https://duckduckgo.com/?q=%s+%21ducky&kl=en-us",
+		fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
 	}
 
 	-- If no diagnostic is found, in current line, search this meany lines 

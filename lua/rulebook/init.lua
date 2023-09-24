@@ -38,7 +38,7 @@ end
 ---@return boolean whether rule is valid
 ---@nodiscard
 local function validDiagObj(diag)
-	local issuePlea = "\nPlease open an issue at the plugin that provides the diagnostics."
+	local issuePlea = "\nPlease open an issue at diagnostic source or the diagnostic provider."
 	if not diag.code then
 		notify("Diagnostic is missing a code (rule id). " .. issuePlea, "warn")
 		return false

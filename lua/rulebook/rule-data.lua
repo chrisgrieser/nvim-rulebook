@@ -4,7 +4,7 @@ local M = {}
 ---@class ruleIgnoreConfig
 ---@field comment string|string[] "%s" will be replaced with the rule id
 ---@field location "prevLine"|"sameLine"|"encloseLine"
----@field docs? string used for auto-generated docs
+---@field docs string used for auto-generated docs
 
 -- INFO "encloseLine" is a list with two strings, one to be inserted before and
 -- one to be inserted after. Preferred Priority if multiple locations are supported:
@@ -91,6 +91,7 @@ M.ruleDocs = {
 		return "https://biomejs.dev/linter/rules/" .. shortCodeKebabCase
 	end,
 	eslint = "https://eslint.org/docs/latest/rules/%s",
+	stylelint = "https://stylelint.io/user-guide/rules/%s",
 
 	-- source name for lua_ls
 	["Lua Diagnostics"] = "https://luals.github.io/wiki/diagnostics/#%s",
@@ -99,7 +100,7 @@ M.ruleDocs = {
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
 
 	-- INFO used when no docs found for the diagnostics source
-	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us"
+	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
 }
 
 --------------------------------------------------------------------------------
