@@ -9,7 +9,7 @@ Some LSPs provide code actions for that – this plugin adds commands for linter
 <!--toc:start-->
 - [Supported Sources](#supported-sources)
 	- [Rule Lookup](#rule-lookup)
-	- [Add Ignore Comments](#add-ignore-comments)
+	- [Add Ignore Comment](#add-ignore-comment)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Limitations](#limitations)
@@ -32,6 +32,7 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 - `shellcheck`
 - `stylelint`
 - `yamllint`
+
 ### Add Ignore Comment
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
@@ -140,3 +141,4 @@ __Profiles__
 __Buy Me a Coffee__  
 <br>
 <a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+

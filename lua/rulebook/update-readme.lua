@@ -61,7 +61,7 @@ local newContent = table.concat(beforePart, "\n")
 	.. "\n"
 	.. "### Rule Lookup\n"
 	.. table.concat(ruleDocsSources, "\n")
-	.. "\n"
+	.. "\n\n"
 	.. "### Add Ignore Comment\n"
 	.. table.concat(ignoreCommentSources, "\n")
 	.. "\n"
