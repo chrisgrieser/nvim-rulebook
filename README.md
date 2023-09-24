@@ -24,27 +24,26 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 <!-- INFO use `make update_readme` to automatically update this section -->
 <!-- auto-generated: start -->
 ### Rule Lookup
-- `eslint`
-- `shellcheck`
-- `biome`
-- `selene`
-- `pylint`
-- `yamllint`
-- `stylelint`
 - `Lua Diagnostics`
-
-### Add Ignore Comments
-- [eslint](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1)
+- `biome`
+- `eslint`
+- `pylint`
+- `selene`
+- `shellcheck`
+- `stylelint`
+- `yamllint`
+### Add Ignore Comment
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
-- [shellcheck](https://www.shellcheck.net/wiki/Ignore)
-- [biome](https://biomejs.dev/linter/#ignoring-code)
-- [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
-- [typescript](https://www.typescriptlang.org/)
-- [selene](https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file)
-- [pylint](https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html)
-- [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
+- [biome](https://biomejs.dev/linter/#ignoring-code)
+- [eslint](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1)
+- [pylint](https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html)
+- [selene](https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file)
+- [shellcheck](https://www.shellcheck.net/wiki/Ignore)
 - [stylelint](https://stylelint.io/user-guide/ignore-code/)
+- [typescript](https://www.typescriptlang.org/)
+- [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
+- [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
 <!-- auto-generated: end -->
 
 ## Installation

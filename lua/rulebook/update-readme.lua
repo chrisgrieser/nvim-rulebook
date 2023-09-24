@@ -37,29 +37,33 @@ for line in io.lines(readmePath) do
 end
 
 -- insert new lines
-local linesToInsert = {}
+local ruleDocsSources = {}
+local ignoreCommentSources = {}
 
-table.insert(linesToInsert, "### Rule Lookup")
 local ruleDocs = require("rulebook.rule-data").ruleDocs
 for source, _ in pairs(ruleDocs) do
 	if source ~= "fallback" then
 		local newLine = ("- `%s`"):format(source)
-		table.insert(linesToInsert, newLine)
+		table.insert(ruleDocsSources, newLine)
 	end
 end
+table.sort(ruleDocsSources)
 
-table.insert(linesToInsert, "")
-table.insert(linesToInsert, "### Add Ignore Comments")
 local ignoreComments = require("rulebook.rule-data").ignoreComments
 for source, data in pairs(ignoreComments) do
 	local newLine = ("- [%s](%s)"):format(source, data.docs)
-	table.insert(linesToInsert, newLine)
+	table.insert(ignoreCommentSources, newLine)
 end
+table.sort(ignoreCommentSources)
 
 -- write new file
 local newContent = table.concat(beforePart, "\n")
 	.. "\n"
-	.. table.concat(linesToInsert, "\n")
+	.. "### Rule Lookup\n"
+	.. table.concat(ruleDocsSources, "\n")
+	.. "\n"
+	.. "### Add Ignore Comment\n"
+	.. table.concat(ignoreCommentSources, "\n")
 	.. "\n"
 	.. table.concat(afterPart, "\n")
 writeToFile(readmePath, newContent)
