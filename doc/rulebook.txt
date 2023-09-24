@@ -22,7 +22,7 @@ linters and LSPs that don’t.
 
 - |rulebook-supported-sources|
     - |rulebook-rule-lookup|
-    - |rulebook-add-ignore-comments|
+    - |rulebook-add-ignore-comment|
 - |rulebook-installation|
 - |rulebook-configuration|
 - |rulebook-limitations|
@@ -47,7 +47,10 @@ RULE LOOKUP ~
 - `shellcheck`
 - `stylelint`
 - `yamllint`
-    ### Add Ignore Comment
+
+
+ADD IGNORE COMMENT ~
+
 - LTeX <https://valentjn.github.io/ltex/advanced-usage.html>
 - Pyright <https://microsoft.github.io/pyright/#/comments>
 - biome <https://biomejs.dev/linter/#ignoring-code>
