@@ -90,12 +90,17 @@ defaultConfig = {
 		}
 	},
 
-	-- %s will be replaced with rule-id
+	-- the value of the rule documentions accept either a string or a function
+	-- if it is a string, %s will be replaced with rule-id
+	-- if it is a function, takes a diagnostic object as argument must return a url
 	ruleDocumentations = {
 		selene = "https://kampfkarren.github.io/selene/lints/%s.html"
 		-- ... (full list of supported sources can be found in the README)
 
-		yourCustomSource = "https://my-docs/%s.hthml"
+		customSource = "https://my-docs/%s.hthml",
+		anotherCustomSource = function(diag)
+			-- ...
+		end,
 
 		-- Search URL when no documentation definition is available for a
 		-- diagnostic source. "%s" will be replaced with the diagnostic source & code.

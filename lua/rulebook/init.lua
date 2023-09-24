@@ -6,7 +6,8 @@ local fn = vim.fn
 
 ---@class pluginConfig for this plugin
 ---@field ignoreComments table<string, ruleIgnoreConfig>
----@field ruleDocs table<string, string>
+---@field ruleDocs table<string, string|function>
+---@field forwSearchLines number
 
 ---@type pluginConfig
 local defaultConfig = {
@@ -68,13 +69,14 @@ local function searchForTheRule(diag)
 	if not validDiagObj(diag) then return end
 
 	-- determine url to open
-	local docsUrl = config.ruleDocs[diag.source]
+	local docResolver = config.ruleDocs[diag.source]
 	local urlToOpen
-	if docsUrl then
-		urlToOpen = docsUrl:format(diag.code)
-	else
-		local escapedQuery = (diag.code .. " " .. diag.source):gsub(" ", "%%20")
-		urlToOpen = config.ruleDocs.fallback:format(escapedQuery)
+	if type(docResolver) == "string" then
+		urlToOpen = docResolver:format(diag.code)
+	elseif type(docResolver) == "function" then
+		urlToOpen = docResolver(diag)
+	else -- fallback
+		urlToOpen = config.ruleDocs.fallback:format(diag.code .. "%%20" .. diag.source)
 	end
 
 	-- open with the OS-specific shell command

@@ -75,15 +75,21 @@ M.ignoreComments = {
 --------------------------------------------------------------------------------
 
 ---INFO the key must be named exactly like diagnostic.source (case-sensitive!)
--- "%s" will be replaced with the rule id
----@type table<string, string>
+-- string value: "%s" will be replaced with the rule id
+-- function value it will be called with the diagnostic object
+---@type table<string, string|function>
 M.ruleDocs = {
 	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
 	shellcheck = "https://www.shellcheck.net/wiki/SC%s",
 	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
 
-	stylelint = "https://stylelint.io/user-guide/rules/%s",
-	biome = "https://biomejs.dev/linter/rules/%s",
+	biome = function(diag)
+		-- biome codes are "lint/topic/rule-id", but the website only requires "rule-id"
+		-- also, the rule ids are camelCase, while the website requires kebab-case
+		local shortCode = diag.code:match(".*/(.-)$")
+		local shortCodeKebabCase = shortCode:gsub("(%u)", "-%1"):lower()
+		return "https://biomejs.dev/linter/rules/" .. shortCodeKebabCase
+	end,
 	eslint = "https://eslint.org/docs/latest/rules/%s",
 
 	-- source name for lua_ls
