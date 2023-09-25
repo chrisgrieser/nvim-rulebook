@@ -70,5 +70,4 @@ local newContent = table.concat(beforePart, "\n")
 	.. table.concat(ignoreCommentSources, "\n")
 	.. "\n"
 	.. table.concat(afterPart, "\n")
-	.. "\n"
 writeToFile(readmePath, newContent)
