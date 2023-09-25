@@ -81,7 +81,6 @@ M.ignoreComments = {
 M.ruleDocs = {
 	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us", -- when no docs found for source
 	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
-	shellcheck = "https://www.shellcheck.net/wiki/SC%s",
 	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
 	eslint = "https://eslint.org/docs/latest/rules/%s",
 	stylelint = "https://stylelint.io/user-guide/rules/%s",
@@ -93,6 +92,12 @@ M.ruleDocs = {
 		local shortCode = diag.code:match(".*/(.-)$")
 		local shortCodeKebabCase = shortCode:gsub("(%u)", "-%1"):lower()
 		return "https://biomejs.dev/linter/rules/" .. shortCodeKebabCase
+	end,
+
+	shellcheck =  function (diag)
+		-- sometimes, the code is `SC1234`, sometimes it is `1234`
+		local code = diag.code:gsub("^SC", "")
+		return "https://www.shellcheck.net/wiki/SC" .. code
 	end,
 
 	-----------------------------------------------------------------------------
