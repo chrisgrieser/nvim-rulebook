@@ -82,6 +82,10 @@ M.ruleDocs = {
 	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
 	shellcheck = "https://www.shellcheck.net/wiki/SC%s",
 	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
+	eslint = "https://eslint.org/docs/latest/rules/%s",
+	stylelint = "https://stylelint.io/user-guide/rules/%s",
+	["Lua Diagnostics"] = "https://luals.github.io/wiki/diagnostics/#%s",
+	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s", -- urls use rule-name, not rule-id
 
 	biome = function(diag)
 		-- biome codes are "lint/topic/rule-id", but the website only requires "rule-id"
@@ -90,17 +94,9 @@ M.ruleDocs = {
 		local shortCodeKebabCase = shortCode:gsub("(%u)", "-%1"):lower()
 		return "https://biomejs.dev/linter/rules/" .. shortCodeKebabCase
 	end,
-	eslint = "https://eslint.org/docs/latest/rules/%s",
-	stylelint = "https://stylelint.io/user-guide/rules/%s",
 
-	-- source name for lua_ls
-	["Lua Diagnostics"] = "https://luals.github.io/wiki/diagnostics/#%s",
-
-	-- urls unfortunately use the rule-name, not the rule-id :/
-	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
-
-	-- INFO used when no docs found for the diagnostics source
-	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+	-----------------------------------------------------------------------------
+	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us", -- when no docs found for source
 }
 
 --------------------------------------------------------------------------------
