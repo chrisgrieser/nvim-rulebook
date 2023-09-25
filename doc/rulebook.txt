@@ -42,11 +42,17 @@ RULE LOOKUP ~
 - `Lua Diagnostics`
 - `biome`
 - `eslint`
+- `markdownlint` 
 - `pylint`
+- `ruff`
 - `selene`
 - `shellcheck`
 - `stylelint`
 - `yamllint`
+
+_These sources do not support opening the exact rule site and therefore fall
+back to an index page which contains the rule. The code is copied to the
+clipboard for easier selection of the rule at the site._
 
 
 ADD IGNORE COMMENT ~
