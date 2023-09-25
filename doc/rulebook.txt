@@ -7,6 +7,7 @@ Table of Contents                                 *rulebook-table-of-contents*
   - Supported Sources              |rulebook-nvim-rulebook--supported-sources|
   - Installation                        |rulebook-nvim-rulebook--installation|
   - Configuration                      |rulebook-nvim-rulebook--configuration|
+  - Customize Built-in Sources|rulebook-nvim-rulebook--customize-built-in-sources|
   - Limitations                          |rulebook-nvim-rulebook--limitations|
   - Credits                                  |rulebook-nvim-rulebook--credits|
 
@@ -25,6 +26,7 @@ linters and LSPs that don’t.
     - |rulebook-add-ignore-comment|
 - |rulebook-installation|
 - |rulebook-configuration|
+- |rulebook-customize-built-in-sources|
 - |rulebook-limitations|
 - |rulebook-credits|
 
@@ -110,30 +112,36 @@ CONFIGURATION                          *rulebook-nvim-rulebook--configuration*
     
             yourCustomSource = {
                 -- %s will be replaced with rule-id
-                -- if location is "encloseLine", needs to be a list of two strings
                 comment = "// disabling-comment %s",
     
                 -- "prevLine"|"sameLine"|"encloseLine"
                 location = "prevLine",
             }
+    
+            -- if location is "encloseLine", needs to be a list of two strings
+            anotherCustomSource = {
+                comment = { "// disable-rule %s", "// enable-rule %s" },
+                location = "encloseLine",
+            }
         },
     
-        -- the value of the rule documentions accept either a string or a function
-        -- if it is a string, %s will be replaced with rule-id
-        -- if it is a function, takes a diagnostic object as argument must return a url
         ruleDocumentations = {
             selene = "https://kampfkarren.github.io/selene/lints/%s.html"
             -- ... (full list of supported sources can be found in the README)
-    
-            customSource = "https://my-docs/%s.hthml",
-            anotherCustomSource = function(diag)
-                -- ...
-            end,
     
             -- Search URL when no documentation definition is available for a
             -- diagnostic source. "%s" will be replaced with the diagnostic source & code.
             -- Default is the DDG "Ducky Search" (automatically opening first result).
             fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+    
+            -- the value of the rule documentions accept either a string or a function
+            -- if a string, %s will be replaced with rule-id
+            -- if a function, takes a diagnostic object as argument must return a url
+            yourCustomSource = "https://my-docs/%s.hthml",
+            anotherCustomSource = function(diag)
+                -- ...
+                return url
+            end,
         }
     
         -- If no diagnostic is found, in current line, search this meany lines 
@@ -142,9 +150,26 @@ CONFIGURATION                          *rulebook-nvim-rulebook--configuration*
     }
 <
 
-The plugin uses |vim.ui.select| so the appearance of the rule selection can be
+The plugin uses |vim.ui.select|, so the appearance of the rule selection can be
 customized by using a ui-plugin like dressing.nvim
 <https://github.com/stevearc/dressing.nvim>.
+
+
+CUSTOMIZE BUILT-IN SOURCES*rulebook-nvim-rulebook--customize-built-in-sources*
+
+Built-in sources be customized by overwriting them in the configuration:
+
+>lua
+    -- use `disable-line` instead of the default `disable-next-line`
+    defaultConfig = {
+        ignoreRuleComments = {
+            eslint ={
+                comment = "// eslint-disable-line %s",
+                location = "sameLine",
+            } 
+        }
+    }
+<
 
 
 LIMITATIONS                              *rulebook-nvim-rulebook--limitations*
