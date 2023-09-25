@@ -6,15 +6,17 @@ Add inline-comments to ignore rules, or lookup rule documentation online.
 
 Some LSPs provide code actions for that – this plugin adds commands for linters and LSPs that don't.
 
-<!--toc:start-->
+<!-- toc -->
+
 - [Supported Sources](#supported-sources)
-	+ [Rule Lookup](#rule-lookup)
-	+ [Add Ignore Comment](#add-ignore-comment)
+	* [Rule Lookup](#rule-lookup)
+	* [Add Ignore Comment](#add-ignore-comment)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Limitations](#limitations)
 - [Credits](#credits)
-<!--toc:end-->
+
+<!-- tocstop -->
 
 ## Supported Sources
 You easily add a custom source via the [plugin configuration](#configuration). Though, please consider making a PR to add support for a source if it is missing.
