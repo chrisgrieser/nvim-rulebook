@@ -107,7 +107,7 @@ M.ruleDocs = {
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
 	ruff = "https://docs.astral.sh/ruff/rules/",
 
-	-- no allow reliable linking possible, so the website itself is best we can so
+	-- no reliable linking possible, so the website itself is best we can so
 	markdownlint = "https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md",
 }
 

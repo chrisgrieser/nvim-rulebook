@@ -13,6 +13,7 @@ Some LSPs provide code actions for that – this plugin adds commands for linter
 	* [Add Ignore Comment](#add-ignore-comment)
 - [Installation](#installation)
 - [Configuration](#configuration)
+- [Customize Built-in Sources](#customize-built-in-sources)
 - [Limitations](#limitations)
 - [Credits](#credits)
 
@@ -89,30 +90,36 @@ defaultConfig = {
 
 		yourCustomSource = {
 			-- %s will be replaced with rule-id
-			-- if location is "encloseLine", needs to be a list of two strings
 			comment = "// disabling-comment %s",
 
 			-- "prevLine"|"sameLine"|"encloseLine"
 			location = "prevLine",
 		}
+
+		-- if location is "encloseLine", needs to be a list of two strings
+		anotherCustomSource = {
+			comment = { "// disable-rule %s", "// enable-rule %s" },
+			location = "encloseLine",
+		}
 	},
 
-	-- the value of the rule documentions accept either a string or a function
-	-- if it is a string, %s will be replaced with rule-id
-	-- if it is a function, takes a diagnostic object as argument must return a url
 	ruleDocumentations = {
 		selene = "https://kampfkarren.github.io/selene/lints/%s.html"
 		-- ... (full list of supported sources can be found in the README)
-
-		customSource = "https://my-docs/%s.hthml",
-		anotherCustomSource = function(diag)
-			-- ...
-		end,
 
 		-- Search URL when no documentation definition is available for a
 		-- diagnostic source. "%s" will be replaced with the diagnostic source & code.
 		-- Default is the DDG "Ducky Search" (automatically opening first result).
 		fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+
+		-- the value of the rule documentions accept either a string or a function
+		-- if a string, %s will be replaced with rule-id
+		-- if a function, takes a diagnostic object as argument must return a url
+		yourCustomSource = "https://my-docs/%s.hthml",
+		anotherCustomSource = function(diag)
+			-- ...
+			return url
+		end,
 	}
 
 	-- If no diagnostic is found, in current line, search this meany lines 
@@ -121,7 +128,22 @@ defaultConfig = {
 }
 ```
 
-The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()) so the appearance of the rule selection can be customized by using a ui-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
+The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the appearance of the rule selection can be customized by using a ui-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
+
+## Customize Built-in Sources
+Built-in sources be customized by overwriting them in the configuration:
+
+```lua
+-- use `disable-line` instead of the default `disable-next-line`
+defaultConfig = {
+	ignoreRuleComments = {
+		eslint ={
+			comment = "// eslint-disable-line %s",
+			location = "sameLine",
+		} 
+	}
+}
+```
 
 ## Limitations
 - The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined errorformat). Please open an issue at the diagnostics provider to fix.
@@ -144,6 +166,6 @@ __Profiles__
 - [ResearchGate](https://www.researchgate.net/profile/Christopher-Grieser)
 - [LinkedIn](https://www.linkedin.com/in/christopher-grieser-ba693b17a/)
 
-__Buy Me a Coffee__  
+__Buy Me a Coffee__
 <br>
 <a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
