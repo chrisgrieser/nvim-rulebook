@@ -79,13 +79,13 @@ M.ignoreComments = {
 -- function value it will be called with the diagnostic object
 ---@type table<string, string|function>
 M.ruleDocs = {
+	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us", -- when no docs found for source
 	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
 	shellcheck = "https://www.shellcheck.net/wiki/SC%s",
 	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
 	eslint = "https://eslint.org/docs/latest/rules/%s",
 	stylelint = "https://stylelint.io/user-guide/rules/%s",
 	["Lua Diagnostics"] = "https://luals.github.io/wiki/diagnostics/#%s",
-	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s", -- urls use rule-name, not rule-id
 
 	biome = function(diag)
 		-- biome codes are "lint/topic/rule-id", but the website only requires "rule-id"
@@ -96,7 +96,14 @@ M.ruleDocs = {
 	end,
 
 	-----------------------------------------------------------------------------
-	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us", -- when no docs found for source
+	-- IMPROVABLE RULEDOCS
+
+	-- urls use rule-name, not rule-id, so this is the closest we can get
+	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
+	ruff = "https://docs.astral.sh/ruff/rules/",
+
+	-- no allow reliable linking possible, so the website itself is best we can so
+	markdownlint = "https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md",
 }
 
 --------------------------------------------------------------------------------
