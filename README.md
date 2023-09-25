@@ -78,6 +78,7 @@ vim.keymap.set("n", "<leader>l", function() require("rulebook").lookupRule() end
 ```
 
 ## Configuration
+The configuration is completely optional, the plugin works fine out of the box. The Configuration is only needed when you want to customize a source or add custom sources.
 
 ```lua
 defaultConfig = {
