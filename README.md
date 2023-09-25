@@ -8,8 +8,8 @@ Some LSPs provide code actions for that – this plugin adds commands for linter
 
 <!--toc:start-->
 - [Supported Sources](#supported-sources)
-	- [Rule Lookup](#rule-lookup)
-	- [Add Ignore Comment](#add-ignore-comment)
+	+ [Rule Lookup](#rule-lookup)
+	+ [Add Ignore Comment](#add-ignore-comment)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Limitations](#limitations)
@@ -27,7 +27,9 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 - `Lua Diagnostics`
 - `biome`
 - `eslint`
+- `markdownlint` [^1]
 - `pylint`
+- `ruff` [^1]
 - `selene`
 - `shellcheck`
 - `stylelint`
@@ -141,4 +143,6 @@ __Profiles__
 __Buy Me a Coffee__  
 <br>
 <a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+[^1]: These sources do not support opening the exact rule site and therefore fall back to an index page which contains the rule.
 

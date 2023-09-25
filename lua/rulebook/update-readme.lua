@@ -41,9 +41,11 @@ local ruleDocsSources = {}
 local ignoreCommentSources = {}
 
 local ruleDocs = require("rulebook.rule-data").ruleDocs
-for source, _ in pairs(ruleDocs) do
+for source, docUrl in pairs(ruleDocs) do
 	if source ~= "fallback" then
 		local newLine = ("- `%s`"):format(source)
+		-- add link to footnote explaining limitation
+		if type(docUrl) == "string" and not docUrl:find("%%s") then newLine = newLine .. " [^1]" end
 		table.insert(ruleDocsSources, newLine)
 	end
 end
