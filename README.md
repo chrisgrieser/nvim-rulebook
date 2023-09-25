@@ -27,13 +27,15 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 - `Lua Diagnostics`
 - `biome`
 - `eslint`
-- `markdownlint` [^1]
+- `markdownlint` \*
 - `pylint`
-- `ruff` [^1]
+- `ruff` \*
 - `selene`
 - `shellcheck`
 - `stylelint`
 - `yamllint`
+
+*\* These sources do not support opening the exact rule site and therefore fall back to an index page which contains the rule. The code is copied to the clipboard for easier selection of the rule at the site.*
 
 ### Add Ignore Comment
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
@@ -143,6 +145,3 @@ __Profiles__
 __Buy Me a Coffee__  
 <br>
 <a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-
-[^1]: These sources do not support opening the exact rule site and therefore fall back to an index page which contains the rule.
-
