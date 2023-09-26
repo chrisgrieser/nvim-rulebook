@@ -4,6 +4,7 @@
 Table of Contents                                 *rulebook-table-of-contents*
 
 1. nvim-rulebook                                     |rulebook-nvim-rulebook-|
+  - Features                                |rulebook-nvim-rulebook--features|
   - Supported Sources              |rulebook-nvim-rulebook--supported-sources|
   - Installation                        |rulebook-nvim-rulebook--installation|
   - Configuration                      |rulebook-nvim-rulebook--configuration|
@@ -21,6 +22,7 @@ Add inline-comments to ignore rules, or lookup rule documentation online.
 Some LSPs provide code actions for that – this plugin adds commands for
 linters and LSPs that don’t.
 
+- |rulebook-features|
 - |rulebook-supported-sources|
     - |rulebook-rule-lookup|
     - |rulebook-add-ignore-comment|
@@ -29,6 +31,16 @@ linters and LSPs that don’t.
 - |rulebook-customize-built-in-sources|
 - |rulebook-limitations|
 - |rulebook-credits|
+
+
+FEATURES                                    *rulebook-nvim-rulebook--features*
+
+- Look up official rule documentation, falling back to a web search if the source does not have rule documentation.
+- Add inline-comments to ignore rules like `// eslint disable-next-line some-rule`
+- Supports previous line, same line, and enclosing lines
+- QoL: auto-select a rule if it is the only one in the current line; if the line has no diagnostic, search forward up to the next line that does.
+- Includes built-in support for various linters. Zero plugin configuration required if you only need to use built-in sources.
+- Customizing built-in sources or adding your own sources is easy. PRs to add more built-ins are welcome.
 
 
 SUPPORTED SOURCES                  *rulebook-nvim-rulebook--supported-sources*
