@@ -71,14 +71,13 @@ local function searchForTheRule(diag)
 	-- determine url to open
 	local docResolver = config.ruleDocs[diag.source]
 	local urlToOpen
-	if type(docResolver) == "string" then
-		if docResolver:find("%%s") then
-			urlToOpen = docResolver:format(diag.code)
-		else
-			-- for cases where a specific rule cannot be linked, copy the code to
-			-- the clipboard, so it is easier at the rule index page
-			fn.setreg("+", diag.code)
-		end
+	if type(docResolver) == "string" and docResolver:find("%%s") then
+		urlToOpen = docResolver:format(diag.code)
+	elseif type(docResolver) == "string" and not docResolver:find("%%s") then
+		-- for cases where a specific rule cannot be linked, copy the code to
+		-- the clipboard, so it is easier at the rule index page
+		fn.setreg("+", diag.code)
+		urlToOpen = docResolver
 	elseif type(docResolver) == "function" then
 		urlToOpen = docResolver(diag)
 	else
