@@ -22,7 +22,7 @@ Some LSPs provide code actions for that – this plugin adds commands for linter
 ## Supported Sources
 You easily add a custom source via the [plugin configuration](#configuration). Though, please consider making a PR to add support for a source if it is missing.
 
-[Rule Data for the supported linters](./lua/rulebook/rule-data.lua)
+[Rule Data for the supported linters](./lua/rulebook/data)
 
 <!-- INFO use `make update_readme` to automatically update this section -->
 <!-- auto-generated: start -->
