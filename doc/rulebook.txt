@@ -36,8 +36,7 @@ linters and LSPs that don’t.
 FEATURES                                    *rulebook-nvim-rulebook--features*
 
 - Look up official rule documentation, falling back to a web search if the source does not have rule documentation.
-- Add inline-comments to ignore rules like `// eslint disable-next-line some-rule`
-- Supports previous line, same line, and enclosing lines
+- Add inline-comments to ignore rules like `// eslint disable-next-line some-rule`. Supports previous line, same line, and enclosing lines.
 - QoL: auto-select a rule if it is the only one in the current line; if the line has no diagnostic, search forward up to the next line that does.
 - Includes built-in support for various linters. Zero plugin configuration required if you only need to use built-in sources.
 - Customizing built-in sources or adding your own sources is easy. PRs to add more built-ins are welcome.
@@ -176,10 +175,10 @@ CUSTOMIZE BUILT-IN SOURCES*rulebook-nvim-rulebook--customize-built-in-sources*
 Built-in sources be customized by overwriting them in the configuration:
 
 >lua
-    -- use `disable-line` instead of the default `disable-next-line`
+    -- use `disable-line` instead of the default `disable-next-line` for eslint
     defaultConfig = {
         ignoreRuleComments = {
-            eslint ={
+            eslint = {
                 comment = "// eslint-disable-line %s",
                 location = "sameLine",
             } 
