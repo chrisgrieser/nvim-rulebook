@@ -40,7 +40,7 @@ end
 local ruleDocsSources = {}
 local ignoreCommentSources = {}
 
-local ruleDocs = require("rulebook.rule-data").ruleDocs
+local ruleDocs = require("rulebook.data.rule-docs")
 for source, docUrl in pairs(ruleDocs) do
 	if source ~= "fallback" then
 		local newLine = ("- `%s`"):format(source)
@@ -51,7 +51,7 @@ for source, docUrl in pairs(ruleDocs) do
 end
 table.sort(ruleDocsSources)
 
-local ignoreComments = require("rulebook.rule-data").ignoreComments
+local ignoreComments = require("rulebook.data.add-ignore-comment")
 for source, data in pairs(ignoreComments) do
 	local newLine = ("- [%s](%s)"):format(source, data.docs)
 	table.insert(ignoreCommentSources, newLine)
