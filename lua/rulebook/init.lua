@@ -11,8 +11,8 @@ local fn = vim.fn
 
 ---@type pluginConfig
 local defaultConfig = {
-	ignoreComments = require("rulebook.rule-data").ignoreComments,
-	ruleDocs = require("rulebook.rule-data").ruleDocs,
+	ignoreComments = require("rulebook.data.add-ignore-comment"),
+	ruleDocs = require("rulebook.data.rule-docs"),
 	forwSearchLines = 10,
 }
 

@@ -1,11 +1,3 @@
-local M = {}
---------------------------------------------------------------------------------
-
----@class ruleIgnoreConfig
----@field comment string|string[] "%s" will be replaced with the rule id
----@field location "prevLine"|"sameLine"|"encloseLine"
----@field docs string used for auto-generated docs
-
 -- INFO "encloseLine" is a list with two strings, one to be inserted before and
 -- one to be inserted after. Preferred Priority if multiple locations are supported:
 -- 1. prevLine
@@ -14,7 +6,7 @@ local M = {}
 
 ---INFO the key must be named exactly like diagnostic.source (case-sensitive!)
 ---@type table<string, ruleIgnoreConfig>
-M.ignoreComments = {
+M = {
 	shellcheck = {
 		comment = "# shellcheck disable=%s",
 		location = "prevLine",
@@ -70,45 +62,6 @@ M.ignoreComments = {
 		location = "prevLine",
 		docs = "https://www.typescriptlang.org/", -- no docs found that are more specific
 	},
-}
-
---------------------------------------------------------------------------------
-
----INFO the key must be named exactly like diagnostic.source (case-sensitive!)
--- string value: "%s" will be replaced with the rule id
--- function value it will be called with the diagnostic object
----@type table<string, string|function>
-M.ruleDocs = {
-	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us", -- when no docs found for source
-	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
-	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
-	eslint = "https://eslint.org/docs/latest/rules/%s",
-	stylelint = "https://stylelint.io/user-guide/rules/%s",
-	["Lua Diagnostics"] = "https://luals.github.io/wiki/diagnostics/#%s",
-
-	biome = function(diag)
-		-- biome codes are "lint/topic/rule-id", but the website only requires "rule-id"
-		-- also, the rule ids are camelCase, while the website requires kebab-case
-		local shortCode = diag.code:match(".*/(.-)$")
-		local shortCodeKebabCase = shortCode:gsub("(%u)", "-%1"):lower()
-		return "https://biomejs.dev/linter/rules/" .. shortCodeKebabCase
-	end,
-
-	shellcheck =  function (diag)
-		-- sometimes, the code is `SC1234`, sometimes it is `1234`
-		local code = diag.code:gsub("^SC", "")
-		return "https://www.shellcheck.net/wiki/SC" .. code
-	end,
-
-	-----------------------------------------------------------------------------
-	-- IMPROVABLE RULEDOCS
-
-	-- urls use rule-name, not rule-id, so this is the closest we can get
-	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
-	ruff = "https://docs.astral.sh/ruff/rules/",
-
-	-- no reliable linking possible, so the website itself is best we can so
-	markdownlint = "https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md",
 }
 
 --------------------------------------------------------------------------------

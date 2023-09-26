@@ -3,3 +3,8 @@
 ---@field source? number -- linter of LSP name
 ---@field code? string -- rule id
 ---@field bufnr number
+
+---@class ruleIgnoreConfig
+---@field comment string|string[] "%s" will be replaced with the rule id
+---@field location "prevLine"|"sameLine"|"encloseLine"
+---@field docs string used for auto-generated docs
