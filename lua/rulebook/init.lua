@@ -81,8 +81,10 @@ local function searchForTheRule(diag)
 		end
 	elseif type(docResolver) == "function" then
 		urlToOpen = docResolver(diag)
-	else -- fallback
-		urlToOpen = config.ruleDocs.fallback:format(diag.code .. "%%20" .. diag.source)
+	else
+		-- fallback
+		local escapedQuery = (diag.code .. " " .. diag.source):gsub(" ", "%%20")
+		urlToOpen = config.ruleDocs.fallback:format(escapedQuery)
 	end
 
 	-- open with the OS-specific shell command
