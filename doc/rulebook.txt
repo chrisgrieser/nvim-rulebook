@@ -52,6 +52,7 @@ Rule Data for the supported linters <./lua/rulebook/data>
 
 RULE LOOKUP ~
 
+- `LTeX`
 - `Lua Diagnostics.`
 - `biome`
 - `eslint`
