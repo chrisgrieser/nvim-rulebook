@@ -36,6 +36,7 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 <!-- INFO use `make update_readme` to automatically update this section -->
 <!-- auto-generated: start -->
 ### Rule Lookup
+- `LTeX`
 - `Lua Diagnostics.`
 - `biome`
 - `eslint`
