@@ -17,7 +17,7 @@ Table of Contents                                 *rulebook-table-of-contents*
 
 
 
-Add inline-comments to ignore rules, or lookup rule documentation online.
+Addinline-comments to ignore rules, or lookup rule documentation online.
 
 Some LSPs provide code actions for that – this plugin adds commands for
 linters and LSPs that don’t.
@@ -86,7 +86,7 @@ ADD IGNORE COMMENT ~
 INSTALLATION                            *rulebook-nvim-rulebook--installation*
 
 This plugin requires diagnostics provided by a source that supports neovim’s
-builtin diagnostics system. (nvim’s builtin LSP client or nvim-lint
+built-in diagnostics system. (nvim’s built-in LSP client or nvim-lint
 <https://github.com/mfussenegger/nvim-lint> are such sources.)
 
 >lua
@@ -166,7 +166,7 @@ custom sources.
 <
 
 The plugin uses |vim.ui.select|, so the appearance of the rule selection can be
-customized by using a ui-plugin like dressing.nvim
+customized by using a UI-plugin like dressing.nvim
 <https://github.com/stevearc/dressing.nvim>.
 
 
@@ -189,7 +189,7 @@ Built-in sources be customized by overwriting them in the configuration:
 
 LIMITATIONS                              *rulebook-nvim-rulebook--limitations*
 
-- The diagnostics have to contain the necessary data, |that is a diagnostic code and diagnostic source|. Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined errorformat). Please open an issue at the diagnostics provider to fix.
+- The diagnostics have to contain the necessary data, |that is a diagnostic code and diagnostic source|. Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix.
 - This plugin does _not_ hook into `vim.lsp.buf.code_action`, but provides its own selector.
 
 
