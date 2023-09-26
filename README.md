@@ -8,6 +8,7 @@ Some LSPs provide code actions for that – this plugin adds commands for linter
 
 <!-- toc -->
 
+- [Features](#features)
 - [Supported Sources](#supported-sources)
 	* [Rule Lookup](#rule-lookup)
 	* [Add Ignore Comment](#add-ignore-comment)
@@ -18,6 +19,14 @@ Some LSPs provide code actions for that – this plugin adds commands for linter
 - [Credits](#credits)
 
 <!-- tocstop -->
+
+## Features
+- Look up official rule documentation, falling back to a web search if the source does not have rule documentation.
+- Add inline-comments to ignore rules like `// eslint disable-next-line some-rule`
+- Supports previous line, same line, and enclosing lines
+- QoL: auto-select a rule if it is the only one in the current line; if the line has no diagnostic, search forward up to the next line that does.
+- Includes built-in support for various linters. Zero plugin configuration required if you only need to use built-in sources.
+- Customizing built-in sources or adding your own sources is easy. PRs to add more built-ins are welcome.
 
 ## Supported Sources
 You easily add a custom source via the [plugin configuration](#configuration). Though, please consider making a PR to add support for a source if it is missing.
