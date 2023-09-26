@@ -1,5 +1,6 @@
 <!-- LTeX: enabled=false -->
-# nvim-rulebook 📖 <!-- LTeX: enabled=true -->
+# nvim-rulebook 📖 
+<!-- LTeX: enabled=true -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a>
 
 Add inline-comments to ignore rules, or lookup rule documentation online.
@@ -63,7 +64,7 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 <!-- auto-generated: end -->
 
 ## Installation
-This plugin requires diagnostics provided by a source that supports neovim's builtin diagnostics system. (nvim's builtin LSP client or [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
+This plugin requires diagnostics provided by a source that supports neovim's built-in diagnostics system. (nvim's built-in LSP client or [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
 
 ```lua
 -- lazy.nvim
@@ -137,7 +138,7 @@ defaultConfig = {
 }
 ```
 
-The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the appearance of the rule selection can be customized by using a ui-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
+The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the appearance of the rule selection can be customized by using a UI-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
 ## Customize Built-in Sources
 Built-in sources be customized by overwriting them in the configuration:
@@ -155,7 +156,7 @@ defaultConfig = {
 ```
 
 ## Limitations
-- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined errorformat). Please open an issue at the diagnostics provider to fix.
+- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix.
 - This plugin does *not* hook into `vim.lsp.buf.code_action`, but provides its own selector.
 
 ## Credits
