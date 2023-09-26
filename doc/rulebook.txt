@@ -41,7 +41,7 @@ Rule Data for the supported linters <./lua/rulebook/rule-data.lua>
 
 RULE LOOKUP ~
 
-- `Lua Diagnostics`
+- `Lua Diagnostics.`
 - `biome`
 - `eslint`
 - `markdownlint` 
