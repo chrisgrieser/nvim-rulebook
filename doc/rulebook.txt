@@ -36,7 +36,7 @@ SUPPORTED SOURCES                  *rulebook-nvim-rulebook--supported-sources*
 You easily add a custom source via the |rulebook-plugin-configuration|. Though,
 please consider making a PR to add support for a source if it is missing.
 
-Rule Data for the supported linters <./lua/rulebook/rule-data.lua>
+Rule Data for the supported linters <./lua/rulebook/data>
 
 
 RULE LOOKUP ~
