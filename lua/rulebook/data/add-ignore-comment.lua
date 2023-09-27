@@ -43,7 +43,7 @@ M = {
 		docs = "https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html",
 	},
 	Pyright = {
-		comment = "# pyright: ignore %s",
+		comment = "# pyright: ignore [%s]",
 		location = "sameLine",
 		docs = "https://microsoft.github.io/pyright/#/comments",
 	},
