@@ -32,7 +32,7 @@ local M = {
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
 	ruff = "https://docs.astral.sh/ruff/rules/",
 
-	-- no reliable linking possible, so the website itself is best we can so
+	-- no reliable linking possible, so the website itself is best we can do
 	markdownlint = "https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md",
 }
 
