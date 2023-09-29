@@ -92,7 +92,7 @@ The configuration is completely optional, the plugin works fine out of the box. 
 
 ```lua
 defaultConfig = {
-	ignoreRuleComments = {
+	ignoreComments = {
 		selene = {
 			comment = "-- selene: allow(%s)",
 			location = "prevLine",
@@ -114,7 +114,7 @@ defaultConfig = {
 		}
 	},
 
-	ruleDocumentations = {
+	ruleDocs = {
 		selene = "https://kampfkarren.github.io/selene/lints/%s.html"
 		-- ... (full list of supported sources can be found in the README)
 
@@ -147,7 +147,7 @@ Built-in sources be customized by overwriting them in the configuration:
 ```lua
 -- use `disable-line` instead of the default `disable-next-line` for eslint
 defaultConfig = {
-	ignoreRuleComments = {
+	ignoreComments = {
 		eslint = {
 			comment = "// eslint-disable-line %s",
 			location = "sameLine",
