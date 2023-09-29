@@ -1,4 +1,4 @@
-*rulebook.txt*          For NVIM v0.8.0         Last change: 2023 September 27
+*rulebook.txt*          For NVIM v0.8.0         Last change: 2023 September 29
 
 ==============================================================================
 Table of Contents                                 *rulebook-table-of-contents*
@@ -119,7 +119,7 @@ custom sources.
 
 >lua
     defaultConfig = {
-        ignoreRuleComments = {
+        ignoreComments = {
             selene = {
                 comment = "-- selene: allow(%s)",
                 location = "prevLine",
@@ -141,7 +141,7 @@ custom sources.
             }
         },
     
-        ruleDocumentations = {
+        ruleDocs = {
             selene = "https://kampfkarren.github.io/selene/lints/%s.html"
             -- ... (full list of supported sources can be found in the README)
     
@@ -178,7 +178,7 @@ Built-in sources be customized by overwriting them in the configuration:
 >lua
     -- use `disable-line` instead of the default `disable-next-line` for eslint
     defaultConfig = {
-        ignoreRuleComments = {
+        ignoreComments = {
             eslint = {
                 comment = "// eslint-disable-line %s",
                 location = "sameLine",
