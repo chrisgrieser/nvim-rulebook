@@ -1,6 +1,15 @@
 local M = {}
 local fn = vim.fn
 
+---Send notification
+---@param msg string
+---@param level? "info"|"trace"|"debug"|"warn"|"error"
+local function notify(msg, level)
+	if not level then level = "info" end
+	local pluginName = "nvim-rulebook"
+	vim.notify(msg, vim.log.levels[level:upper()], { title = pluginName })
+end
+
 --------------------------------------------------------------------------------
 -- CONFIG
 
@@ -20,18 +29,25 @@ local defaultConfig = {
 local config = defaultConfig
 
 ---@param userConfig table
-function M.setup(userConfig) config = vim.tbl_deep_extend("force", defaultConfig, userConfig) end
+function M.setup(userConfig)
+	config = vim.tbl_deep_extend("force", defaultConfig, userConfig)
+
+	-- validate config
+	for name, linter in pairs(config.ignoreComments) do
+		local comType = type(linter.comment)
+		local errorMsg
+		if not (vim.tbl_contains({ "prevLine", "sameLine", "encloseLine" }, linter.location)) then
+			errorMsg = "'location' must be one of 'prevLine', 'sameLine' or 'encloseLine'"
+		elseif linter.location == "encloseLine" and comType ~= "table" and #linter.comment ~= 2 then
+			errorMsg = "'encloseLine' requires 'comment' to be a list of two strings"
+		elseif linter.location ~= "encloseLine" and comType ~= "string" and comType ~= "function" then
+			errorMsg = ("'%s' requires 'comment' to be a string or function"):format(linter.location)
+		end
+		if errorMsg then notify(("Config for %s: "):format(name) .. errorMsg, "error") end
+	end
+end
 
 --------------------------------------------------------------------------------
-
----Send notification
----@param msg string
----@param level? "info"|"trace"|"debug"|"warn"|"error"
-local function notify(msg, level)
-	if not level then level = "info" end
-	local pluginName = "nvim-rulebook"
-	vim.notify(msg, vim.log.levels[level:upper()], { title = pluginName })
-end
 
 ---checks whether rule has id and source, as prescribed in nvim diagnostic structure
 ---@param diag diagnostic
