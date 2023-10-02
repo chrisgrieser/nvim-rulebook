@@ -5,6 +5,7 @@
 -- 3. encloseLine
 
 ---INFO the key must be named exactly like diagnostic.source (case-sensitive!)
+---
 ---@type table<string, ruleIgnoreConfig>
 M = {
 	shellcheck = {
@@ -61,6 +62,11 @@ M = {
 		comment = "// @ts-ignore",
 		location = "prevLine",
 		docs = "https://www.typescriptlang.org/", -- no docs found that are more specific
+	},
+	["editorconfig-checker"] = {
+		comment = function(_) return vim.bo.commentstring:format("editorconfig-checker-disable-line") end,
+		location = "sameLine",
+		docs = "https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines",
 	},
 }
 
