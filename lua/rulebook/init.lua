@@ -54,10 +54,10 @@ end
 ---@return boolean whether rule is valid
 ---@nodiscard
 local function validDiagObj(diag)
-	-- exceptions that do not have codes
-	if diag.source == "editorconfig-checker" then return true end
+	-- exception: sources that do not have codes
+	if diag.source == "editorconfig-checker" or diag.source == "codespell" then return true end
 
-	local issuePlea = "\nPlease open an issue at diagnostic source or the diagnostic provider."
+	local issuePlea = "\nPlease open an issue at the diagnostic source or the diagnostic provider."
 	if not diag.code then
 		notify("Diagnostic is missing a code (rule id). " .. issuePlea, "warn")
 		return false

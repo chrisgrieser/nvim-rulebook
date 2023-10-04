@@ -68,6 +68,12 @@ M = {
 		location = "sameLine",
 		docs = "https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines",
 	},
+	codespell = {
+		comment = function(_) return vim.bo.commentstring:format("codespell-ignore") end,
+		location = "sameLine",
+		-- HACK uses workaround via `codespell --ignore-regex`
+		docs = "https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455",
+	},
 }
 
 --------------------------------------------------------------------------------
