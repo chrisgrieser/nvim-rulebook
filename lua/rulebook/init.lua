@@ -54,15 +54,15 @@ end
 ---@return boolean whether rule is valid
 ---@nodiscard
 local function validDiagObj(diag)
-	-- exception: sources that do not have codes
-	if diag.source == "editorconfig-checker" or diag.source == "codespell" then return true end
+	local sourcesWithNoCodes = { "editorconfig-checker", "codespell" }
+	if vim.tbl_contains(sourcesWithNoCodes, diag.source) then return true end
 
 	local issuePlea = "\nPlease open an issue at the diagnostic source or the diagnostic provider."
 	if not diag.code then
-		notify("Diagnostic is missing a code (rule id). " .. issuePlea, "warn")
+		notify("Diagnostic is missing a code (rule id)." .. issuePlea, "warn")
 		return false
 	elseif not diag.source then
-		notify("Diagnostic is missing a source" .. issuePlea, "warn")
+		notify("Diagnostic is missing a source." .. issuePlea, "warn")
 		return false
 	end
 	return true
