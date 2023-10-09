@@ -1,3 +1,8 @@
+---@class ruleIgnoreConfig
+---@field comment string|string[]|function "%s" will be replaced with the rule id
+---@field location "prevLine"|"sameLine"|"encloseLine"
+---@field docs string used for auto-generated docs
+
 -- INFO "encloseLine" is a list with two strings, one to be inserted before and
 -- one to be inserted after. Preferred Priority if multiple locations are supported:
 -- 1. prevLine

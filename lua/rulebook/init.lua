@@ -50,7 +50,7 @@ end
 --------------------------------------------------------------------------------
 
 ---checks whether rule has id and source, as prescribed in nvim diagnostic structure
----@param diag diagnostic
+---@param diag Diagnostic
 ---@return boolean whether rule is valid
 ---@nodiscard
 local function validDiagObj(diag)
@@ -83,7 +83,7 @@ end
 
 --------------------------------------------------------------------------------
 
----@param diag diagnostic
+---@param diag Diagnostic
 local function searchForTheRule(diag)
 	if not validDiagObj(diag) then return end
 
@@ -118,7 +118,7 @@ local function searchForTheRule(diag)
 	fn.system(openCommand)
 end
 
----@param diag diagnostic
+---@param diag Diagnostic
 local function addIgnoreComment(diag)
 	if not validDiagObj(diag) then return end
 
