@@ -1,4 +1,4 @@
-*rulebook.txt*           For NVIM v0.8.0          Last change: 2023 October 09
+*rulebook.txt*           For NVIM v0.8.0          Last change: 2023 October 12
 
 ==============================================================================
 Table of Contents                                 *rulebook-table-of-contents*
@@ -54,11 +54,12 @@ RULE LOOKUP ~
 
 - `LTeX`
 - `Lua Diagnostics.`
+- `Ruff`
 - `biome`
+- `clang-tidy`
 - `eslint`
 - `markdownlint` 
 - `pylint`
-- `ruff`
 - `selene`
 - `shellcheck`
 - `stylelint`
@@ -74,6 +75,7 @@ ADD IGNORE COMMENT ~
 - LTeX <https://valentjn.github.io/ltex/advanced-usage.html>
 - Pyright <https://microsoft.github.io/pyright/#/comments>
 - biome <https://biomejs.dev/linter/#ignoring-code>
+- clang-tidy <https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics>
 - codespell <https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455>
 - editorconfig-checker <https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines>
 - eslint <https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1>
@@ -115,12 +117,11 @@ built-in diagnostics system. (nvim’s built-in LSP client or nvim-lint
 
 CONFIGURATION                          *rulebook-nvim-rulebook--configuration*
 
-The configuration is completely optional, the plugin works fine out of the box.
-The Configuration is only needed when you want to customize a source or add
-custom sources.
+The configuration is optional. You only need to add a config when you want to
+customize a source or add custom sources.
 
 >lua
-    defaultConfig = {
+    require("rulebook").setup = ({
         ignoreComments = {
             selene = {
                 comment = "-- selene: allow(%s)",
@@ -128,12 +129,9 @@ custom sources.
             },
             -- ... (full list of supported sources can be found in the README)
     
-            yourCustomSource = {
-                -- %s will be replaced with rule-id
-                comment = "// disabling-comment %s",
-    
-                -- "prevLine"|"sameLine"|"encloseLine"
-                location = "prevLine",
+            yourCustomSource = { -- exact, case-sensitive source-name
+                comment = "// disabling-comment %s", -- %s will be replaced with rule-id
+                location = "prevLine", -- "prevLine"|"sameLine"|"encloseLine"
             }
     
             -- if location is "encloseLine", needs to be a list of two strings
@@ -152,7 +150,7 @@ custom sources.
             -- Default is the DDG "Ducky Search" (automatically opening first result).
             fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
     
-            -- the value of the rule documentions accept either a string or a function
+            -- the value of the rule documentations accept either a string or a function
             -- if a string, %s will be replaced with rule-id
             -- if a function, takes a diagnostic object as argument must return a url
             yourCustomSource = "https://my-docs/%s.hthml",
@@ -165,9 +163,12 @@ custom sources.
         -- If no diagnostic is found, in current line, search this meany lines 
         -- forward for diagnostics before aborting.
         forwSearchLines = 10,
-    }
+    })
 <
 
+
+  [!NOTE] When adding your own source, you must add the _exact_, case-sensitive
+  source-name. (for example, `clang-tidy`, not `clang`).
 The plugin uses |vim.ui.select|, so the appearance of the rule selection can be
 customized by using a UI-plugin like dressing.nvim
 <https://github.com/stevearc/dressing.nvim>.
@@ -179,20 +180,20 @@ Built-in sources be customized by overwriting them in the configuration:
 
 >lua
     -- use `disable-line` instead of the default `disable-next-line` for eslint
-    defaultConfig = {
+    require("rulebook").setup = {
         ignoreComments = {
             eslint = {
                 comment = "// eslint-disable-line %s",
                 location = "sameLine",
-            } 
-        }
+            },
+        },
     }
 <
 
 
 LIMITATIONS                              *rulebook-nvim-rulebook--limitations*
 
-- The diagnostics have to contain the necessary data, |that is a diagnostic code and diagnostic source|. Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix.
+- The diagnostics have to contain the necessary data, |that is a diagnostic code and diagnostic source|. Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix such issues.
 - This plugin does _not_ hook into `vim.lsp.buf.code_action`, but provides its own selector.
 
 
