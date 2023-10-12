@@ -11,15 +11,6 @@ local M = {
 	stylelint = "https://stylelint.io/user-guide/rules/%s",
 	LTeX = "https://community.languagetool.org/rule/show/%s?lang=en",
 	["Lua Diagnostics."] = "https://luals.github.io/wiki/diagnostics/#%s", -- lua_ls
-
-	biome = function(diag)
-		-- biome codes are "lint/topic/rule-id", but the website only requires "rule-id"
-		-- also, the rule ids are camelCase, while the website requires kebab-case
-		local shortCode = diag.code:match(".*/(.-)$")
-		local shortCodeKebabCase = shortCode:gsub("(%u)", "-%1"):lower()
-		return "https://biomejs.dev/linter/rules/" .. shortCodeKebabCase
-	end,
-
 	shellcheck = function(diag)
 		-- depending on provider, the code is `SC1234` or `1234`
 		local code = diag.code:gsub("^SC", "")
@@ -30,6 +21,7 @@ local M = {
 	Ruff = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	["clang-tidy"] = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	Pyright = function(diag) return diag.user_data.lsp.codeDescription.href end,
+	biome = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	-----------------------------------------------------------------------------
 
 	-- urls use rule-name, not rule-id, so this is the closest we can get
