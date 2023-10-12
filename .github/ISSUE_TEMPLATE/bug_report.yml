@@ -26,6 +26,15 @@ body:
         2. Click on '...'
         3. Scroll down to '...'
   - type: textarea
+    id: diagnostic-object
+    attributes:
+      label: Diagnostic Object
+      description: >
+        Move the cursor to the diagnostic, run `:lua = vim.diagnostic.get_next()`, and 
+        paste the output here.
+    validations:
+      required: true
+  - type: textarea
     id: version-info
     attributes:
       label: neovim version
