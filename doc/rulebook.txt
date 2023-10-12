@@ -147,13 +147,13 @@ customize a source or add custom sources.
             -- ... (full list of supported sources can be found in the README)
     
             -- Search URL when no documentation definition is available for a
-            -- diagnostic source. "%s" will be replaced with the diagnostic source & code.
+            -- diagnostic source. `%s` will be replaced with the diagnostic source & code.
             -- Default is the DDG "Ducky Search" (automatically opening first result).
             fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
     
             -- the value of the rule documentations accept either a string or a function
-            -- if a string, %s will be replaced with rule-id
-            -- if a function, takes a diagnostic object as argument must return a url
+            -- if a string, `%s` will be replaced with rule-id
+            -- if a function, takes a `:h diagnostic-structure` as argument and must return a url
             yourCustomSource = "https://my-docs/%s.hthml",
             anotherCustomSource = function(diag)
                 -- ...
