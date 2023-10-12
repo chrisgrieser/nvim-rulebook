@@ -90,10 +90,10 @@ vim.keymap.set("n", "<leader>l", function() require("rulebook").lookupRule() end
 ```
 
 ## Configuration
-The configuration is completely optional, the plugin works fine out of the box. The Configuration is only needed when you want to customize a source or add custom sources.
+The configuration is optional, the plugin works fine out of the box. You only need to add a config when you want to customize a source or add custom sources.
 
 ```lua
-defaultConfig = {
+require("rulebook").setup = ({
 	ignoreComments = {
 		selene = {
 			comment = "-- selene: allow(%s)",
@@ -125,7 +125,7 @@ defaultConfig = {
 		-- Default is the DDG "Ducky Search" (automatically opening first result).
 		fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
 
-		-- the value of the rule documentions accept either a string or a function
+		-- the value of the rule documentations accept either a string or a function
 		-- if a string, %s will be replaced with rule-id
 		-- if a function, takes a diagnostic object as argument must return a url
 		yourCustomSource = "https://my-docs/%s.hthml",
@@ -138,7 +138,7 @@ defaultConfig = {
 	-- If no diagnostic is found, in current line, search this meany lines 
 	-- forward for diagnostics before aborting.
 	forwSearchLines = 10,
-}
+})
 ```
 
 The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the appearance of the rule selection can be customized by using a UI-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
