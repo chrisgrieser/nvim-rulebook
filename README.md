@@ -38,6 +38,7 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 ### Rule Lookup
 - `LTeX`
 - `Lua Diagnostics.`
+- `Pyright`
 - `Ruff`
 - `biome`
 - `clang-tidy`
