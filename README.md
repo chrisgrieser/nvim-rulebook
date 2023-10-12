@@ -38,11 +38,12 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 ### Rule Lookup
 - `LTeX`
 - `Lua Diagnostics.`
+- `Ruff`
 - `biome`
+- `clang-tidy`
 - `eslint`
 - `markdownlint` \*
 - `pylint`
-- `ruff` \*
 - `selene`
 - `shellcheck`
 - `stylelint`
@@ -54,6 +55,7 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
 - [biome](https://biomejs.dev/linter/#ignoring-code)
+- [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
 - [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines)
 - [eslint](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1)

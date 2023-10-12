@@ -10,7 +10,6 @@
 -- 3. encloseLine
 
 ---INFO the key must be named exactly like diagnostic.source (case-sensitive!)
----
 ---@type table<string, ruleIgnoreConfig>
 M = {
 	shellcheck = {
@@ -78,6 +77,11 @@ M = {
 		location = "sameLine",
 		-- HACK uses workaround via `codespell --ignore-regex`
 		docs = "https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455",
+	},
+	["clang-tidy"] = {
+		comment = "// NOLINT(%s)",
+		location = "sameLine",
+		docs = "https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics",
 	},
 }
 

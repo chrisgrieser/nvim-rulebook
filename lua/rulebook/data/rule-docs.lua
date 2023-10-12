@@ -28,6 +28,7 @@ local M = {
 
 	-- website links saved directly in diagnostic object
 	Ruff = function(diag) return diag.user_data.lsp.codeDescription.href end,
+	["clang-tidy"] = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	-----------------------------------------------------------------------------
 
 	-- urls use rule-name, not rule-id, so this is the closest we can get
