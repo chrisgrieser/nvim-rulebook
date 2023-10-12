@@ -1,5 +1,5 @@
 <!-- LTeX: enabled=false -->
-# nvim-rulebook 📖 
+# nvim-rulebook 📖
 <!-- LTeX: enabled=true -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a>
 
@@ -90,7 +90,7 @@ vim.keymap.set("n", "<leader>l", function() require("rulebook").lookupRule() end
 ```
 
 ## Configuration
-The configuration is optional, the plugin works fine out of the box. You only need to add a config when you want to customize a source or add custom sources.
+The configuration is optional. You only need to add a config when you want to customize a source or add custom sources.
 
 ```lua
 require("rulebook").setup = ({
@@ -101,12 +101,9 @@ require("rulebook").setup = ({
 		},
 		-- ... (full list of supported sources can be found in the README)
 
-		yourCustomSource = {
-			-- %s will be replaced with rule-id
-			comment = "// disabling-comment %s",
-
-			-- "prevLine"|"sameLine"|"encloseLine"
-			location = "prevLine",
+		yourCustomSource = { -- exact, case-sensitive source-name
+			comment = "// disabling-comment %s", -- %s will be replaced with rule-id
+			location = "prevLine", -- "prevLine"|"sameLine"|"encloseLine"
 		}
 
 		-- if location is "encloseLine", needs to be a list of two strings
@@ -141,6 +138,9 @@ require("rulebook").setup = ({
 })
 ```
 
+> [!NOTE]
+> When adding your own source, you must add the *exact*, case-sensitive source-name. (for example, `clang-tidy`, not `clang`).
+
 The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the appearance of the rule selection can be customized by using a UI-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
 ## Customize Built-in Sources
@@ -148,18 +148,18 @@ Built-in sources be customized by overwriting them in the configuration:
 
 ```lua
 -- use `disable-line` instead of the default `disable-next-line` for eslint
-defaultConfig = {
+require("rulebook").setup = {
 	ignoreComments = {
 		eslint = {
 			comment = "// eslint-disable-line %s",
 			location = "sameLine",
-		} 
-	}
+		},
+	},
 }
 ```
 
 ## Limitations
-- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix.
+- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix such issues.
 - This plugin does *not* hook into `vim.lsp.buf.code_action`, but provides its own selector.
 
 ## Credits
