@@ -54,6 +54,7 @@ RULE LOOKUP ~
 
 - `LTeX`
 - `Lua Diagnostics.`
+- `Pyright`
 - `Ruff`
 - `biome`
 - `clang-tidy`
