@@ -20,17 +20,18 @@ local M = {
 		return "https://biomejs.dev/linter/rules/" .. shortCodeKebabCase
 	end,
 
-	shellcheck =  function (diag)
-		-- sometimes, the code is `SC1234`, sometimes it is `1234`
+	shellcheck = function(diag)
+		-- depending on provider, the code is `SC1234` or `1234`
 		local code = diag.code:gsub("^SC", "")
 		return "https://www.shellcheck.net/wiki/SC" .. code
 	end,
 
+	-- website links saved directly in diagnostic object
+	Ruff = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	-----------------------------------------------------------------------------
 
 	-- urls use rule-name, not rule-id, so this is the closest we can get
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
-	ruff = "https://docs.astral.sh/ruff/rules/",
 
 	-- no reliable linking possible, so the website itself is best we can do
 	markdownlint = "https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md",
