@@ -1,4 +1,4 @@
-*rulebook.txt*           For NVIM v0.8.0          Last change: 2023 October 12
+*rulebook.txt*           For NVIM v0.8.0          Last change: 2023 October 13
 
 ==============================================================================
 Table of Contents                                 *rulebook-table-of-contents*
@@ -10,6 +10,7 @@ Table of Contents                                 *rulebook-table-of-contents*
   - Configuration                      |rulebook-nvim-rulebook--configuration|
   - Customize Built-in Sources|rulebook-nvim-rulebook--customize-built-in-sources|
   - Limitations                          |rulebook-nvim-rulebook--limitations|
+  - API                                          |rulebook-nvim-rulebook--api|
   - Credits                                  |rulebook-nvim-rulebook--credits|
 
 ==============================================================================
@@ -30,6 +31,8 @@ linters and LSPs that don’t.
 - |rulebook-configuration|
 - |rulebook-customize-built-in-sources|
 - |rulebook-limitations|
+- |rulebook-api|
+    - |rulebook-availability-of-rule-lookup|
 - |rulebook-credits|
 
 
@@ -196,6 +199,35 @@ LIMITATIONS                              *rulebook-nvim-rulebook--limitations*
 
 - The diagnostics have to contain the necessary data, |that is a diagnostic code and diagnostic source|. Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix such issues.
 - This plugin does _not_ hook into `vim.lsp.buf.code_action`, but provides its own selector.
+
+
+API                                              *rulebook-nvim-rulebook--api*
+
+
+AVAILABILITY OF RULE LOOKUP ~
+
+The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object
+and returns a boolean whether `nvim-rulebook` documentation for the respective
+diagnostic available. This can be used to configure `vim.diagnostic.config`, do
+have floats and virtual text indicate the availability of rule-lookup.
+
+>lua
+    vim.diagnostic.config {
+        virtual_text = {
+            suffix = function(diag)
+                local rule = diag.code or ""
+                local docsIcon = require("rulebook").hasDocs(diag) and "  " or ""
+                return ("[%s]"):format(rule, docsIcon)
+            end,
+        },
+        float = {
+            suffix = function(diag)
+                local docsIcon = require("rulebook").hasDocs(diag) and "  " or ""
+                return docsIcon
+            end,
+        },
+    }
+<
 
 
 CREDITS                                      *rulebook-nvim-rulebook--credits*
