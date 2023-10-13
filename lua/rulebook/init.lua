@@ -210,4 +210,16 @@ function M.lookupRule() selectRule(searchForTheRule) end
 ---Add ignore comment for the rule
 function M.ignoreRule() selectRule(addIgnoreComment) end
 
+---Utility for diagnostic formatting config (vim.diagnostic.config), that
+---returns whether nvim-rulebook has documentation for the diagnostic that can
+---be opened via `lookupRule`
+---@param diag Diagnostic
+---@return boolean hasDocs
+function M.hasDocs(diag)
+	local hasDocumentations = config.ruleDocs[diag.source] ~= nil
+	return hasDocumentations
+end
+
+--------------------------------------------------------------------------------
+
 return M

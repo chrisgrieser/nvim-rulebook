@@ -17,6 +17,8 @@ Some LSPs provide code actions for that – this plugin adds commands for linter
 - [Configuration](#configuration)
 - [Customize Built-in Sources](#customize-built-in-sources)
 - [Limitations](#limitations)
+- [API](#api)
+	* [Availability of Rule Lookup](#availability-of-rule-lookup)
 - [Credits](#credits)
 
 <!-- tocstop -->
@@ -165,15 +167,38 @@ require("rulebook").setup = {
 - The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix such issues.
 - This plugin does *not* hook into `vim.lsp.buf.code_action`, but provides its own selector.
 
+## API
+
+### Availability of Rule Lookup
+The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object and returns a boolean whether `nvim-rulebook` documentation for the respective diagnostic available. This can be used to configure `vim.diagnostic.config`, do have floats and virtual text indicate the availability of rule-lookup.
+
+```lua
+vim.diagnostic.config {
+	virtual_text = {
+		suffix = function(diag)
+			local rule = diag.code or ""
+			local docsIcon = require("rulebook").hasDocs(diag) and "  " or ""
+			return ("[%s]"):format(rule, docsIcon)
+		end,
+	},
+	float = {
+		suffix = function(diag)
+			local docsIcon = require("rulebook").hasDocs(diag) and "  " or ""
+			return docsIcon
+		end,
+	},
+}
+```
+
 ## Credits
 <!-- vale Google.FirstPerson = NO -->
-__About Me__  
+**About Me**  
 In my day job, I am a sociologist studying the social mechanisms underlying the digital economy. For my PhD project, I investigate the governance of the app economy and how software ecosystems manage the tension between innovation and compatibility. If you are interested in this subject, feel free to get in touch.
 
-__Blog__  
+**Blog**  
 I also occasionally blog about vim: [Nano Tips for Vim](https://nanotipsforvim.prose.sh)
 
-__Profiles__  
+**Profiles**  
 - [reddit](https://www.reddit.com/user/pseudometapseudo)
 - [Discord](https://discordapp.com/users/462774483044794368/)
 - [Academic Website](https://chris-grieser.de/)
@@ -182,6 +207,6 @@ __Profiles__
 - [ResearchGate](https://www.researchgate.net/profile/Christopher-Grieser)
 - [LinkedIn](https://www.linkedin.com/in/christopher-grieser-ba693b17a/)
 
-__Buy Me a Coffee__
+**Buy Me a Coffee**
 <br>
 <a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
