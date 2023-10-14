@@ -139,8 +139,7 @@ require("rulebook").setup = ({
 		end,
 	}
 
-	-- If no diagnostic is found, in current line, search this meany lines 
-	-- forward for diagnostics before aborting.
+	-- if no diagnostic is found in current line, search this many lines forward
 	forwSearchLines = 10,
 })
 ```
