@@ -97,6 +97,8 @@ vim.keymap.set("n", "<leader>l", function() require("rulebook").lookupRule() end
 ## Configuration
 The configuration is optional. You only need to add a config when you want to customize a source or add custom sources.
 
+When adding your own source, you must add the *exact*, case-sensitive source-name. (for example, `clang-tidy`, not `clang`).
+
 ```lua
 require("rulebook").setup = ({
 	ignoreComments = {
@@ -143,9 +145,6 @@ require("rulebook").setup = ({
 })
 ```
 
-> [!NOTE]
-> When adding your own source, you must add the *exact*, case-sensitive source-name. (for example, `clang-tidy`, not `clang`).
-
 The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the appearance of the rule selection can be customized by using a UI-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
 ## Customize Built-in Sources
@@ -164,28 +163,18 @@ require("rulebook").setup = {
 ```
 
 ## Limitations
-- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix such issues.
-- This plugin does *not* hook into `vim.lsp.buf.code_action`, but provides its own selector.
+- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs, and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix such issues.
+- This plugin does not hook into `vim.lsp.buf.code_action`, but provides its own selector.
 
 ## API
 
 ### Availability of Rule Lookup
-The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object and returns a boolean whether `nvim-rulebook` documentation for the respective diagnostic available. This can be used to configure `vim.diagnostic.config`, do have floats and virtual text indicate the availability of rule-lookup.
+The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object and returns a boolean whether `nvim-rulebook` documentation for the respective diagnostic available. One use case for this is to add a visual indicator if there is a rule lookup available for a diagnostic (see [vim.diagnostic.config](https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config())).
 
 ```lua
 vim.diagnostic.config {
 	virtual_text = {
-		suffix = function(diag)
-			local rule = diag.code or ""
-			local docsIcon = require("rulebook").hasDocs(diag) and "  " or ""
-			return ("[%s]"):format(rule, docsIcon)
-		end,
-	},
-	float = {
-		suffix = function(diag)
-			local docsIcon = require("rulebook").hasDocs(diag) and "  " or ""
-			return docsIcon
-		end,
+		suffix = function(diag) return require("rulebook").hasDocs(diag) and "  " or "" end,
 	},
 }
 ```
