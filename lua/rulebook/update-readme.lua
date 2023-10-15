@@ -41,11 +41,9 @@ local ruleDocsSources = {}
 local ignoreCommentSources = {}
 
 local ruleDocs = require("rulebook.data.rule-docs")
-for source, docUrl in pairs(ruleDocs) do
+for source, _ in pairs(ruleDocs) do
 	if source ~= "fallback" then
 		local newLine = ("- `%s`"):format(source)
-		-- add link to footnote explaining limitation
-		if type(docUrl) == "string" and not docUrl:find("%%s") then newLine = newLine .. " \\*" end
 		table.insert(ruleDocsSources, newLine)
 	end
 end
@@ -63,8 +61,6 @@ local newContent = table.concat(beforePart, "\n")
 	.. "\n"
 	.. "### Rule Lookup\n"
 	.. table.concat(ruleDocsSources, "\n")
-	.. "\n\n"
-	.. "*\\* These sources do not support opening the exact rule site and therefore fall back to an index page which contains the rule. The code is copied to the clipboard for easier selection of the rule at the site.*"
 	.. "\n\n"
 	.. "### Add Ignore Comment\n"
 	.. table.concat(ignoreCommentSources, "\n")

@@ -1,37 +1,46 @@
 <!-- LTeX: enabled=false -->
 # nvim-rulebook 📖
 <!-- LTeX: enabled=true -->
-<a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a>
+<a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img
+src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a>
 
 Add inline-comments to ignore rules, or lookup rule documentation online.
 
-Some LSPs provide code actions for that – this plugin adds commands for linters and LSPs that don't.
+Some LSPs provide code actions for that – this plugin adds commands for linters
+and LSPs that don't.
 
 <!-- toc -->
 
 - [Features](#features)
 - [Supported Sources](#supported-sources)
-	* [Rule Lookup](#rule-lookup)
-	* [Add Ignore Comment](#add-ignore-comment)
+    * [Rule Lookup](#rule-lookup)
+    * [Add Ignore Comment](#add-ignore-comment)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Customize Built-in Sources](#customize-built-in-sources)
 - [Limitations](#limitations)
 - [API](#api)
-	* [Availability of Rule Lookup](#availability-of-rule-lookup)
+    * [Availability of Rule Lookup](#availability-of-rule-lookup)
 - [Credits](#credits)
 
 <!-- tocstop -->
 
 ## Features
-- Look up official rule documentation, falling back to a web search if the source does not have rule documentation.
-- Add inline-comments to ignore rules like `// eslint disable-next-line some-rule`. Supports previous line, same line, and enclosing lines.
-- QoL: auto-select a rule if it is the only one in the current line; if the line has no diagnostic, search forward up to the next line that does.
-- Includes built-in support for various linters. Zero plugin configuration required if you only need to use built-in sources.
-- Customizing built-in sources or adding your own sources is easy. PRs to add more built-ins are welcome.
+- Look up official rule documentation, falling back to a web search if the
+  source does not have rule documentation.
+- Add inline-comments to ignore rules like `// eslint disable-next-line
+  some-rule`. Supports previous line, same line, and enclosing lines.
+- QoL: auto-select a rule if it is the only one in the current line; if the line
+  has no diagnostic, search forward up to the next line that does.
+- Includes built-in support for various linters. Zero plugin configuration
+  required if you only need to use built-in sources.
+- Customizing built-in sources or adding your own sources is easy. PRs to add
+  more built-ins are welcome.
 
 ## Supported Sources
-You easily add a custom source via the [plugin configuration](#configuration). Though, please consider making a PR to add support for a source if it is missing.
+You easily add a custom source via the [plugin configuration](#configuration).
+Though, please consider making a PR to add support for a source if it is
+missing.
 
 [Rule Data for the supported linters](./lua/rulebook/data)
 
@@ -45,14 +54,12 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 - `biome`
 - `clang-tidy`
 - `eslint`
-- `markdownlint` \*
+- `markdownlint`
 - `pylint`
 - `selene`
 - `shellcheck`
 - `stylelint`
 - `yamllint`
-
-*\* These sources do not support opening the exact rule site and therefore fall back to an index page which contains the rule. The code is copied to the clipboard for easier selection of the rule at the site.*
 
 ### Add Ignore Comment
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
@@ -72,7 +79,9 @@ You easily add a custom source via the [plugin configuration](#configuration). T
 <!-- auto-generated: end -->
 
 ## Installation
-This plugin requires diagnostics provided by a source that supports neovim's built-in diagnostics system. (nvim's built-in LSP client or [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
+This plugin requires diagnostics provided by a source that supports Neovim's
+built-in diagnostics system. (nvim's built-in LSP client or
+[nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
 
 ```lua
 -- lazy.nvim
@@ -95,9 +104,11 @@ vim.keymap.set("n", "<leader>l", function() require("rulebook").lookupRule() end
 ```
 
 ## Configuration
-The configuration is optional. You only need to add a config when you want to customize a source or add custom sources.
+The configuration is optional. You only need to add a config when you want to
+customize a source or add custom sources.
 
-When adding your own source, you must add the *exact*, case-sensitive source-name. (for example, `clang-tidy`, not `clang`).
+When adding your own source, you must add the *exact*, case-sensitive
+source-name. (for example, `clang-tidy`, not `clang`).
 
 ```lua
 require("rulebook").setup = ({
@@ -144,7 +155,10 @@ require("rulebook").setup = ({
 })
 ```
 
-The plugin uses [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the appearance of the rule selection can be customized by using a UI-plugin like [dressing.nvim](https://github.com/stevearc/dressing.nvim).
+The plugin uses
+[vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the
+appearance of the rule selection can be customized by using a UI-plugin like
+[dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
 ## Customize Built-in Sources
 Built-in sources be customized by overwriting them in the configuration:
@@ -162,13 +176,24 @@ require("rulebook").setup = {
 ```
 
 ## Limitations
-- The diagnostics have to contain the necessary data, [that is a diagnostic code and diagnostic source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most LSPs, and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix such issues.
-- This plugin does not hook into `vim.lsp.buf.code_action`, but provides its own selector.
+- The diagnostics have to contain the necessary data, [that is a diagnostic code
+  and diagnostic
+  source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most
+  LSPs, and most linters configured for `nvim-lint` do that, but some diagnostic
+  sources do not (for example `efm-langserver` with incorrectly defined
+  `errorformat`). Please open an issue at the diagnostics provider to fix such
+  issues.
+- This plugin does not hook into `vim.lsp.buf.code_action`, but provides its own
+  selector.
 
 ## API
 
 ### Availability of Rule Lookup
-The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object and returns a boolean whether `nvim-rulebook` documentation for the respective diagnostic available. One use case for this is to add a visual indicator if there is a rule lookup available for a diagnostic (see [vim.diagnostic.config](https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config())).
+The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object
+and returns a boolean whether `nvim-rulebook` documentation for the respective
+diagnostic available. One use case for this is to add a visual indicator if
+there is a rule lookup available for a diagnostic (see
+[vim.diagnostic.config](https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.config())).
 
 ```lua
 vim.diagnostic.config {
@@ -181,7 +206,10 @@ vim.diagnostic.config {
 ## Credits
 <!-- vale Google.FirstPerson = NO -->
 **About Me**  
-In my day job, I am a sociologist studying the social mechanisms underlying the digital economy. For my PhD project, I investigate the governance of the app economy and how software ecosystems manage the tension between innovation and compatibility. If you are interested in this subject, feel free to get in touch.
+In my day job, I am a sociologist studying the social mechanisms underlying the
+digital economy. For my PhD project, I investigate the governance of the app
+economy and how software ecosystems manage the tension between innovation and
+compatibility. If you are interested in this subject, feel free to get in touch.
 
 **Blog**  
 I also occasionally blog about vim: [Nano Tips for Vim](https://nanotipsforvim.prose.sh)
@@ -197,4 +225,10 @@ I also occasionally blog about vim: [Nano Tips for Vim](https://nanotipsforvim.p
 
 **Buy Me a Coffee**
 <br>
-<a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+<a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img
+	height='36'
+	style='border:0px;height:36px;'
+	src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3'
+	border='0'
+	alt='Buy Me a Coffee at ko-fi.com'
+/></a>
