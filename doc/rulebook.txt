@@ -1,4 +1,4 @@
-*rulebook.txt*           For NVIM v0.8.0          Last change: 2023 October 14
+*rulebook.txt*           For NVIM v0.8.0          Last change: 2023 October 15
 
 ==============================================================================
 Table of Contents                                 *rulebook-table-of-contents*
@@ -38,11 +38,15 @@ linters and LSPs that don’t.
 
 FEATURES                                    *rulebook-nvim-rulebook--features*
 
-- Look up official rule documentation, falling back to a web search if the source does not have rule documentation.
-- Add inline-comments to ignore rules like `// eslint disable-next-line some-rule`. Supports previous line, same line, and enclosing lines.
-- QoL: auto-select a rule if it is the only one in the current line; if the line has no diagnostic, search forward up to the next line that does.
-- Includes built-in support for various linters. Zero plugin configuration required if you only need to use built-in sources.
-- Customizing built-in sources or adding your own sources is easy. PRs to add more built-ins are welcome.
+- Look up official rule documentation, falling back to a web search if the
+    source does not have rule documentation.
+- Add inline-comments to ignore rules like `// eslint disable-next-line   some-rule`. Supports previous line, same line, and enclosing lines.
+- QoL: auto-select a rule if it is the only one in the current line; if the line
+    has no diagnostic, search forward up to the next line that does.
+- Includes built-in support for various linters. Zero plugin configuration
+    required if you only need to use built-in sources.
+- Customizing built-in sources or adding your own sources is easy. PRs to add
+    more built-ins are welcome.
 
 
 SUPPORTED SOURCES                  *rulebook-nvim-rulebook--supported-sources*
@@ -62,16 +66,12 @@ RULE LOOKUP ~
 - `biome`
 - `clang-tidy`
 - `eslint`
-- `markdownlint` 
+- `markdownlint`
 - `pylint`
 - `selene`
 - `shellcheck`
 - `stylelint`
 - `yamllint`
-
-_These sources do not support opening the exact rule site and therefore fall
-back to an index page which contains the rule. The code is copied to the
-clipboard for easier selection of the rule at the site._
 
 
 ADD IGNORE COMMENT ~
@@ -94,7 +94,7 @@ ADD IGNORE COMMENT ~
 
 INSTALLATION                            *rulebook-nvim-rulebook--installation*
 
-This plugin requires diagnostics provided by a source that supports neovim’s
+This plugin requires diagnostics provided by a source that supports Neovim’s
 built-in diagnostics system. (nvim’s built-in LSP client or nvim-lint
 <https://github.com/mfussenegger/nvim-lint> are such sources.)
 
@@ -196,8 +196,15 @@ Built-in sources be customized by overwriting them in the configuration:
 
 LIMITATIONS                              *rulebook-nvim-rulebook--limitations*
 
-- The diagnostics have to contain the necessary data, |that is a diagnostic code and diagnostic source|. Most LSPs, and most linters configured for `nvim-lint` do that, but some diagnostic sources do not (for example `efm-langserver` with incorrectly defined `errorformat`). Please open an issue at the diagnostics provider to fix such issues.
-- This plugin does not hook into `vim.lsp.buf.code_action`, but provides its own selector.
+- The diagnostics have to contain the necessary data, |that is a diagnostic code
+    and diagnostic
+    source|. Most
+    LSPs, and most linters configured for `nvim-lint` do that, but some diagnostic
+    sources do not (for example `efm-langserver` with incorrectly defined
+    `errorformat`). Please open an issue at the diagnostics provider to fix such
+    issues.
+- This plugin does not hook into `vim.lsp.buf.code_action`, but provides its own
+    selector.
 
 
 API                                              *rulebook-nvim-rulebook--api*
