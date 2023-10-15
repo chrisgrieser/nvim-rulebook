@@ -13,7 +13,7 @@ local M = {
 	["Lua Diagnostics."] = "https://luals.github.io/wiki/diagnostics/#%s", -- lua_ls
 	shellcheck = function(diag)
 		-- depending on provider, the code is `SC1234` or `1234`
-		local code = diag.code:gsub("^SC", "")
+		local code = type(diag.code) == "string" and diag.code:gsub("^SC", "") or tostring(diag.code)
 		return "https://www.shellcheck.net/wiki/SC" .. code
 	end,
 
