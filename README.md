@@ -13,14 +13,14 @@ and LSPs that don't.
 
 - [Features](#features)
 - [Supported Sources](#supported-sources)
-    * [Rule Lookup](#rule-lookup)
-    * [Add Ignore Comment](#add-ignore-comment)
+	* [Rule Lookup](#rule-lookup)
+	* [Add Ignore Comment](#add-ignore-comment)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Customize Built-in Sources](#customize-built-in-sources)
 - [Limitations](#limitations)
 - [API](#api)
-    * [Availability of Rule Lookup](#availability-of-rule-lookup)
+	* [Availability of Rule Lookup](#availability-of-rule-lookup)
 - [Credits](#credits)
 
 <!-- tocstop -->
@@ -142,7 +142,8 @@ require("rulebook").setup = ({
 
 		-- the value of the rule documentations accept either a string or a function
 		-- if a string, `%s` will be replaced with rule-id
-		-- if a function, takes a `:h diagnostic-structure` as argument and must return a url
+		-- if a function, takes a `:h diagnostic-structure` as argument and must 
+		-- return a url
 		yourCustomSource = "https://my-docs/%s.hthml",
 		anotherCustomSource = function(diag)
 			-- ...
@@ -223,8 +224,6 @@ I also occasionally blog about vim: [Nano Tips for Vim](https://nanotipsforvim.p
 - [ResearchGate](https://www.researchgate.net/profile/Christopher-Grieser)
 - [LinkedIn](https://www.linkedin.com/in/christopher-grieser-ba693b17a/)
 
-**Buy Me a Coffee**
-<br>
 <a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img
 	height='36'
 	style='border:0px;height:36px;'
