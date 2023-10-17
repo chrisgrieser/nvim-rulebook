@@ -88,6 +88,14 @@ M = {
 		location = "prevLine",
 		docs = "https://github.com/get-alex/alex#control",
 	},
+	woke = {
+		comment = function(diag)
+			local ignoreText = "wokeignore:rule=" .. diag.code
+			return vim.bo.commentstring:format(ignoreText)
+		end,
+		location = "sameLine",
+		docs = "https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring",
+	},
 }
 
 --------------------------------------------------------------------------------
