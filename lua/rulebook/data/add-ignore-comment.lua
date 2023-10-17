@@ -83,6 +83,11 @@ M = {
 		location = "sameLine",
 		docs = "https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics",
 	},
+	alex = {
+		comment = "<!-- alex ignore %s -->",
+		location = "prevLine",
+		docs = "https://github.com/get-alex/alex#control",
+	},
 }
 
 --------------------------------------------------------------------------------
