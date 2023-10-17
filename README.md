@@ -64,6 +64,7 @@ missing.
 ### Add Ignore Comment
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
+- [alex](https://github.com/get-alex/alex#control)
 - [biome](https://biomejs.dev/linter/#ignoring-code)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
@@ -75,6 +76,7 @@ missing.
 - [stylelint](https://stylelint.io/user-guide/ignore-code/)
 - [typescript](https://www.typescriptlang.org/)
 - [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
+- [woke](https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring)
 - [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
 <!-- auto-generated: end -->
 
