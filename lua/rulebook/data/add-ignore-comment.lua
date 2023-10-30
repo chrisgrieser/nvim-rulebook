@@ -22,6 +22,11 @@ M = {
 		location = "prevLine",
 		docs = "https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file",
 	},
+	["Lua Diagnostics."] = {
+		comment = "---@diagnostic disable-line: %s",
+		location = "sameLine", -- prevLine already available via code action
+		docs = "https://luals.github.io/wiki/annotations/#diagnostic",
+	},
 	yamllint = {
 		comment = "# yamllint disable-line rule:%s",
 		location = "prevLine",
