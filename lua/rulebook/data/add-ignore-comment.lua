@@ -1,13 +1,7 @@
 ---@class ruleIgnoreConfig
----@field comment string|string[]|function "%s" will be replaced with the rule id
----@field location "prevLine"|"sameLine"|"encloseLine"
+---@field comment string|string[]|function if string, "%s" will be replaced with the rule id
+---@field location "prevLine"|"sameLine"|"encloseLine" "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field docs string used for auto-generated docs
-
--- INFO "encloseLine" is a list with two strings, one to be inserted before and
--- one to be inserted after. Preferred Priority if multiple locations are supported:
--- 1. prevLine
--- 2. sameLine
--- 3. encloseLine
 
 ---INFO the key must be named exactly like diagnostic.source (case-sensitive!)
 ---@type table<string, ruleIgnoreConfig>

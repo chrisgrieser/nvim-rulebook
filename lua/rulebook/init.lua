@@ -164,7 +164,7 @@ local function selectRule(operation)
 	while #diagsAtLine == 0 do
 		lnum = lnum + 1
 		if lnum > lastLine or lnum > startLine + config.forwSearchLines then
-			local msg = ("No diagnostics found in the next %s lines."):format(config.forwSearchLines)
+			local msg = ("No supported diagnostics found in the next %s lines."):format(config.forwSearchLines)
 			notify(msg, "warn")
 			return
 		end
