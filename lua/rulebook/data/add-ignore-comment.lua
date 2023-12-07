@@ -51,6 +51,11 @@ M = {
 		location = "sameLine",
 		docs = "https://microsoft.github.io/pyright/#/comments",
 	},
+	Ruff = {
+		comment = "# noqa: %s",
+		location = "sameLine",
+		docs = "https://docs.astral.sh/ruff/linter/#error-suppression",
+	},
 	eslint = {
 		comment = "// eslint-disable-next-line %s",
 		location = "prevLine",
