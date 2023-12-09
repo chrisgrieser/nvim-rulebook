@@ -31,12 +31,22 @@ M = {
 		location = "prevLine",
 		docs = "https://stylelint.io/user-guide/ignore-code/",
 	},
+	stylelintplus = {
+		comment = "/* stylelint-disable-next-line %s */",
+		location = "prevLine",
+		docs = "https://stylelint.io/user-guide/ignore-code/",
+	},
 	LTeX = {
 		comment = { "<!-- LTeX: enabled=false -->", "<!-- LTeX: enabled=true -->" },
 		location = "encloseLine",
 		docs = "https://valentjn.github.io/ltex/advanced-usage.html",
 	},
 	vale = {
+		comment = { "<!-- vale %s = NO -->", "<!-- vale %s = YES -->" },
+		location = "encloseLine",
+		docs = "https://vale.sh/docs/topics/config/#markup-based-configuration",
+	},
+	["vale-ls"] = {
 		comment = { "<!-- vale %s = NO -->", "<!-- vale %s = YES -->" },
 		location = "encloseLine",
 		docs = "https://vale.sh/docs/topics/config/#markup-based-configuration",
