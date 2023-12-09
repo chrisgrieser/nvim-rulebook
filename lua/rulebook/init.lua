@@ -68,19 +68,6 @@ local function validDiagObj(diag)
 	return true
 end
 
----@param lnum number
----@param operationIsIgnore boolean
----@nodiscard
-local function getDiagsInCurLine(lnum, operationIsIgnore)
-	local diags = vim.diagnostic.get(0, { lnum = lnum })
-	-- INFO for rule search, there is no need to filter the diagnostics, since there
-	-- is a fallback mechanic
-	if operationIsIgnore then
-		diags = vim.tbl_filter(function(d) return config.ignoreComments[d.source] ~= nil end, diags)
-	end
-	return diags
-end
-
 --------------------------------------------------------------------------------
 
 ---@param diag Diagnostic
@@ -152,29 +139,35 @@ end
 ---Selects a diagnostic in the current line. If one diagnostic, automatically
 ---selects it. If no diagnostic found, searches in the next lines.
 ---@param operation function(diag)
-local function selectRule(operation)
+local function findAndSelectRule(operation)
 	local operationIsIgnore = operation == addIgnoreComment
 	local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
 	local startLine = lnum
 	local lastLine = vim.api.nvim_buf_line_count(0)
+	local diagsAtLine
 
-	local diagsAtLine = getDiagsInCurLine(lnum, operationIsIgnore)
+	-- loop through lines until we find a diagnostic
+	while true do
+		diagsAtLine = vim.diagnostic.get(0, { lnum = lnum })
+		if operationIsIgnore then
+			-- INFO for rule search, there is no need to filter the diagnostics, since there
+			-- is a fallback mechanic
+			diagsAtLine = vim.tbl_filter(
+				function(d) return config.ignoreComments[d.source] ~= nil end,
+				diagsAtLine
+			)
+		end
 
-	-- no diagnostic -> search the next lines
-	while #diagsAtLine == 0 do
+		-- no diagnostic -> search the next lines
+		if #diagsAtLine > 0 then break end
 		lnum = lnum + 1
+
+		-- abort if not diagnostics found in the next few lines as well
 		if lnum > lastLine or lnum > startLine + config.forwSearchLines then
 			local msg = ("No supported diagnostics found in the next %s lines."):format(config.forwSearchLines)
 			notify(msg, "warn")
 			return
 		end
-		diagsAtLine = getDiagsInCurLine(lnum, operationIsIgnore)
-	end
-
-	-- move cursor when adding comment
-	if operationIsIgnore and startLine ~= lnum then
-		vim.api.nvim_win_set_cursor(0, { lnum + 1, 0 }) -- +1 cause indexing difference
-		vim.cmd("normal! ^")
 	end
 
 	-- autoselect if only one diagnostic
@@ -189,14 +182,21 @@ local function selectRule(operation)
 		prompt = title,
 		kind = "rule_selection",
 		format_item = function(diag)
-			local source = diag.source .. ": " or ""
+			local source = diag.source and diag.source .. ": " or ""
 			local desc = diag.code or diag.message
 			local display = source .. desc
 			if not (diag.code and diag.source) then display = " " .. display end
 			return display
 		end,
 	}, function(diag)
-		if not diag then return end
+		if not diag then return end -- user aborted
+
+		-- move cursor to location where we add the comment
+		if operationIsIgnore and startLine ~= lnum then
+			vim.api.nvim_win_set_cursor(0, { lnum + 1, 0 }) 
+			vim.cmd("normal! ^")
+		end
+
 		operation(diag)
 	end)
 end
@@ -205,10 +205,10 @@ end
 -- COMMANDS FOR USER
 
 ---Search via DuckDuckGo for the rule
-function M.lookupRule() selectRule(searchForTheRule) end
+function M.lookupRule() findAndSelectRule(searchForTheRule) end
 
 ---Add ignore comment for the rule
-function M.ignoreRule() selectRule(addIgnoreComment) end
+function M.ignoreRule() findAndSelectRule(addIgnoreComment) end
 
 ---Utility for diagnostic formatting config (vim.diagnostic.config), that
 ---returns whether nvim-rulebook has documentation for the diagnostic that can
