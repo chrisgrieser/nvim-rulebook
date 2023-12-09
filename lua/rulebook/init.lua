@@ -170,6 +170,13 @@ local function findAndSelectRule(operation)
 		end
 	end
 
+	-- remove duplicate rules
+	local uniqueRule = {}
+	for _, diag in ipairs(diagsAtLine) do
+		uniqueRule[diag.source .. diag.code] = diag
+	end
+	diagsAtLine = vim.tbl_values(uniqueRule)
+
 	-- autoselect if only one diagnostic
 	if #diagsAtLine == 1 then
 		operation(diagsAtLine[1])
