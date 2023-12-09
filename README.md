@@ -63,7 +63,9 @@ missing.
 
 ### Add Ignore Comment
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
+- [Lua Diagnostics.](https://luals.github.io/wiki/annotations/#diagnostic)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
+- [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
 - [alex](https://github.com/get-alex/alex#control)
 - [biome](https://biomejs.dev/linter/#ignoring-code)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
@@ -74,7 +76,9 @@ missing.
 - [selene](https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file)
 - [shellcheck](https://www.shellcheck.net/wiki/Ignore)
 - [stylelint](https://stylelint.io/user-guide/ignore-code/)
+- [stylelintplus](https://stylelint.io/user-guide/ignore-code/)
 - [typescript](https://www.typescriptlang.org/)
+- [vale-ls](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [woke](https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring)
 - [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
