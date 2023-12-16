@@ -173,7 +173,8 @@ local function findAndSelectRule(operation)
 	-- remove duplicate rules
 	local uniqueRule = {}
 	for _, diag in ipairs(diagsAtLine) do
-		uniqueRule[diag.source .. diag.code] = diag
+		-- not using code to create hash-key, since some diagnostics have no code
+		uniqueRule[diag.source .. diag.message] = diag
 	end
 	diagsAtLine = vim.tbl_values(uniqueRule)
 
