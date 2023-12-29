@@ -1,4 +1,4 @@
-*rulebook.txt*          For NVIM v0.8.0          Last change: 2023 December 16
+*rulebook.txt*          For NVIM v0.8.0          Last change: 2023 December 29
 
 ==============================================================================
 Table of Contents                                 *rulebook-table-of-contents*
@@ -71,6 +71,7 @@ RULE LOOKUP ~
 - `selene`
 - `shellcheck`
 - `stylelint`
+- `stylelintplus`
 - `yamllint`
 
 
