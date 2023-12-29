@@ -2,7 +2,7 @@
 # nvim-rulebook 📖
 <!-- LTeX: enabled=true -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img
-src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield" /></a>
+alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
 Add inline-comments to ignore rules, or lookup rule documentation online.
 
