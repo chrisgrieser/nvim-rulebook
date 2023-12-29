@@ -9,6 +9,7 @@ local M = {
 	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
 	eslint = "https://eslint.org/docs/latest/rules/%s",
 	stylelint = "https://stylelint.io/user-guide/rules/%s",
+	stylelintplus = "https://stylelint.io/user-guide/rules/%s", -- stylelint-lsp
 	LTeX = "https://community.languagetool.org/rule/show/%s?lang=en",
 	["Lua Diagnostics."] = "https://luals.github.io/wiki/diagnostics/#%s", -- lua_ls
 	shellcheck = function(diag)

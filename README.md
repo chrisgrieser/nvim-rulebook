@@ -59,6 +59,7 @@ missing.
 - `selene`
 - `shellcheck`
 - `stylelint`
+- `stylelintplus`
 - `yamllint`
 
 ### Add Ignore Comment
