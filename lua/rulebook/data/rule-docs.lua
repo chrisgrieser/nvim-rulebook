@@ -18,6 +18,11 @@ local M = {
 		return "https://www.shellcheck.net/wiki/SC" .. code
 	end,
 
+	-- typescript has no official docs, therefore using community docs, even
+	-- though they, too, are not complete.
+	tsserver = "https://tswhy.deno.dev/ts%s",
+	typescript = "https://tswhy.deno.dev/ts%s",
+
 	-- website links saved directly in diagnostic object
 	Ruff = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	["clang-tidy"] = function(diag) return diag.user_data.lsp.codeDescription.href end,
