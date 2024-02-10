@@ -60,6 +60,8 @@ missing.
 - `shellcheck`
 - `stylelint`
 - `stylelintplus`
+- `tsserver`
+- `typescript`
 - `yamllint`
 
 ### Add Ignore Comment

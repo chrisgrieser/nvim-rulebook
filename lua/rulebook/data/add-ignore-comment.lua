@@ -4,6 +4,8 @@
 ---@field docs string used for auto-generated docs
 
 ---INFO the key must be named exactly like diagnostic.source (case-sensitive!)
+--------------------------------------------------------------------------------
+
 ---@type table<string, ruleIgnoreConfig>
 M = {
 	shellcheck = {

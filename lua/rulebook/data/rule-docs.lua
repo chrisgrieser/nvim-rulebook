@@ -1,6 +1,7 @@
 -- INFO the key must be named exactly like diagnostic.source (case-sensitive!)
 -- - string value: "%s" will be replaced with the rule id
 -- - function value: will be called with the diagnostic object
+--------------------------------------------------------------------------------
 
 ---@type table<string, string|function>
 local M = {
