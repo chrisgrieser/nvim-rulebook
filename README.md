@@ -78,6 +78,7 @@ missing.
 - [shellcheck](https://www.shellcheck.net/wiki/Ignore)
 - [stylelint](https://stylelint.io/user-guide/ignore-code/)
 - [stylelintplus](https://stylelint.io/user-guide/ignore-code/)
+- [tsserver](https://www.typescriptlang.org/)
 - [typescript](https://www.typescriptlang.org/)
 - [vale-ls](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)

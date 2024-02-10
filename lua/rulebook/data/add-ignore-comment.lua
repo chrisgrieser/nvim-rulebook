@@ -16,7 +16,7 @@ M = {
 		location = "prevLine",
 		docs = "https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file",
 	},
-	["Lua Diagnostics."] = {
+	["Lua Diagnostics."] = { -- Lua LSP
 		comment = "---@diagnostic disable-line: %s",
 		location = "sameLine", -- prevLine already available via code action
 		docs = "https://luals.github.io/wiki/annotations/#diagnostic",
@@ -26,12 +26,12 @@ M = {
 		location = "prevLine",
 		docs = "https://yamllint.readthedocs.io/en/stable/disable_with_comments.html",
 	},
-	stylelint = {
+	stylelint = { -- stylelint as CLI
 		comment = "/* stylelint-disable-next-line %s */",
 		location = "prevLine",
 		docs = "https://stylelint.io/user-guide/ignore-code/",
 	},
-	stylelintplus = {
+	stylelintplus = { -- stylelint LSP
 		comment = "/* stylelint-disable-next-line %s */",
 		location = "prevLine",
 		docs = "https://stylelint.io/user-guide/ignore-code/",
@@ -76,10 +76,15 @@ M = {
 		location = "prevLine",
 		docs = "https://biomejs.dev/linter/#ignoring-code",
 	},
-	typescript = { -- tsserver
+	typescript = { -- name used by LSP available via mason
 		comment = "// @ts-ignore",
 		location = "prevLine",
 		docs = "https://www.typescriptlang.org/", -- no docs found that are more specific
+	},
+	tsserver = { -- name used by typescript-tools.nvim
+		comment = "// @ts-ignore",
+		location = "prevLine",
+		docs = "https://www.typescriptlang.org/", 
 	},
 	["editorconfig-checker"] = {
 		comment = function(_) return vim.bo.commentstring:format("editorconfig-checker-disable-line") end,
