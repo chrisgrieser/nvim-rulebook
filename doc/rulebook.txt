@@ -72,6 +72,8 @@ RULE LOOKUP ~
 - `shellcheck`
 - `stylelint`
 - `stylelintplus`
+- `tsserver`
+- `typescript`
 - `yamllint`
 
 
