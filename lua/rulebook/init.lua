@@ -32,7 +32,7 @@ local config = defaultConfig
 function M.setup(userConfig)
 	config = vim.tbl_deep_extend("force", defaultConfig, userConfig)
 
-	-- validate config
+	-- VALIDATE
 	for name, linter in pairs(config.ignoreComments) do
 		local comType = type(linter.comment)
 		local errorMsg
@@ -146,7 +146,7 @@ local function findAndSelectRule(operation)
 	local lastLine = vim.api.nvim_buf_line_count(0)
 	local diagsAtLine
 
-	-- loop through lines until we find a diagnostic
+	-- loop through lines until we find a line with diagnostics
 	while true do
 		diagsAtLine = vim.diagnostic.get(0, { lnum = lnum })
 		if operationIsIgnore then
@@ -162,7 +162,7 @@ local function findAndSelectRule(operation)
 		if #diagsAtLine > 0 then break end
 		lnum = lnum + 1
 
-		-- abort if not diagnostics found in the next few lines as well
+		-- GUARD
 		if lnum > lastLine or lnum > startLine + config.forwSearchLines then
 			local msg = ("No supported diagnostics found in the next %s lines."):format(config.forwSearchLines)
 			notify(msg, "warn")
@@ -173,8 +173,7 @@ local function findAndSelectRule(operation)
 	-- remove duplicate rules
 	local uniqueRule = {}
 	for _, diag in ipairs(diagsAtLine) do
-		-- not using code to create hash-key, since some diagnostics have no code
-		uniqueRule[diag.source .. diag.message] = diag
+		uniqueRule[diag.source .. (diag.code or diag.message)] = diag
 	end
 	diagsAtLine = vim.tbl_values(uniqueRule)
 
@@ -201,7 +200,7 @@ local function findAndSelectRule(operation)
 
 		-- move cursor to location where we add the comment
 		if operationIsIgnore and startLine ~= lnum then
-			vim.api.nvim_win_set_cursor(0, { lnum + 1, 0 }) 
+			vim.api.nvim_win_set_cursor(0, { lnum + 1, 0 })
 			vim.cmd("normal! ^")
 		end
 
