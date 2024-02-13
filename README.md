@@ -56,6 +56,7 @@ missing.
 - `eslint`
 - `markdownlint`
 - `pylint`
+- `quick-lint-js`
 - `selene`
 - `shellcheck`
 - `stylelint`

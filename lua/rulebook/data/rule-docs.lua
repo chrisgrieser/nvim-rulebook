@@ -29,6 +29,7 @@ local M = {
 	["clang-tidy"] = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	Pyright = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	biome = function(diag) return diag.user_data.lsp.codeDescription.href end,
+	["quick-lint-js"] = function(diag) return diag.user_data.lsp.codeDescription.href end,
 	-----------------------------------------------------------------------------
 
 	-- urls use rule-name, not rule-id, so this is the closest we can get
