@@ -23,6 +23,7 @@ local defaultConfig = {
 	ignoreComments = require("rulebook.data.add-ignore-comment"),
 	ruleDocs = require("rulebook.data.rule-docs"),
 	forwSearchLines = 10,
+	yankDiagnosticCodeToSystemClipboard = true,
 }
 
 -- if user does not call setup, use default
@@ -134,6 +135,15 @@ local function addIgnoreComment(diag)
 	end
 end
 
+---@param diag Diagnostic
+local function yankDiagCode(diag)
+	if not validDiagObj(diag) then return end
+	
+	local reg = config.yankDiagnosticCodeToSystemClipboard and "+" or '"'
+	vim.fn.setreg(reg, diag.code)
+	notify(("Diagnostic code copied: \n%s"):format(diag.code), "info")
+end
+
 --------------------------------------------------------------------------------
 
 ---Selects a diagnostic in the current line. If one diagnostic, automatically
@@ -164,7 +174,9 @@ local function findAndSelectRule(operation)
 
 		-- GUARD
 		if lnum > lastLine or lnum > startLine + config.forwSearchLines then
-			local msg = ("No supported diagnostics found in the next %s lines."):format(config.forwSearchLines)
+			local msg = ("No supported diagnostics found in the next %s lines."):format(
+				config.forwSearchLines
+			)
 			notify(msg, "warn")
 			return
 		end
@@ -184,7 +196,11 @@ local function findAndSelectRule(operation)
 	end
 
 	-- select from multiple diagnostics
-	local title = operationIsIgnore and "Ignore Rule:" or "Lookup Rule:"
+	local title
+	if operationIsIgnore then title = "Ignore Rule:" end
+	if operation == searchForTheRule then title = "Lookup Rule:" end
+	if operation == yankDiagCode then title = "Yank Diagnostic Code:" end
+
 	vim.ui.select(diagsAtLine, {
 		prompt = title,
 		kind = "rule_selection",
@@ -211,11 +227,9 @@ end
 --------------------------------------------------------------------------------
 -- COMMANDS FOR USER
 
----Search via DuckDuckGo for the rule
 function M.lookupRule() findAndSelectRule(searchForTheRule) end
-
----Add ignore comment for the rule
 function M.ignoreRule() findAndSelectRule(addIgnoreComment) end
+function M.yankDiagnosticCode() findAndSelectRule(yankDiagCode) end
 
 ---Utility for diagnostic formatting config (vim.diagnostic.config), that
 ---returns whether nvim-rulebook has documentation for the diagnostic that can

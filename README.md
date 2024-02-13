@@ -98,8 +98,9 @@ built-in diagnostics system. (nvim's built-in LSP client or
 {
 	"chrisgrieser/nvim-rulebook",
 	keys = {
-		{ "<leader>i", function() require("rulebook").ignoreRule() end },
-		{ "<leader>l", function() require("rulebook").lookupRule() end },
+		{ "<leader>ri", function() require("rulebook").ignoreRule() end },
+		{ "<leader>rl", function() require("rulebook").lookupRule() end },
+		{ "<leader>ry", function() require("rulebook").yankDiagnosticCode() end },
 	}
 },
 ```
@@ -109,8 +110,9 @@ built-in diagnostics system. (nvim's built-in LSP client or
 use { "chrisgrieser/nvim-rulebook" }
 
 -- in your config
-vim.keymap.set("n", "<leader>i", function() require("rulebook").ignoreRule() end)
-vim.keymap.set("n", "<leader>l", function() require("rulebook").lookupRule() end)
+vim.keymap.set("n", "<leader>ri", function() require("rulebook").ignoreRule() end)
+vim.keymap.set("n", "<leader>rl", function() require("rulebook").lookupRule() end)
+vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticCode() end)
 ```
 
 ## Configuration
@@ -163,6 +165,9 @@ require("rulebook").setup = ({
 
 	-- if no diagnostic is found in current line, search this many lines forward
 	forwSearchLines = 10,
+
+	-- whether to yank to `+` or `"`
+	yankDiagnosticCodeToSystemClipboard = true,
 })
 ```
 
