@@ -41,6 +41,7 @@ local M = {
 --------------------------------------------------------------------------------
 
 M.tsserver = M.typescript -- typescript-tools.nvim
+M.ts = M.typescript -- vtsls
 M.stylelintplus = M.stylelint -- stylelint-lsp
 
 --------------------------------------------------------------------------------

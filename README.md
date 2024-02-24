@@ -61,6 +61,7 @@ missing.
 - `shellcheck`
 - `stylelint`
 - `stylelintplus`
+- `ts`
 - `tsserver`
 - `typescript`
 - `yamllint`
@@ -81,6 +82,7 @@ missing.
 - [shellcheck](https://www.shellcheck.net/wiki/Ignore)
 - [stylelint](https://stylelint.io/user-guide/ignore-code/)
 - [stylelintplus](https://stylelint.io/user-guide/ignore-code/)
+- [ts](https://www.typescriptlang.org/)
 - [tsserver](https://www.typescriptlang.org/)
 - [typescript](https://www.typescriptlang.org/)
 - [vale-ls](https://vale.sh/docs/topics/config/#markup-based-configuration)
