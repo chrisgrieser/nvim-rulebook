@@ -3,7 +3,7 @@
 ---@field location "prevLine"|"sameLine"|"encloseLine" "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field docs string used for auto-generated docs
 
----INFO the key must be named exactly like diagnostic.source (case-sensitive!)
+---INFO the key must be named *exactly* like diagnostic.source (case-sensitive!)
 --------------------------------------------------------------------------------
 
 ---@type table<string, ruleIgnoreConfig>
@@ -28,12 +28,7 @@ M = {
 		location = "prevLine",
 		docs = "https://yamllint.readthedocs.io/en/stable/disable_with_comments.html",
 	},
-	stylelint = { -- stylelint as CLI
-		comment = "/* stylelint-disable-next-line %s */",
-		location = "prevLine",
-		docs = "https://stylelint.io/user-guide/ignore-code/",
-	},
-	stylelintplus = { -- stylelint LSP
+	stylelint = {
 		comment = "/* stylelint-disable-next-line %s */",
 		location = "prevLine",
 		docs = "https://stylelint.io/user-guide/ignore-code/",
@@ -44,11 +39,6 @@ M = {
 		docs = "https://valentjn.github.io/ltex/advanced-usage.html",
 	},
 	vale = {
-		comment = { "<!-- vale %s = NO -->", "<!-- vale %s = YES -->" },
-		location = "encloseLine",
-		docs = "https://vale.sh/docs/topics/config/#markup-based-configuration",
-	},
-	["vale-ls"] = {
 		comment = { "<!-- vale %s = NO -->", "<!-- vale %s = YES -->" },
 		location = "encloseLine",
 		docs = "https://vale.sh/docs/topics/config/#markup-based-configuration",
@@ -78,15 +68,10 @@ M = {
 		location = "prevLine",
 		docs = "https://biomejs.dev/linter/#ignoring-code",
 	},
-	typescript = { -- name used by LSP available via mason
+	typescript = {
 		comment = "// @ts-ignore",
 		location = "prevLine",
 		docs = "https://www.typescriptlang.org/", -- no docs found that are more specific
-	},
-	tsserver = { -- name used by typescript-tools.nvim
-		comment = "// @ts-ignore",
-		location = "prevLine",
-		docs = "https://www.typescriptlang.org/", 
 	},
 	["editorconfig-checker"] = {
 		comment = function(_) return vim.bo.commentstring:format("editorconfig-checker-disable-line") end,
@@ -118,6 +103,10 @@ M = {
 		docs = "https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring",
 	},
 }
+
+M.tsserver = M.typescript -- typescript-tools.nvim
+M["vale-ls"] = M.vale
+M.stylelintplus = M.stylelint -- stylelint-lsp
 
 --------------------------------------------------------------------------------
 return M

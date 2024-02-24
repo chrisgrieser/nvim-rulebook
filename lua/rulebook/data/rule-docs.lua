@@ -5,12 +5,12 @@
 
 ---@type table<string, string|function>
 local M = {
-	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us", -- when no docs found for source
+	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+
 	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
 	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
 	eslint = "https://eslint.org/docs/latest/rules/%s",
 	stylelint = "https://stylelint.io/user-guide/rules/%s",
-	stylelintplus = "https://stylelint.io/user-guide/rules/%s", -- stylelint-lsp
 	LTeX = "https://community.languagetool.org/rule/show/%s?lang=en",
 	["Lua Diagnostics."] = "https://luals.github.io/wiki/diagnostics/#%s", -- lua_ls
 	shellcheck = function(diag)
@@ -21,7 +21,6 @@ local M = {
 
 	-- typescript has no official docs, therefore using community docs, even
 	-- though they, too, are not complete.
-	tsserver = "https://tswhy.deno.dev/ts%s",
 	typescript = "https://tswhy.deno.dev/ts%s",
 
 	-- website links saved directly in diagnostic object
@@ -38,6 +37,11 @@ local M = {
 	-- no reliable linking possible, so the website itself is best we can do
 	markdownlint = "https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md",
 }
+
+--------------------------------------------------------------------------------
+
+M.tsserver = M.typescript -- typescript-tools.nvim
+M.stylelintplus = M.stylelint -- stylelint-lsp
 
 --------------------------------------------------------------------------------
 return M
