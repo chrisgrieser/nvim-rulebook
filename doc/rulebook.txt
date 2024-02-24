@@ -1,4 +1,4 @@
-*rulebook.txt*          For NVIM v0.8.0          Last change: 2024 February 13
+*rulebook.txt*          For NVIM v0.8.0          Last change: 2024 February 24
 
 ==============================================================================
 Table of Contents                                 *rulebook-table-of-contents*
@@ -73,6 +73,7 @@ RULE LOOKUP ~
 - `shellcheck`
 - `stylelint`
 - `stylelintplus`
+- `ts`
 - `tsserver`
 - `typescript`
 - `yamllint`
@@ -95,6 +96,7 @@ ADD IGNORE COMMENT ~
 - shellcheck <https://www.shellcheck.net/wiki/Ignore>
 - stylelint <https://stylelint.io/user-guide/ignore-code/>
 - stylelintplus <https://stylelint.io/user-guide/ignore-code/>
+- ts <https://www.typescriptlang.org/>
 - tsserver <https://www.typescriptlang.org/>
 - typescript <https://www.typescriptlang.org/>
 - vale-ls <https://vale.sh/docs/topics/config/#markup-based-configuration>
