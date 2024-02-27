@@ -3,6 +3,9 @@
 -- - function value: will be called with the diagnostic object
 --------------------------------------------------------------------------------
 
+-- some providers save the links to the docs in the diagnostic object
+local urlInDiagObj = function(diag) return diag.user_data.lsp.codeDescription.href end
+
 ---@type table<string, string|function>
 local M = {
 	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
@@ -23,19 +26,19 @@ local M = {
 	-- though they, too, are not complete.
 	typescript = "https://tswhy.deno.dev/ts%s",
 
-	-- website links saved directly in diagnostic object
-	Ruff = function(diag) return diag.user_data.lsp.codeDescription.href end,
-	["clang-tidy"] = function(diag) return diag.user_data.lsp.codeDescription.href end,
-	Pyright = function(diag) return diag.user_data.lsp.codeDescription.href end,
-	biome = function(diag) return diag.user_data.lsp.codeDescription.href end,
-	["quick-lint-js"] = function(diag) return diag.user_data.lsp.codeDescription.href end,
-	-----------------------------------------------------------------------------
-
 	-- urls use rule-name, not rule-id, so this is the closest we can get
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
 
 	-- no reliable linking possible, so the website itself is best we can do
 	markdownlint = "https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md",
+
+	-----------------------------------------------------------------------------
+
+	Ruff = urlInDiagObj,
+	["clang-tidy"] = urlInDiagObj,
+	Pyright = urlInDiagObj,
+	biome = urlInDiagObj,
+	["quick-lint-js"] = urlInDiagObj,
 }
 
 --------------------------------------------------------------------------------
