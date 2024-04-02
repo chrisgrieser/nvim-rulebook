@@ -37,6 +37,7 @@ local M = {
 	Ruff = urlInDiagObj,
 	["clang-tidy"] = urlInDiagObj,
 	Pyright = urlInDiagObj,
+	basedpyright = urlInDiagObj,
 	biome = urlInDiagObj,
 	["quick-lint-js"] = urlInDiagObj,
 }

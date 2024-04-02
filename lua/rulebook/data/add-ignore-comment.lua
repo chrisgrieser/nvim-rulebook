@@ -108,6 +108,7 @@ M.tsserver = M.typescript -- typescript-tools.nvim
 M.ts = M.typescript -- vtsls
 M["vale-ls"] = M.vale
 M.stylelintplus = M.stylelint -- stylelint-lsp
+M.basedpyright = M.Pyright 
 
 --------------------------------------------------------------------------------
 return M
