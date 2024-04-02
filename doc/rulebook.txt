@@ -1,4 +1,4 @@
-*rulebook.txt*          For NVIM v0.8.0          Last change: 2024 February 27
+*rulebook.txt*            For NVIM v0.8.0           Last change: 2024 April 02
 
 ==============================================================================
 Table of Contents                                 *rulebook-table-of-contents*
