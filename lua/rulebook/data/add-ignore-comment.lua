@@ -69,7 +69,7 @@ M = {
 		docs = "https://biomejs.dev/linter/#ignoring-code",
 	},
 	typescript = {
-		comment = "// @ts-ignore",
+		comment = "// @ts-expect-error", -- https://typescript-eslint.io/rules/prefer-ts-expect-error/
 		location = "prevLine",
 		docs = "https://www.typescriptlang.org/", -- no docs found that are more specific
 	},
