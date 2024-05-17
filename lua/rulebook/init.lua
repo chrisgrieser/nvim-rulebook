@@ -51,7 +51,7 @@ end
 --------------------------------------------------------------------------------
 
 ---checks whether rule has id and source, as prescribed in nvim diagnostic structure
----@param diag Diagnostic
+---@param diag vim.Diagnostic
 ---@return boolean whether rule is valid
 ---@nodiscard
 local function validDiagObj(diag)
@@ -71,7 +71,7 @@ end
 
 --------------------------------------------------------------------------------
 
----@param diag Diagnostic
+---@param diag vim.Diagnostic
 local function searchForTheRule(diag)
 	if not validDiagObj(diag) then return end
 
@@ -106,7 +106,7 @@ local function searchForTheRule(diag)
 	fn.system(openCommand)
 end
 
----@param diag Diagnostic
+---@param diag vim.Diagnostic
 local function addIgnoreComment(diag)
 	if not validDiagObj(diag) then return end
 
@@ -135,7 +135,7 @@ local function addIgnoreComment(diag)
 	end
 end
 
----@param diag Diagnostic
+---@param diag vim.Diagnostic
 local function yankDiagCode(diag)
 	if not validDiagObj(diag) then return end
 	
@@ -234,7 +234,7 @@ function M.yankDiagnosticCode() findAndSelectRule(yankDiagCode) end
 ---Utility for diagnostic formatting config (vim.diagnostic.config), that
 ---returns whether nvim-rulebook has documentation for the diagnostic that can
 ---be opened via `lookupRule`
----@param diag Diagnostic
+---@param diag vim.Diagnostic
 ---@return boolean hasDocs
 function M.hasDocs(diag)
 	local hasDocumentations = config.ruleDocs[diag.source] ~= nil
