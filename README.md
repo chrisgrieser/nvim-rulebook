@@ -96,6 +96,8 @@ This plugin requires diagnostics provided by a source that supports Neovim's
 built-in diagnostics system. (nvim's built-in LSP client or
 [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
 
+In addition, nvim 0.10 is required.
+
 ```lua
 -- lazy.nvim
 {

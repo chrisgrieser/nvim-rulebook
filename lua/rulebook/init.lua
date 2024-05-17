@@ -93,17 +93,7 @@ local function searchForTheRule(diag)
 		urlToOpen = config.ruleDocs.fallback:format(escapedQuery)
 	end
 
-	-- open with the OS-specific shell command
-	local opener
-	if fn.has("macunix") == 1 then
-		opener = "open"
-	elseif fn.has("linux") == 1 then
-		opener = "xdg-open"
-	elseif fn.has("win64") == 1 or fn.has("win32") == 1 then
-		opener = "start"
-	end
-	local openCommand = string.format("%s '%s' >/dev/null 2>&1", opener, urlToOpen)
-	fn.system(openCommand)
+	vim.ui.open(urlToOpen)
 end
 
 ---@param diag vim.Diagnostic
