@@ -1,3 +1,10 @@
+local version = vim.version()
+if version.major == 0 and version.minor < 10 then
+	vim.notify("nvim-rulebook requires at least nvim 0.10.", vim.log.levels.WARN)
+	return
+end
+--------------------------------------------------------------------------------
+
 local M = {}
 local fn = vim.fn
 
@@ -6,8 +13,7 @@ local fn = vim.fn
 ---@param level? "info"|"trace"|"debug"|"warn"|"error"
 local function notify(msg, level)
 	if not level then level = "info" end
-	local pluginName = "nvim-rulebook"
-	vim.notify(msg, vim.log.levels[level:upper()], { title = pluginName })
+	vim.notify(msg, vim.log.levels[level:upper()], { title = "nvim-rulebook" })
 end
 
 --------------------------------------------------------------------------------
