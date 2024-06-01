@@ -51,6 +51,7 @@ missing.
 - `Lua Diagnostics.`
 - `Pyright`
 - `Ruff`
+- `basedpyright`
 - `biome`
 - `clang-tidy`
 - `eslint`
@@ -72,6 +73,7 @@ missing.
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
 - [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
 - [alex](https://github.com/get-alex/alex#control)
+- [basedpyright](https://microsoft.github.io/pyright/#/comments)
 - [biome](https://biomejs.dev/linter/#ignoring-code)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
