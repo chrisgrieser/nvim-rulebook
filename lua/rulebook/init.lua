@@ -61,7 +61,10 @@ end
 ---@return boolean whether rule is valid
 ---@nodiscard
 local function validDiagObj(diag)
-	local sourcesWithNoCodes = { "editorconfig-checker", "codespell", "spellwarn" }
+	local sourcesWithNoCodes = vim.iter(config.ignoreComments)
+		:filter(function(_, conf) return conf.doesNotUseCodes end)
+		:map(function(linter, _) return linter end)
+		:totable()
 	if vim.tbl_contains(sourcesWithNoCodes, diag.source) then return true end
 
 	local issuePlea = "\nPlease open an issue at the diagnostic source or the diagnostic provider."
@@ -134,7 +137,7 @@ end
 ---@param diag vim.Diagnostic
 local function yankDiagCode(diag)
 	if not validDiagObj(diag) then return end
-	
+
 	local reg = config.yankDiagnosticCodeToSystemClipboard and "+" or '"'
 	vim.fn.setreg(reg, diag.code)
 	notify(("Diagnostic code copied: \n%s"):format(diag.code), "info")

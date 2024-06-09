@@ -2,6 +2,7 @@
 ---@field comment string|string[]|function if string, "%s" will be replaced with the rule id
 ---@field location "prevLine"|"sameLine"|"encloseLine" "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field docs string used for auto-generated docs
+---@field doesNotUseCodes? boolean the linter does not use codes/rule-ids
 
 ---INFO the key must be named *exactly* like diagnostic.source (case-sensitive!)
 --------------------------------------------------------------------------------
@@ -77,12 +78,14 @@ M = {
 		comment = function(_) return vim.bo.commentstring:format("editorconfig-checker-disable-line") end,
 		location = "sameLine",
 		docs = "https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines",
+		doesNotUseCodes = true,
 	},
 	codespell = {
 		comment = function(_) return vim.bo.commentstring:format("codespell-ignore") end,
 		location = "sameLine",
 		-- HACK uses workaround via `codespell --ignore-regex`
 		docs = "https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455",
+		doesNotUseCodes = true,
 	},
 	["clang-tidy"] = {
 		comment = "// NOLINT(%s)",
@@ -106,6 +109,7 @@ M = {
 		comment = function(_) return vim.bo.commentstring:format("spellwarn:disable-line") end,
 		location = "sameLine",
 		docs = "https://github.com/ravibrock/spellwarn.nvim#usage",
+		doesNotUseCodes = true,
 	},
 }
 
