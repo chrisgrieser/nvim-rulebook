@@ -102,13 +102,18 @@ M = {
 		location = "sameLine",
 		docs = "https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring",
 	},
+	spellwarn = { -- not a linter, but a nvim plugin
+		comment = function(_) return vim.bo.commentstring:format("spellwarn:disable-line") end,
+		location = "sameLine",
+		docs = "https://github.com/ravibrock/spellwarn.nvim#usage",
+	},
 }
 
 M.tsserver = M.typescript -- typescript-tools.nvim
 M.ts = M.typescript -- vtsls
 M["vale-ls"] = M.vale
 M.stylelintplus = M.stylelint -- stylelint-lsp
-M.basedpyright = M.Pyright 
+M.basedpyright = M.Pyright
 
 --------------------------------------------------------------------------------
 return M

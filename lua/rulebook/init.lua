@@ -61,7 +61,7 @@ end
 ---@return boolean whether rule is valid
 ---@nodiscard
 local function validDiagObj(diag)
-	local sourcesWithNoCodes = { "editorconfig-checker", "codespell" }
+	local sourcesWithNoCodes = { "editorconfig-checker", "codespell", "spellwarn" }
 	if vim.tbl_contains(sourcesWithNoCodes, diag.source) then return true end
 
 	local issuePlea = "\nPlease open an issue at the diagnostic source or the diagnostic provider."
