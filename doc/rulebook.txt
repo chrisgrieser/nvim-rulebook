@@ -96,6 +96,7 @@ ADD IGNORE COMMENT ~
 - pylint <https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html>
 - selene <https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file>
 - shellcheck <https://www.shellcheck.net/wiki/Ignore>
+- spellwarn <https://github.com/ravibrock/spellwarn.nvim#usage>
 - stylelint <https://stylelint.io/user-guide/ignore-code/>
 - stylelintplus <https://stylelint.io/user-guide/ignore-code/>
 - ts <https://www.typescriptlang.org/>
