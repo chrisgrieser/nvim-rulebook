@@ -8,12 +8,14 @@ function M.suppress()
 	local indent = vim.api.nvim_get_current_line():match("^%s*")
 
 	local ftConfig = require("rulebook.config").config.suppressFormatter[ft]
+	if not ftConfig then
+		u.notify(("No formatter suppression configured for %q."):format(ft), "warn")
+		return
+	end
 	local coverage = mode == "n" and "ignoreBlock" or "ignoreRange"
 	local suppressText = ftConfig[coverage]
-
-	-- GUARD
 	if not suppressText then
-		u.notify(("No suppress comment %q found for %q."):format(coverage, ft))
+		u.notify(("No %q configured for %q."):format(coverage, ft), "warn")
 		return
 	end
 
