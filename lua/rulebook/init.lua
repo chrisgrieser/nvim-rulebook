@@ -12,7 +12,9 @@ function M.setup(userConfig) require("rulebook.config").setup(userConfig) end
 
 function M.lookupRule() require("rulebook.diagnostic-actions").selectRule("lookupRule") end
 function M.ignoreRule() require("rulebook.diagnostic-actions").selectRule("ignoreRule") end
-function M.yankDiagnosticCode() require("rulebook.diagnostic-actions").selectRule("yankDiagnosticCode") end
+function M.yankDiagnosticCode()
+	require("rulebook.diagnostic-actions").selectRule("yankDiagnosticCode")
+end
 
 function M.suppressFormatter() require("rulebook.formatter-actions").suppress() end
 
