@@ -1,5 +1,5 @@
 ---@class ruleIgnoreConfig
----@field comment string|string[]|function if string, "%s" will be replaced with the rule id
+---@field comment string|string[]|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
 ---@field location "prevLine"|"sameLine"|"encloseLine" "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field docs string used for auto-generated docs
 ---@field doesNotUseCodes? boolean the linter does not use codes/rule-ids
@@ -65,7 +65,11 @@ M = {
 		docs = "https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1",
 	},
 	biome = {
-		comment = "// biome-ignore %s: <explanation>",
+		-- biome works for css and js, so the comment syntax is dependent on the filetype
+		comment = function(diag)
+			local ignoreText = ("biome-ignore %s: <explanation>"):format(diag.code)
+			return vim.bo.commentstring:format(ignoreText)
+		end,
 		location = "prevLine",
 		docs = "https://biomejs.dev/linter/#ignoring-code",
 	},
