@@ -44,7 +44,7 @@ missing.
 
 [Rule Data for the supported linters](./lua/rulebook/data)
 
-<!-- INFO use `make update_readme` to automatically update this section -->
+<!-- INFO use `just update-readme` to automatically update this section -->
 <!-- auto-generated: start -->
 ### Rule Lookup
 - `LTeX`
@@ -96,7 +96,8 @@ missing.
 
 ## Installation
 This plugin requires diagnostics provided by a source that supports Neovim's
-built-in diagnostics system. (nvim's built-in LSP client or
+built-in diagnostics system. (nvim's built-in LSP client,
+[efm-langserver](https://github.com/mattn/efm-langserver) or
 [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
 
 In addition, nvim 0.10 is required.
@@ -203,9 +204,9 @@ require("rulebook").setup = {
 - The diagnostics have to contain the necessary data, [that is a diagnostic code
   and diagnostic
   source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most
-  LSPs, and most linters configured for `nvim-lint` do that, but some diagnostic
-  sources do not (for example `efm-langserver` with incorrectly defined
-  `errorformat`). Please open an issue at the diagnostics provider to fix such
+  LSPs and most linters configured for `nvim-lint`/`efm` do that, but some diagnostic
+  sources do not (for example, `efm` with incorrectly defined `errorformat`).
+  Please open an issue at the diagnostics provider to fix such
   issues.
 - This plugin does not hook into `vim.lsp.buf.code_action`, but provides its own
   selector.
@@ -227,22 +228,16 @@ vim.diagnostic.config {
 }
 ```
 
-## Credits
 <!-- vale Google.FirstPerson = NO -->
-**About Me**  
+## Credits
 In my day job, I am a sociologist studying the social mechanisms underlying the
 digital economy. For my PhD project, I investigate the governance of the app
 economy and how software ecosystems manage the tension between innovation and
 compatibility. If you are interested in this subject, feel free to get in touch.
 
-**Blog**  
 I also occasionally blog about vim: [Nano Tips for Vim](https://nanotipsforvim.prose.sh)
 
-**Profiles**  
-- [reddit](https://www.reddit.com/user/pseudometapseudo)
-- [Discord](https://discordapp.com/users/462774483044794368/)
 - [Academic Website](https://chris-grieser.de/)
-- [Twitter](https://twitter.com/pseudo_meta)
 - [Mastodon](https://pkm.social/@pseudometa)
 - [ResearchGate](https://www.researchgate.net/profile/Christopher-Grieser)
 - [LinkedIn](https://www.linkedin.com/in/christopher-grieser-ba693b17a/)
