@@ -9,9 +9,10 @@ local notify = require("rulebook.utils").notify
 
 ---@type pluginConfig
 local defaultConfig = {
-	ignoreComments = require("rulebook.data.add-ignore-comment"),
+	ignoreComments = require("rulebook.data.add-ignore-rule-comment"),
 	ruleDocs = require("rulebook.data.rule-docs"),
 	forwSearchLines = 10,
+	suppressFormatter = require("rulebook.data.suppress-formatter-comment"),
 	yankDiagnosticCodeToSystemClipboard = true,
 }
 

@@ -15,6 +15,7 @@ and LSPs that don't.
 - [Supported Sources](#supported-sources)
 	* [Rule Lookup](#rule-lookup)
 	* [Add Ignore Comment](#add-ignore-comment)
+	* [Suppress Formatting](#suppress-formatting)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Customize Built-in Sources](#customize-built-in-sources)
@@ -30,10 +31,12 @@ and LSPs that don't.
   source does not have rule documentation.
 - Add inline-comments to ignore rules like `// eslint disable-next-line
   some-rule`. Supports previous line, same line, and enclosing lines.
+- Suppress formatting with via ignore comments of the respective formatter, such
+  as `// prettier-ignore`.
 - QoL: auto-select a rule if it is the only one in the current line; if the line
-  has no diagnostic, search forward up to the next line that does.
-- Includes built-in support for various linters. Zero plugin configuration
-  required if you only need to use built-in sources.
+  has no diagnostic, search forward to the next line that does.
+- Includes built-in support for various linters and formatters. No plugin
+  configuration required if you only need to use built-in sources.
 - Customizing built-in sources or adding your own sources is easy. PRs to add
   more built-ins are welcome.
 
@@ -42,7 +45,7 @@ You easily add a custom source via the [plugin configuration](#configuration).
 Though, please consider making a PR to add support for a source if it is
 missing.
 
-[Rule Data for the supported linters](./lua/rulebook/data)
+[Rule Data for built-in support of linters and formatters](./lua/rulebook/data)
 
 <!-- INFO use `just update-readme` to automatically update this section -->
 <!-- auto-generated: start -->
@@ -94,6 +97,11 @@ missing.
 - [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
 <!-- auto-generated: end -->
 
+### Suppress Formatting
+- [stylua](https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file)
+- [prettier](https://prettier.io/docs/en/ignore.html)
+- [black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections)
+
 ## Installation
 This plugin requires diagnostics provided by a source that supports Neovim's
 built-in diagnostics system. (nvim's built-in LSP client,
@@ -110,6 +118,7 @@ In addition, nvim 0.10 is required.
 		{ "<leader>ri", function() require("rulebook").ignoreRule() end },
 		{ "<leader>rl", function() require("rulebook").lookupRule() end },
 		{ "<leader>ry", function() require("rulebook").yankDiagnosticCode() end },
+		{ "<leader>sf", function() require("rulebook").suppressFormatter() end, mode = {"n", "x"} },
 	}
 },
 ```
@@ -122,14 +131,15 @@ use { "chrisgrieser/nvim-rulebook" }
 vim.keymap.set("n", "<leader>ri", function() require("rulebook").ignoreRule() end)
 vim.keymap.set("n", "<leader>rl", function() require("rulebook").lookupRule() end)
 vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticCode() end)
+vim.keymap.set({ "n", "x" }, "<leader>sf", function() require("rulebook").suppressFormatter() end)
 ```
 
 ## Configuration
 The configuration is optional. You only need to add a config when you want to
-customize a source or add custom sources.
+add or customize sources.
 
 When adding your own source, you must add the *exact*, case-sensitive
-source-name. (for example, `clang-tidy`, not `clang`).
+source name, for example, `clang-tidy`, not `clang`.
 
 ```lua
 require("rulebook").setup = ({
@@ -175,6 +185,17 @@ require("rulebook").setup = ({
 	-- if no diagnostic is found in current line, search this many lines forward
 	forwSearchLines = 10,
 
+	suppressFormatter = {
+		lua = {
+			-- normal mode
+			ignoreBlock = "-- stylua: ignore",
+			location = "prevLine",
+
+			-- visual mode
+			ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore start" },
+		},
+	}
+
 	-- whether to yank to `+` or `"`
 	yankDiagnosticCodeToSystemClipboard = true,
 })
@@ -189,7 +210,7 @@ appearance of the rule selection can be customized by using a UI-plugin like
 Built-in sources be customized by overwriting them in the configuration:
 
 ```lua
--- use `disable-line` instead of the default `disable-next-line` for eslint
+-- example: use `disable-line` instead of the default `disable-next-line` for eslint
 require("rulebook").setup = {
 	ignoreComments = {
 		eslint = {

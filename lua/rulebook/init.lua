@@ -14,6 +14,8 @@ function M.lookupRule() require("rulebook.diagnostic-actions").selectRule("looku
 function M.ignoreRule() require("rulebook.diagnostic-actions").selectRule("ignoreRule") end
 function M.yankDiagnosticCode() require("rulebook.diagnostic-actions").selectRule("yankDiagnosticCode") end
 
+function M.suppressFormatter() require("rulebook.formatter-actions").suppress() end
+
 --------------------------------------------------------------------------------
 -- API
 
