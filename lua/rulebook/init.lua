@@ -3,64 +3,20 @@ if version.major == 0 and version.minor < 10 then
 	vim.notify("nvim-rulebook requires at least nvim 0.10.", vim.log.levels.WARN)
 	return
 end
---------------------------------------------------------------------------------
 
 local M = {}
-local fn = vim.fn
-
----Send notification
----@param msg string
----@param level? "info"|"trace"|"debug"|"warn"|"error"
-local function notify(msg, level)
-	if not level then level = "info" end
-	vim.notify(msg, vim.log.levels[level:upper()], { title = "nvim-rulebook" })
-end
-
+local notify = require("rulebook.utils").notify
 --------------------------------------------------------------------------------
--- CONFIG
 
----@class pluginConfig for this plugin
----@field ignoreComments table<string, ruleIgnoreConfig>
----@field ruleDocs table<string, string|function>
----@field forwSearchLines number
-
----@type pluginConfig
-local defaultConfig = {
-	ignoreComments = require("rulebook.data.add-ignore-comment"),
-	ruleDocs = require("rulebook.data.rule-docs"),
-	forwSearchLines = 10,
-	yankDiagnosticCodeToSystemClipboard = true,
-}
-
--- if user does not call setup, use default
-local config = defaultConfig
-
----@param userConfig table
-function M.setup(userConfig)
-	config = vim.tbl_deep_extend("force", defaultConfig, userConfig)
-
-	-- VALIDATE
-	for name, linter in pairs(config.ignoreComments) do
-		local comType = type(linter.comment)
-		local errorMsg
-		if not (vim.tbl_contains({ "prevLine", "sameLine", "encloseLine" }, linter.location)) then
-			errorMsg = "'location' must be one of 'prevLine', 'sameLine' or 'encloseLine'"
-		elseif linter.location == "encloseLine" and comType ~= "table" and #linter.comment ~= 2 then
-			errorMsg = "'encloseLine' requires 'comment' to be a list of two strings"
-		elseif linter.location ~= "encloseLine" and comType ~= "string" and comType ~= "function" then
-			errorMsg = ("'%s' requires 'comment' to be a string or function"):format(linter.location)
-		end
-		if errorMsg then notify(("Config for %s: "):format(name) .. errorMsg, "error") end
-	end
-end
-
---------------------------------------------------------------------------------
+---@param userConfig? table
+function M.setup(userConfig) require("rulebook.config").setup(userConfig) end
 
 ---checks whether rule has id and source, as prescribed in nvim diagnostic structure
 ---@param diag vim.Diagnostic
 ---@return boolean whether rule is valid
 ---@nodiscard
 local function validDiagObj(diag)
+	local config = require("rulebook.config").config
 	local sourcesWithNoCodes = vim.iter(config.ignoreComments)
 		:filter(function(_, conf) return conf.doesNotUseCodes end)
 		:map(function(linter, _) return linter end)
@@ -83,6 +39,7 @@ end
 ---@param diag vim.Diagnostic
 local function searchForTheRule(diag)
 	if not validDiagObj(diag) then return end
+	local config = require("rulebook.config").config
 
 	-- determine url to open
 	local docResolver = config.ruleDocs[diag.source]
@@ -92,7 +49,7 @@ local function searchForTheRule(diag)
 	elseif type(docResolver) == "string" and not docResolver:find("%%s") then
 		-- for cases where a specific rule cannot be linked, copy the code to
 		-- the clipboard, so it is easier at the rule index page
-		fn.setreg("+", diag.code)
+		vim.fn.setreg("+", diag.code)
 		urlToOpen = docResolver
 	elseif type(docResolver) == "function" then
 		urlToOpen = docResolver(diag)
@@ -108,6 +65,7 @@ end
 ---@param diag vim.Diagnostic
 local function addIgnoreComment(diag)
 	if not validDiagObj(diag) then return end
+	local config = require("rulebook.config").config
 
 	local ignoreData = config.ignoreComments
 	local indent = vim.api.nvim_get_current_line():match("^%s*")
@@ -137,6 +95,7 @@ end
 ---@param diag vim.Diagnostic
 local function yankDiagCode(diag)
 	if not validDiagObj(diag) then return end
+	local config = require("rulebook.config").config
 
 	local reg = config.yankDiagnosticCodeToSystemClipboard and "+" or '"'
 	vim.fn.setreg(reg, diag.code)
@@ -149,6 +108,7 @@ end
 ---selects it. If no diagnostic found, searches in the next lines.
 ---@param operation function(diag)
 local function findAndSelectRule(operation)
+	local config = require("rulebook.config").config
 	local operationIsIgnore = operation == addIgnoreComment
 	local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
 	local startLine = lnum
@@ -236,6 +196,7 @@ function M.yankDiagnosticCode() findAndSelectRule(yankDiagCode) end
 ---@param diag vim.Diagnostic
 ---@return boolean hasDocs
 function M.hasDocs(diag)
+	local config = require("rulebook.config").config
 	local hasDocumentations = config.ruleDocs[diag.source] ~= nil
 	return hasDocumentations
 end
