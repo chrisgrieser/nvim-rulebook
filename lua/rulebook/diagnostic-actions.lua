@@ -1,4 +1,5 @@
 local M = {}
+local actions = {}
 local notify = require("rulebook.utils").notify
 --------------------------------------------------------------------------------
 
@@ -36,7 +37,7 @@ end
 --------------------------------------------------------------------------------
 
 ---@param diag vim.Diagnostic
-function M.lookupRule(diag)
+function actions.lookupRule(diag)
 	if not validDiagObj(diag) then return end
 	local config = require("rulebook.config").config
 
@@ -62,7 +63,7 @@ function M.lookupRule(diag)
 end
 
 ---@param diag vim.Diagnostic
-function M.ignoreRule(diag)
+function actions.ignoreRule(diag)
 	local configForSource = require("rulebook.config").config.ignoreComments[diag.source]
 	if not configForSource then
 		notify(("No ignore comment configured for %q."):format(diag.source), "warn")
@@ -95,7 +96,7 @@ function M.ignoreRule(diag)
 end
 
 ---@param diag vim.Diagnostic
-function M.yankDiagnosticCode(diag)
+function actions.yankDiagnosticCode(diag)
 	if not validDiagObj(diag) then return end
 	local config = require("rulebook.config").config
 
@@ -175,7 +176,7 @@ function M.selectRule(operation)
 			vim.cmd("normal! ^")
 		end
 
-		M[operation](diag)
+		actions[operation](diag)
 	end)
 end
 
