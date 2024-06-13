@@ -138,7 +138,7 @@ function M.selectRule(operation)
 
 	-- autoselect if only one diagnostic
 	if #diagsAtLine == 1 then
-		M[operation](diagsAtLine[1])
+		actions[operation](diagsAtLine[1])
 		return
 	end
 
