@@ -8,10 +8,5 @@ function M.notify(msg, level)
 	vim.notify(msg, vim.log.levels[level:upper()], { title = "nvim-rulebook" })
 end
 
-function M.leaveVisualMode()
-	local escKey = vim.api.nvim_replace_termcodes("<Esc>", false, true, true)
-	vim.api.nvim_feedkeys(escKey, "nx", false)
-end
-
 --------------------------------------------------------------------------------
 return M

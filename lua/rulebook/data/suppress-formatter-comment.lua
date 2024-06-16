@@ -1,6 +1,6 @@
 ---@class formatterSuppressConfig
----@field ignoreBlock string used in normal mode
----@field location "prevLine"|"sameLine" where the `ignoreBlock` is inserted
+---@field ignoreBlock string|string[] used in normal mode
+---@field location "prevLine"|"sameLine"|"encloseLine" where `ignoreBlock` is inserted. "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field ignoreRange? string[] list of two strings (start and end), will surround the visual mode selection
 ---@field docs string used for auto-generated docs
 
@@ -13,9 +13,9 @@ M = {
 		docs = "https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file",
 	},
 	python = {
-		ignoreRange = { "# fmt: on", "# fmt: off" },
-		location = "sameLine",
 		ignoreBlock = "# fmt: skip",
+		location = "sameLine",
+		ignoreRange = { "# fmt: on", "# fmt: off" },
 		docs = "https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections",
 		-- the same for `ruff`: https://docs.astral.sh/ruff/formatter/#format-suppression
 	},
@@ -51,8 +51,8 @@ M = {
 	},
 	markdown = {
 		ignoreBlock = "<!-- prettier-ignore -->",
-		ignoreRange = { "<!-- prettier-ignore-start -->", "<!-- prettier-ignore-end -->" },
 		location = "prevLine",
+		ignoreRange = { "<!-- prettier-ignore-start -->", "<!-- prettier-ignore-end -->" },
 		docs = "https://prettier.io/docs/en/ignore.html#markdown",
 	},
 }

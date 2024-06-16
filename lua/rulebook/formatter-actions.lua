@@ -5,7 +5,6 @@ local u = require("rulebook.utils")
 function M.suppress()
 	local ft = vim.bo.filetype
 	local mode = vim.fn.mode()
-	local indent = vim.api.nvim_get_current_line():match("^%s*")
 
 	local ftConfig = require("rulebook.config").config.suppressFormatter[ft]
 	if not ftConfig then
@@ -19,16 +18,23 @@ function M.suppress()
 		return
 	end
 
-	if vim.fn.mode() == "n" then
+	local indent = vim.api.nvim_get_current_line():match("^%s*")
+	local prevLnum = vim.api.nvim_win_get_cursor(0)[1] - 1
+
+	if mode == "n" then
 		if ftConfig.location == "prevLine" then
-			local prevLnum = vim.api.nvim_win_get_cursor(0)[1] - 1
 			vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { indent .. suppressText })
 		elseif ftConfig.location == "sameLine" then
 			local curLine = vim.api.nvim_get_current_line():gsub("%s+$", "")
 			vim.api.nvim_set_current_line(curLine .. " " .. suppressText)
+		elseif ftConfig.location == "encloseLine" then
+			local nextLnum = prevLnum + 1
+			-- next line first to not shift the line number
+			vim.api.nvim_buf_set_lines(0, nextLnum, nextLnum, false, { indent .. suppressText[1] })
+			vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { indent .. suppressText[2] })
 		end
-	else
-		u.leaveVisualMode() -- so `<>` marks are set
+	elseif mode:find("[Vv]") then
+		vim.cmd.normal { mode, bang = true } -- leave visual mode, so `<>` marks are set
 		local startLn = vim.api.nvim_buf_get_mark(0, "<")[1] - 1
 		local endLn = vim.api.nvim_buf_get_mark(0, ">")[1]
 
