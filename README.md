@@ -97,10 +97,12 @@ missing.
 - [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
 <!-- auto-generated: end -->
 
+<!-- TODO: auto-generate this section as well -->
 ### Suppress Formatting
 - [stylua](https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file)
 - [prettier](https://prettier.io/docs/en/ignore.html)
-- [black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections)
+- [black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections) / [ruff](https://docs.astral.sh/ruff/formatter/#format-suppression)
+- [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code)
 
 ## Installation
 This plugin requires diagnostics provided by a source that supports Neovim's

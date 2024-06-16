@@ -55,6 +55,18 @@ M = {
 		ignoreRange = { "<!-- prettier-ignore-start -->", "<!-- prettier-ignore-end -->" },
 		docs = "https://prettier.io/docs/en/ignore.html#markdown",
 	},
+	c = {
+		ignoreBlock = { "/* clang-format off */", "/* clang-format on */" },
+		location = "encloseLine",
+		ignoreRange = { "/* clang-format off */", "/* clang-format on */" },
+		docs = "https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code",
+	},
+	cpp = {
+		ignoreBlock = { "/* clang-format off */", "/* clang-format on */" },
+		location = "encloseLine",
+		ignoreRange = { "/* clang-format off */", "/* clang-format on */" },
+		docs = "https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code",
+	},
 }
 
 --------------------------------------------------------------------------------
