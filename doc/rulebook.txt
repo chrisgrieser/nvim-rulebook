@@ -27,6 +27,7 @@ linters and LSPs that don’t.
 - |rulebook-supported-sources|
     - |rulebook-rule-lookup|
     - |rulebook-add-ignore-comment|
+    - |rulebook-suppress-formatting|
 - |rulebook-installation|
 - |rulebook-configuration|
 - |rulebook-customize-built-in-sources|
@@ -41,10 +42,12 @@ FEATURES                                    *rulebook-nvim-rulebook--features*
 - Look up official rule documentation, falling back to a web search if the
     source does not have rule documentation.
 - Add inline-comments to ignore rules like `// eslint disable-next-line   some-rule`. Supports previous line, same line, and enclosing lines.
+- Suppress formatting with via ignore comments of the respective formatter, such
+    as `// prettier-ignore`.
 - QoL: auto-select a rule if it is the only one in the current line; if the line
-    has no diagnostic, search forward up to the next line that does.
-- Includes built-in support for various linters. Zero plugin configuration
-    required if you only need to use built-in sources.
+    has no diagnostic, search forward to the next line that does.
+- Includes built-in support for various linters and formatters. No plugin
+    configuration required if you only need to use built-in sources.
 - Customizing built-in sources or adding your own sources is easy. PRs to add
     more built-ins are welcome.
 
@@ -54,7 +57,7 @@ SUPPORTED SOURCES                  *rulebook-nvim-rulebook--supported-sources*
 You easily add a custom source via the |rulebook-plugin-configuration|. Though,
 please consider making a PR to add support for a source if it is missing.
 
-Rule Data for the supported linters <./lua/rulebook/data>
+Rule Data for built-in support of linters and formatters <./lua/rulebook/data>
 
 
 RULE LOOKUP ~
@@ -108,10 +111,19 @@ ADD IGNORE COMMENT ~
 - yamllint <https://yamllint.readthedocs.io/en/stable/disable_with_comments.html>
 
 
+SUPPRESS FORMATTING ~
+
+- stylua <https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file>
+- prettier <https://prettier.io/docs/en/ignore.html>
+- black <https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections> / ruff <https://docs.astral.sh/ruff/formatter/#format-suppression>
+- clang-format <https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code>
+
+
 INSTALLATION                            *rulebook-nvim-rulebook--installation*
 
 This plugin requires diagnostics provided by a source that supports Neovim’s
-built-in diagnostics system. (nvim’s built-in LSP client or nvim-lint
+built-in diagnostics system. (nvim’s built-in LSP client, efm-langserver
+<https://github.com/mattn/efm-langserver> or nvim-lint
 <https://github.com/mfussenegger/nvim-lint> are such sources.)
 
 In addition, nvim 0.10 is required.
@@ -124,6 +136,7 @@ In addition, nvim 0.10 is required.
             { "<leader>ri", function() require("rulebook").ignoreRule() end },
             { "<leader>rl", function() require("rulebook").lookupRule() end },
             { "<leader>ry", function() require("rulebook").yankDiagnosticCode() end },
+            { "<leader>sf", function() require("rulebook").suppressFormatter() end, mode = {"n", "x"} },
         }
     },
 <
@@ -136,16 +149,17 @@ In addition, nvim 0.10 is required.
     vim.keymap.set("n", "<leader>ri", function() require("rulebook").ignoreRule() end)
     vim.keymap.set("n", "<leader>rl", function() require("rulebook").lookupRule() end)
     vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticCode() end)
+    vim.keymap.set({ "n", "x" }, "<leader>sf", function() require("rulebook").suppressFormatter() end)
 <
 
 
 CONFIGURATION                          *rulebook-nvim-rulebook--configuration*
 
 The configuration is optional. You only need to add a config when you want to
-customize a source or add custom sources.
+add or customize sources.
 
-When adding your own source, you must add the _exact_, case-sensitive
-source-name. (for example, `clang-tidy`, not `clang`).
+When adding your own source, you must add the _exact_, case-sensitive source
+name, for example, `clang-tidy`, not `clang`.
 
 >lua
     require("rulebook").setup = ({
@@ -191,6 +205,17 @@ source-name. (for example, `clang-tidy`, not `clang`).
         -- if no diagnostic is found in current line, search this many lines forward
         forwSearchLines = 10,
     
+        suppressFormatter = {
+            lua = {
+                -- normal mode
+                ignoreBlock = "-- stylua: ignore",
+                location = "prevLine",
+    
+                -- visual mode
+                ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore start" },
+            },
+        }
+    
         -- whether to yank to `+` or `"`
         yankDiagnosticCodeToSystemClipboard = true,
     })
@@ -206,7 +231,7 @@ CUSTOMIZE BUILT-IN SOURCES*rulebook-nvim-rulebook--customize-built-in-sources*
 Built-in sources be customized by overwriting them in the configuration:
 
 >lua
-    -- use `disable-line` instead of the default `disable-next-line` for eslint
+    -- example: use `disable-line` instead of the default `disable-next-line` for eslint
     require("rulebook").setup = {
         ignoreComments = {
             eslint = {
@@ -223,9 +248,9 @@ LIMITATIONS                              *rulebook-nvim-rulebook--limitations*
 - The diagnostics have to contain the necessary data, |that is a diagnostic code
     and diagnostic
     source|. Most
-    LSPs, and most linters configured for `nvim-lint` do that, but some diagnostic
-    sources do not (for example `efm-langserver` with incorrectly defined
-    `errorformat`). Please open an issue at the diagnostics provider to fix such
+    LSPs and most linters configured for `nvim-lint`/`efm` do that, but some diagnostic
+    sources do not (for example, `efm` with incorrectly defined `errorformat`).
+    Please open an issue at the diagnostics provider to fix such
     issues.
 - This plugin does not hook into `vim.lsp.buf.code_action`, but provides its own
     selector.
@@ -253,21 +278,19 @@ there is a rule lookup available for a diagnostic (see
 
 CREDITS                                      *rulebook-nvim-rulebook--credits*
 
-**About Me** In my day job, I am a sociologist studying the social mechanisms
-underlying the digital economy. For my PhD project, I investigate the
-governance of the app economy and how software ecosystems manage the tension
-between innovation and compatibility. If you are interested in this subject,
-feel free to get in touch.
+In my day job, I am a sociologist studying the social mechanisms underlying the
+digital economy. For my PhD project, I investigate the governance of the app
+economy and how software ecosystems manage the tension between innovation and
+compatibility. If you are interested in this subject, feel free to get in
+touch.
 
-**Blog** I also occasionally blog about vim: Nano Tips for Vim
+I also occasionally blog about vim: Nano Tips for Vim
 <https://nanotipsforvim.prose.sh>
 
-**Profiles** - reddit <https://www.reddit.com/user/pseudometapseudo> - Discord
-<https://discordapp.com/users/462774483044794368/> - Academic Website
-<https://chris-grieser.de/> - Twitter <https://twitter.com/pseudo_meta> -
-Mastodon <https://pkm.social/@pseudometa> - ResearchGate
-<https://www.researchgate.net/profile/Christopher-Grieser> - LinkedIn
-<https://www.linkedin.com/in/christopher-grieser-ba693b17a/>
+- Academic Website <https://chris-grieser.de/>
+- Mastodon <https://pkm.social/@pseudometa>
+- ResearchGate <https://www.researchgate.net/profile/Christopher-Grieser>
+- LinkedIn <https://www.linkedin.com/in/christopher-grieser-ba693b17a/>
 
 
 
