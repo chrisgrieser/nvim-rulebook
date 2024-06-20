@@ -2,6 +2,26 @@ local M = {}
 local notify = require("rulebook.utils").notify
 --------------------------------------------------------------------------------
 
+---@param config ruleIgnoreConfig|formatterSuppressConfig
+---@param commentKeyName string
+---@return string errorMsg
+local function validateConfig(config, commentKeyName)
+	local comment = config[commentKeyName]
+	local location = config.location
+	local comType = type(comment)
+	local errorMsg
+	if not (vim.tbl_contains({ "prevLine", "sameLine", "encloseLine" }, location)) then
+		errorMsg = '"location" must be one of "prevLine", "sameLine" or "encloseLine"'
+	elseif location == "encloseLine" and comType ~= "table" and #comment ~= 2 then
+		errorMsg = '"encloseLine" requires "comment" to be a list of two strings'
+	elseif location ~= "encloseLine" and comType ~= "string" and comType ~= "function" then
+		errorMsg = ("%q requires %q to be a string or function"):format(location, commentKeyName)
+	end
+	return errorMsg
+end
+
+--------------------------------------------------------------------------------
+
 ---@class pluginConfig for this plugin
 ---@field ignoreComments table<string, ruleIgnoreConfig>
 ---@field ruleDocs table<string, string|function>
@@ -11,8 +31,8 @@ local notify = require("rulebook.utils").notify
 local defaultConfig = {
 	ignoreComments = require("rulebook.data.add-ignore-rule-comment"),
 	ruleDocs = require("rulebook.data.rule-docs"),
-	forwSearchLines = 10,
 	suppressFormatter = require("rulebook.data.suppress-formatter-comment"),
+	forwSearchLines = 10,
 	yankDiagnosticCodeToSystemClipboard = true,
 }
 
@@ -24,17 +44,17 @@ function M.setup(userConfig)
 	M.config = vim.tbl_deep_extend("force", M.config, userConfig or {})
 
 	-- VALIDATE
-	for name, linter in pairs(M.config.ignoreComments) do
-		local comType = type(linter.comment)
-		local errorMsg
-		if not (vim.tbl_contains({ "prevLine", "sameLine", "encloseLine" }, linter.location)) then
-			errorMsg = "'location' must be one of 'prevLine', 'sameLine' or 'encloseLine'"
-		elseif linter.location == "encloseLine" and comType ~= "table" and #linter.comment ~= 2 then
-			errorMsg = "'encloseLine' requires 'comment' to be a list of two strings"
-		elseif linter.location ~= "encloseLine" and comType ~= "string" and comType ~= "function" then
-			errorMsg = ('%q requires "comment" to be a string or function'):format(linter.location)
+	for linterName, linterConfig in pairs(M.config.ignoreComments) do
+		local errorMsg = validateConfig(linterConfig, "comment")
+		if errorMsg then
+			notify(("Ignore comment config for %q: %s"):format(linterName, errorMsg), "error")
 		end
-		if errorMsg then notify(("Config for %q: "):format(name) .. errorMsg, "error") end
+	end
+	for ftName, ftConfig in pairs(M.config.suppressFormatter) do
+		local errorMsg = validateConfig(ftConfig, "ignoreBlock")
+		if errorMsg then
+			notify(("Suppress formatter config for %q: %s"):format(ftName, errorMsg), "error")
+		end
 	end
 end
 
