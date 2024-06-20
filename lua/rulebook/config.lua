@@ -22,18 +22,18 @@ end
 
 --------------------------------------------------------------------------------
 
----@class pluginConfig for this plugin
+---@class rulebook.config
 ---@field ignoreComments table<string, ruleIgnoreConfig>
 ---@field ruleDocs table<string, string|function>
+---@field suppressFormatter table<string, formatterSuppressConfig>
 ---@field forwSearchLines number
 
----@type pluginConfig
+---@type rulebook.config
 local defaultConfig = {
 	ignoreComments = require("rulebook.data.add-ignore-rule-comment"),
 	ruleDocs = require("rulebook.data.rule-docs"),
 	suppressFormatter = require("rulebook.data.suppress-formatter-comment"),
 	forwSearchLines = 10,
-	yankDiagnosticCodeToSystemClipboard = true,
 }
 
 -- if user does not call setup, use default

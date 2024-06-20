@@ -145,6 +145,9 @@ source name, for example, `clang-tidy`, not `clang`.
 
 ```lua
 require("rulebook").setup = ({
+	-- if no diagnostic is found in current line, search this many lines forward
+	forwSearchLines = 10,
+
 	ignoreComments = {
 		selene = {
 			comment = "-- selene: allow(%s)",
@@ -163,7 +166,6 @@ require("rulebook").setup = ({
 			location = "encloseLine",
 		}
 	},
-
 	ruleDocs = {
 		selene = "https://kampfkarren.github.io/selene/lints/%s.html"
 		-- ... (full list of supported sources can be found in the README)
@@ -183,10 +185,6 @@ require("rulebook").setup = ({
 			return url
 		end,
 	}
-
-	-- if no diagnostic is found in current line, search this many lines forward
-	forwSearchLines = 10,
-
 	suppressFormatter = {
 		lua = {
 			-- normal mode
@@ -197,9 +195,6 @@ require("rulebook").setup = ({
 			ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore start" },
 		},
 	}
-
-	-- whether to yank to `+` or `"`
-	yankDiagnosticCodeToSystemClipboard = true,
 })
 ```
 

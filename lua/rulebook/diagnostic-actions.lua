@@ -97,10 +97,7 @@ end
 ---@param diag vim.Diagnostic
 function actions.yankDiagnosticCode(diag)
 	if not validDiagObj(diag) then return end
-	local config = require("rulebook.config").config
-
-	local reg = config.yankDiagnosticCodeToSystemClipboard and "+" or '"'
-	vim.fn.setreg(reg, diag.code)
+	vim.fn.setreg("+", diag.code)
 	notify(("Diagnostic code copied: \n%s"):format(diag.code), "info")
 end
 
