@@ -23,7 +23,7 @@ local function validDiagObj(diag)
 	if not sourceUsesCodes(diag) then return true end
 
 	local issuePlea =
-		"\nIf you are using efm or nvim-lint, please check your linter config. Otherwise open an issue at the diagnostic source or the diagnostic provider."
+		"\nIf you are using `efm` or `nvim-lint`, please check your linter config. Otherwise open an issue at the diagnostic source or the diagnostic provider."
 	if not diag.source then
 		notify("Diagnostic is missing a source." .. issuePlea, "warn")
 		return false
