@@ -17,6 +17,9 @@ local function validateIgnoreComment(config, commentKeyName)
 	elseif location ~= "encloseLine" and comType ~= "string" and comType ~= "function" then
 		errorMsg = ("`%s` requires `%s` to be a string or function"):format(location, commentKeyName)
 	end
+	if location == "encloseLine" and config.multiRuleIgnore then
+		errorMsg = "`encloseLine` does not support `multiRuleIgnore`."
+	end
 	return errorMsg
 end
 

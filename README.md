@@ -152,12 +152,23 @@ require("rulebook").setup = ({
 		shellcheck = {
 			comment = "# shellcheck disable=%s",
 			location = "prevLine",
+			multiRuleIgnore = true,
+			multiRuleSeparator = ",",
 		},
 		-- ... (full list of sources with builtin support can be found in the README)
 
 		yourCustomSource = { -- exact, case-sensitive source-name
-			comment = "// disabling-comment %s", -- `%s` will be replaced with rule-id
-			location = "prevLine", -- "prevLine"|"sameLine"|"encloseLine"
+			-- `%s` will be replaced with rule-id
+			comment = "// disabling-comment %s",
+
+			---@type "prevLine"|"sameLine"|"encloseLine"
+			location = "sameLine",
+
+			-- whether multiple rules can be ignored with one comment, defaults to `false`
+			multiRuleIgnore = true,
+
+			-- separator for multiple rule-ids, defaults to ", "
+			multiRuleSeparator = ",",
 		}
 
 		-- if location is "encloseLine", needs to be a list of two strings
