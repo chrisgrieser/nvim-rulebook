@@ -4,7 +4,7 @@
 ---@field docs string used for auto-generated docs
 ---@field doesNotUseCodes? boolean the linter does not use codes/rule-ids
 
----INFO the key must be named *exactly* like diagnostic.source (case-sensitive!)
+---INFO the key must be named like the exact, case-sensitive `diagnostic.source`
 --------------------------------------------------------------------------------
 
 ---@type table<string, ruleIgnoreConfig>
@@ -119,9 +119,9 @@ M = {
 
 M.tsserver = M.typescript -- typescript-tools.nvim
 M.ts = M.typescript -- vtsls
-M["vale-ls"] = M.vale
+M["vale-ls"] = M.vale -- lsp and linter have separate source names
 M.stylelintplus = M.stylelint -- stylelint-lsp
-M.basedpyright = M.Pyright
+M.basedpyright = M.Pyright -- pyright fork
 
 --------------------------------------------------------------------------------
 return M

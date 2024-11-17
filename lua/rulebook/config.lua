@@ -5,17 +5,17 @@ local notify = require("rulebook.utils").notify
 ---@param config ruleIgnoreConfig|formatterSuppressConfig
 ---@param commentKeyName string
 ---@return string errorMsg
-local function validateConfig(config, commentKeyName)
+local function validateIgnoreComment(config, commentKeyName)
 	local comment = config[commentKeyName]
 	local location = config.location
 	local comType = type(comment)
 	local errorMsg
 	if not (vim.tbl_contains({ "prevLine", "sameLine", "encloseLine" }, location)) then
-		errorMsg = '"location" must be one of "prevLine", "sameLine" or "encloseLine"'
+		errorMsg = "`location` must be one of `prevLine`, `sameLine` or `encloseLine`."
 	elseif location == "encloseLine" and comType ~= "table" and #comment ~= 2 then
-		errorMsg = '"encloseLine" requires "comment" to be a list of two strings'
+		errorMsg = "`encloseLine` requires 'comment' to be a list of two strings."
 	elseif location ~= "encloseLine" and comType ~= "string" and comType ~= "function" then
-		errorMsg = ("%q requires %q to be a string or function"):format(location, commentKeyName)
+		errorMsg = ("`%s` requires `%s` to be a string or function"):format(location, commentKeyName)
 	end
 	return errorMsg
 end
@@ -45,13 +45,13 @@ function M.setup(userConfig)
 
 	-- VALIDATE
 	for linterName, linterConfig in pairs(M.config.ignoreComments) do
-		local errorMsg = validateConfig(linterConfig, "comment")
+		local errorMsg = validateIgnoreComment(linterConfig, "comment")
 		if errorMsg then
 			notify(("Ignore comment config for %q: %s"):format(linterName, errorMsg), "error")
 		end
 	end
 	for ftName, ftConfig in pairs(M.config.suppressFormatter) do
-		local errorMsg = validateConfig(ftConfig, "ignoreBlock")
+		local errorMsg = validateIgnoreComment(ftConfig, "ignoreBlock")
 		if errorMsg then
 			notify(("Suppress formatter config for %q: %s"):format(ftName, errorMsg), "error")
 		end
