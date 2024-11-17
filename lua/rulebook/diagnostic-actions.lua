@@ -34,6 +34,11 @@ local function validDiagObj(diag)
 	return true
 end
 
+---@param diag vim.Diagnostic
+local function moveCursorToDiagnostic(diag)
+	vim.api.nvim_win_set_cursor(0, { diag.lnum + 1, diag.col })
+end
+
 --------------------------------------------------------------------------------
 
 ---@param diag vim.Diagnostic
@@ -171,6 +176,7 @@ function M.selectRule(operation)
 
 	-- autoselect if only one diagnostic
 	if #diagsAtLine == 1 then
+		moveCursorToDiagnostic(diagsAtLine[1])
 		actions[operation](diagsAtLine[1])
 		return
 	end
@@ -202,13 +208,7 @@ function M.selectRule(operation)
 		end,
 	}, function(diag)
 		if not diag then return end -- user aborted
-
-		-- move cursor to location where we add the comment
-		if operation == "ignoreRule" and startLine ~= lnum then
-			vim.api.nvim_win_set_cursor(0, { lnum + 1, 0 })
-			vim.cmd("normal! ^")
-		end
-
+		moveCursorToDiagnostic(diag)
 		actions[operation](diag)
 	end)
 end
