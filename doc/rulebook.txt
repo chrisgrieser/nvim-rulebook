@@ -5,10 +5,10 @@ Table of Contents                                 *rulebook-table-of-contents*
 
 1. nvim-rulebook                                     |rulebook-nvim-rulebook-|
   - Features                                |rulebook-nvim-rulebook--features|
-  - Supported Sources              |rulebook-nvim-rulebook--supported-sources|
+  - Supported sources              |rulebook-nvim-rulebook--supported-sources|
   - Installation                        |rulebook-nvim-rulebook--installation|
   - Configuration                      |rulebook-nvim-rulebook--configuration|
-  - Customize Built-in Sources|rulebook-nvim-rulebook--customize-built-in-sources|
+  - Customize builtin sources|rulebook-nvim-rulebook--customize-builtin-sources|
   - Limitations                          |rulebook-nvim-rulebook--limitations|
   - API                                          |rulebook-nvim-rulebook--api|
   - Credits                                  |rulebook-nvim-rulebook--credits|
@@ -57,7 +57,7 @@ SUPPORTED SOURCES                  *rulebook-nvim-rulebook--supported-sources*
 You easily add a custom source via the |rulebook-plugin-configuration|. Though,
 please consider making a PR to add support for a source if it is missing.
 
-Rule Data for built-in support of linters and formatters <./lua/rulebook/data>
+Rule data for built-in support of linters and formatters <./lua/rulebook/data>
 
 
 RULE LOOKUP ~
@@ -91,7 +91,7 @@ ADD IGNORE COMMENT ~
 - Ruff <https://docs.astral.sh/ruff/linter/#error-suppression>
 - alex <https://github.com/get-alex/alex#control>
 - basedpyright <https://microsoft.github.io/pyright/#/comments>
-- biome <https://biomejs.dev/linter/#ignoring-code>
+- biome <https://biomejs.dev/linter/#ignore-code>
 - clang-tidy <https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics>
 - codespell <https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455>
 - editorconfig-checker <https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines>
@@ -158,7 +158,7 @@ CONFIGURATION                          *rulebook-nvim-rulebook--configuration*
 The configuration is optional. You only need to add a config when you want to
 add or customize sources.
 
-When adding your own source, you must add the _exact_, case-sensitive source
+When adding your own source, you must add the exact, case-sensitive source
 name, for example, `clang-tidy`, not `clang`.
 
 >lua
@@ -167,23 +167,38 @@ name, for example, `clang-tidy`, not `clang`.
         forwSearchLines = 10,
     
         ignoreComments = {
-            selene = {
-                comment = "-- selene: allow(%s)",
+            shellcheck = {
+                comment = "# shellcheck disable=%s",
                 location = "prevLine",
+                multiRuleIgnore = true,
+                multiRuleSeparator = ",",
             },
-            -- ... (full list of supported sources can be found in the README)
+            -- ... (full list of sources with builtin support can be found in the README)
     
             yourCustomSource = { -- exact, case-sensitive source-name
-                comment = "// disabling-comment %s", -- %s will be replaced with rule-id
-                location = "prevLine", -- "prevLine"|"sameLine"|"encloseLine"
+                -- `%s` will be replaced with rule-id
+                comment = "// disabling-comment %s",
+    
+                ---@type "prevLine"|"sameLine"|"encloseLine"
+                location = "sameLine",
+    
+                -- whether multiple rules can be ignored with one comment, defaults to `false`
+                multiRuleIgnore = true,
+    
+                -- separator for multiple rule-ids, defaults to ", "
+                multiRuleSeparator = ",",
             }
     
             -- if location is "encloseLine", needs to be a list of two strings
             anotherCustomSource = {
-                comment = { "// disable-rule %s", "// enable-rule %s" },
+                comment = { 
+                    "// disable-rule %s", 
+                    "// enable-rule %s",
+                },
                 location = "encloseLine",
             }
         },
+    
         ruleDocs = {
             selene = "https://kampfkarren.github.io/selene/lints/%s.html"
             -- ... (full list of supported sources can be found in the README)
@@ -194,15 +209,15 @@ name, for example, `clang-tidy`, not `clang`.
             fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
     
             -- the value of the rule documentations accept either a string or a function
-            -- if a string, `%s` will be replaced with rule-id
-            -- if a function, takes a `:h diagnostic-structure` as argument and must 
-            -- return a url
+            -- * if a string, `%s` will be replaced with rule-id
+            -- * if a function, takes a `:h diagnostic-structure` as argument & return a url
             yourCustomSource = "https://my-docs/%s.hthml",
             anotherCustomSource = function(diag)
                 -- ...
                 return url
             end,
         }
+    
         suppressFormatter = {
             lua = {
                 -- normal mode
@@ -221,7 +236,7 @@ customized by using a UI-plugin like dressing.nvim
 <https://github.com/stevearc/dressing.nvim>.
 
 
-CUSTOMIZE BUILT-IN SOURCES*rulebook-nvim-rulebook--customize-built-in-sources*
+CUSTOMIZE BUILTIN SOURCES  *rulebook-nvim-rulebook--customize-builtin-sources*
 
 Built-in sources be customized by overwriting them in the configuration:
 
