@@ -64,33 +64,41 @@ end
 
 ---@param diag vim.Diagnostic
 function actions.ignoreRule(diag)
-	local configForSource = require("rulebook.config").config.ignoreComments[diag.source]
-	if not configForSource then
+	---@type ruleIgnoreConfig
+	local sourceConf = require("rulebook.config").config.ignoreComments[diag.source]
+	if not sourceConf then
 		notify(("No ignore comment configured for %q."):format(diag.source), "warn")
 		return
 	end
 	if not validDiagObj(diag) then return end
 
 	local indent = vim.api.nvim_get_current_line():match("^%s*")
-	local prevLnum = vim.api.nvim_win_get_cursor(0)[1] - 1
-	local ignoreComment = configForSource.comment
+	local prevLn = vim.api.nvim_win_get_cursor(0)[1] - 1
+	local ignoreComment = sourceConf.comment
 	if type(ignoreComment) == "function" then ignoreComment = ignoreComment(diag) end
 
-	-- insert the comment
-	if configForSource.location == "prevLine" then
-		ignoreComment = indent .. ignoreComment:format(diag.code)
-		vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { ignoreComment })
-	elseif configForSource.location == "sameLine" then
-		ignoreComment = ignoreComment:format(diag.code)
+	-----------------------------------------------------------------------------
+	if sourceConf.location == "prevLine" then
+		---@cast ignoreComment string
+		local comment = indent .. ignoreComment:format(diag.code)
+		vim.api.nvim_buf_set_lines(0, prevLn, prevLn, false, { comment })
+	-----------------------------------------------------------------------------
+	elseif sourceConf.location == "sameLine" then
+		---@cast ignoreComment string
 		local curLine = vim.api.nvim_get_current_line():gsub("%s+$", "")
-		vim.api.nvim_set_current_line(curLine .. " " .. ignoreComment)
-	elseif configForSource.location == "encloseLine" then
-		ignoreComment[1] = indent .. ignoreComment[1]:format(diag.code)
-		ignoreComment[2] = indent .. ignoreComment[2]:format(diag.code)
-		local nextLnum = prevLnum + 1
+
+		local comment = ignoreComment:format(diag.code)
+		local extraSpace = vim.bo.filetype == "python" and " " or "" -- formatters expect an extra space
+		vim.api.nvim_set_current_line(curLine .. " " .. extraSpace .. comment)
+	-----------------------------------------------------------------------------
+	elseif sourceConf.location == "encloseLine" then
+		---@cast ignoreComment string[]
+		local comment1 = indent .. ignoreComment[1]:format(diag.code)
+		local comment2 = indent .. ignoreComment[2]:format(diag.code)
+		local nextLn = prevLn + 1
 		-- next line first to not shift the line number
-		vim.api.nvim_buf_set_lines(0, nextLnum, nextLnum, false, { ignoreComment[2] })
-		vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { ignoreComment[1] })
+		vim.api.nvim_buf_set_lines(0, nextLn, nextLn, false, { comment2 })
+		vim.api.nvim_buf_set_lines(0, prevLn, prevLn, false, { comment1 })
 	end
 end
 
@@ -100,6 +108,8 @@ function actions.yankDiagnosticCode(diag)
 	vim.fn.setreg("+", diag.code)
 	notify(("Diagnostic code copied: \n%s"):format(diag.code), "info")
 end
+
+--------------------------------------------------------------------------------
 
 ---Selects a diagnostic in the current line. If one diagnostic, automatically
 ---selects it. If no diagnostic found, searches in the next lines.
