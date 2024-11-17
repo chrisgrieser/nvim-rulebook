@@ -1,5 +1,5 @@
 -- INFO has to be run from lua subdirectory when called via `nvim -l`
--- `cd lua && nvim -l rulebook/update-readme.lua`
+-- `cd lua && nvim -l rulebook/_update-readme.lua`
 -- (it is not indented to be used for other purposes)
 --------------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ for source, _ in pairs(ruleDocs) do
 end
 table.sort(ruleDocsSources)
 
-local ignoreComments = require("rulebook.data.add-ignore-comment")
+local ignoreComments = require("rulebook.data.add-ignore-rule-comment")
 for source, data in pairs(ignoreComments) do
 	local newLine = ("- [%s](%s)"):format(source, data.docs)
 	table.insert(ignoreCommentSources, newLine)
@@ -59,10 +59,10 @@ table.sort(ignoreCommentSources)
 -- write new file
 local newContent = table.concat(beforePart, "\n")
 	.. "\n"
-	.. "### Rule Lookup\n"
+	.. "### Rule lookup\n"
 	.. table.concat(ruleDocsSources, "\n")
 	.. "\n\n"
-	.. "### Add Ignore Comment\n"
+	.. "### Add ignore comment\n"
 	.. table.concat(ignoreCommentSources, "\n")
 	.. "\n"
 	.. table.concat(afterPart, "\n")

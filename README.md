@@ -77,7 +77,7 @@ missing.
 - [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
 - [alex](https://github.com/get-alex/alex#control)
 - [basedpyright](https://microsoft.github.io/pyright/#/comments)
-- [biome](https://biomejs.dev/linter/#ignoring-code)
+- [biome](https://biomejs.dev/linter/#ignore-code)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
 - [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines)
