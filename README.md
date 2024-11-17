@@ -13,15 +13,15 @@ and LSPs that don't.
 
 - [Features](#features)
 - [Supported Sources](#supported-sources)
-	* [Rule Lookup](#rule-lookup)
-	* [Add Ignore Comment](#add-ignore-comment)
-	* [Suppress Formatting](#suppress-formatting)
+  * [Rule Lookup](#rule-lookup)
+  * [Add Ignore Comment](#add-ignore-comment)
+  * [Suppress Formatting](#suppress-formatting)
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Customize Built-in Sources](#customize-built-in-sources)
 - [Limitations](#limitations)
 - [API](#api)
-	* [Availability of Rule Lookup](#availability-of-rule-lookup)
+  * [Availability of Rule Lookup](#availability-of-rule-lookup)
 - [Credits](#credits)
 
 <!-- tocstop -->
@@ -40,16 +40,16 @@ and LSPs that don't.
 - Customizing built-in sources or adding your own sources is easy. PRs to add
   more built-ins are welcome.
 
-## Supported Sources
+## Supported sources
 You easily add a custom source via the [plugin configuration](#configuration).
 Though, please consider making a PR to add support for a source if it is
 missing.
 
-[Rule Data for built-in support of linters and formatters](./lua/rulebook/data)
+[Rule data for built-in support of linters and formatters](./lua/rulebook/data)
 
 <!-- INFO use `just update-readme` to automatically update this section -->
 <!-- auto-generated: start -->
-### Rule Lookup
+### Rule lookup
 - `LTeX`
 - `Lua Diagnostics.`
 - `Pyright`
@@ -70,7 +70,7 @@ missing.
 - `typescript`
 - `yamllint`
 
-### Add Ignore Comment
+### Add ignore comment
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
 - [Lua Diagnostics.](https://luals.github.io/wiki/annotations/#diagnostic)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
@@ -98,7 +98,7 @@ missing.
 <!-- auto-generated: end -->
 
 <!-- TODO: auto-generate this section as well -->
-### Suppress Formatting
+### Suppress formatting
 - [stylua](https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file)
 - [prettier](https://prettier.io/docs/en/ignore.html)
 - [black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections) / [ruff](https://docs.astral.sh/ruff/formatter/#format-suppression)
@@ -140,7 +140,7 @@ vim.keymap.set({ "n", "x" }, "<leader>sf", function() require("rulebook").suppre
 The configuration is optional. You only need to add a config when you want to
 add or customize sources.
 
-When adding your own source, you must add the *exact*, case-sensitive
+When adding your own source, you must add the exact, case-sensitive
 source name, for example, `clang-tidy`, not `clang`.
 
 ```lua
@@ -149,23 +149,27 @@ require("rulebook").setup = ({
 	forwSearchLines = 10,
 
 	ignoreComments = {
-		selene = {
-			comment = "-- selene: allow(%s)",
+		shellcheck = {
+			comment = "# shellcheck disable=%s",
 			location = "prevLine",
 		},
-		-- ... (full list of supported sources can be found in the README)
+		-- ... (full list of sources with builtin support can be found in the README)
 
 		yourCustomSource = { -- exact, case-sensitive source-name
-			comment = "// disabling-comment %s", -- %s will be replaced with rule-id
+			comment = "// disabling-comment %s", -- `%s` will be replaced with rule-id
 			location = "prevLine", -- "prevLine"|"sameLine"|"encloseLine"
 		}
 
 		-- if location is "encloseLine", needs to be a list of two strings
 		anotherCustomSource = {
-			comment = { "// disable-rule %s", "// enable-rule %s" },
+			comment = { 
+				"// disable-rule %s", 
+				"// enable-rule %s",
+			},
 			location = "encloseLine",
 		}
 	},
+
 	ruleDocs = {
 		selene = "https://kampfkarren.github.io/selene/lints/%s.html"
 		-- ... (full list of supported sources can be found in the README)
@@ -176,15 +180,15 @@ require("rulebook").setup = ({
 		fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
 
 		-- the value of the rule documentations accept either a string or a function
-		-- if a string, `%s` will be replaced with rule-id
-		-- if a function, takes a `:h diagnostic-structure` as argument and must 
-		-- return a url
+		-- * if a string, `%s` will be replaced with rule-id
+		-- * if a function, takes a `:h diagnostic-structure` as argument & return a url
 		yourCustomSource = "https://my-docs/%s.hthml",
 		anotherCustomSource = function(diag)
 			-- ...
 			return url
 		end,
 	}
+
 	suppressFormatter = {
 		lua = {
 			-- normal mode
@@ -203,7 +207,7 @@ The plugin uses
 appearance of the rule selection can be customized by using a UI-plugin like
 [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
-## Customize Built-in Sources
+## Customize builtin sources
 Built-in sources be customized by overwriting them in the configuration:
 
 ```lua
@@ -231,7 +235,7 @@ require("rulebook").setup = {
 
 ## API
 
-### Availability of Rule Lookup
+### Availability of rule lookup
 The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object
 and returns a boolean whether `nvim-rulebook` documentation for the respective
 diagnostic available. One use case for this is to add a visual indicator if
@@ -246,7 +250,6 @@ vim.diagnostic.config {
 }
 ```
 
-<!-- vale Google.FirstPerson = NO -->
 ## Credits
 In my day job, I am a sociologist studying the social mechanisms underlying the
 digital economy. For my PhD project, I investigate the governance of the app
