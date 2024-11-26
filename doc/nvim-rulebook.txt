@@ -1,6 +1,19 @@
 *nvim-rulebook.txt*          For Neovim          Last change: 2024 November 26
 
 ==============================================================================
+Table of Contents                            *nvim-rulebook-table-of-contents*
+
+1. nvim-rulebook                                |nvim-rulebook-nvim-rulebook-|
+  - Features                           |nvim-rulebook-nvim-rulebook--features|
+  - Supported sources         |nvim-rulebook-nvim-rulebook--supported-sources|
+  - Installation                   |nvim-rulebook-nvim-rulebook--installation|
+  - Configuration                 |nvim-rulebook-nvim-rulebook--configuration|
+  - Customize builtin sources|nvim-rulebook-nvim-rulebook--customize-builtin-sources|
+  - Limitations                     |nvim-rulebook-nvim-rulebook--limitations|
+  - API                                     |nvim-rulebook-nvim-rulebook--api|
+  - Credits                             |nvim-rulebook-nvim-rulebook--credits|
+
+==============================================================================
 1. nvim-rulebook                                *nvim-rulebook-nvim-rulebook-*
 
 
