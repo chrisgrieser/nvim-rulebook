@@ -131,6 +131,19 @@ vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticC
 vim.keymap.set({ "n", "x" }, "<leader>rf", function() require("rulebook").suppressFormatter() end)
 ```
 
+Alternatively, you can use the `:Rulebook` ex-command:
+
+```vim
+:Rulebook ignoreRule
+:Rulebook lookupRule
+:Rulebook yankDiagnosticCode
+:Rulebook suppressFormatter
+```
+
+Note that `:Rulebook suppressFormatter` only supports normal mode. To add
+formatter-ignore comments for a line range, you need to use the lua function
+`require("rulebook").suppressFormatter()` from visual mode.
+
 ## Configuration
 The `.setup()` call is optional. You only need to add a config when you want to
 add or customize sources.
