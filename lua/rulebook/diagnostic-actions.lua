@@ -146,7 +146,7 @@ end
 ---Selects a diagnostic in the current line. If one diagnostic, automatically
 ---selects it. If no diagnostic found, searches in the next lines.
 ---@param operation "lookupRule"|"ignoreRule"|"yankDiagnosticCode"
-function M.selectRule(operation)
+local function selectRule(operation)
 	local config = require("rulebook.config").config
 	local lnum = vim.api.nvim_win_get_cursor(0)[1] - 1
 	local startLine = lnum
@@ -207,11 +207,15 @@ function M.selectRule(operation)
 			return display
 		end,
 	}, function(diag)
-		if not diag then return end -- user aborted
+		if not diag then return end
 		moveCursorToDiagnostic(diag)
 		actions[operation](diag)
 	end)
 end
+
+function M.lookupRule() selectRule("lookupRule") end
+function M.ignoreRule() selectRule("ignoreRule") end
+function M.yankDiagnosticCode() selectRule("yankDiagnosticCode") end
 
 --------------------------------------------------------------------------------
 return M
