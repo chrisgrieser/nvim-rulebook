@@ -12,16 +12,16 @@ and LSPs that don't.
 <!-- toc -->
 
 - [Features](#features)
-- [Supported Sources](#supported-sources)
-  * [Rule Lookup](#rule-lookup)
-  * [Add Ignore Comment](#add-ignore-comment)
-  * [Suppress Formatting](#suppress-formatting)
+- [Supported sources](#supported-sources)
+	* [Rule lookup](#rule-lookup)
+	* [Add ignore comment](#add-ignore-comment)
+	* [Suppress formatting](#suppress-formatting)
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Customize Built-in Sources](#customize-built-in-sources)
+- [Customize builtin sources](#customize-builtin-sources)
 - [Limitations](#limitations)
 - [API](#api)
-  * [Availability of Rule Lookup](#availability-of-rule-lookup)
+	* [Availability of rule lookup](#availability-of-rule-lookup)
 - [Credits](#credits)
 
 <!-- tocstop -->
@@ -97,20 +97,22 @@ missing.
 - [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
 <!-- auto-generated: end -->
 
-<!-- TODO: auto-generate this section as well -->
+<!-- TODO: auto-generate this section as well? -->
 ### Suppress formatting
 - [stylua](https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file)
 - [prettier](https://prettier.io/docs/en/ignore.html)
-- [black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections) / [ruff](https://docs.astral.sh/ruff/formatter/#format-suppression)
+- [black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections)
+  / [ruff](https://docs.astral.sh/ruff/formatter/#format-suppression)
 - [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code)
 
 ## Installation
-This plugin requires diagnostics provided by a source that supports Neovim's
-built-in diagnostics system. (nvim's built-in LSP client,
-[efm-langserver](https://github.com/mattn/efm-langserver) or
-[nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
 
-In addition, nvim 0.10 is required.
+**Requirements**
+- nvim 0.10+
+- Diagnostics provided by a source that supports Neovim's built-in diagnostics
+  system. (nvim's built-in LSP client,
+  [efm-langserver](https://github.com/mattn/efm-langserver) or
+  [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
 
 ```lua
 -- lazy.nvim
