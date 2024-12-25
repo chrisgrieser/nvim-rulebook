@@ -7,6 +7,7 @@ Table of Contents                            *nvim-rulebook-table-of-contents*
   - Features                           |nvim-rulebook-nvim-rulebook--features|
   - Supported sources         |nvim-rulebook-nvim-rulebook--supported-sources|
   - Installation                   |nvim-rulebook-nvim-rulebook--installation|
+  - Usage                                 |nvim-rulebook-nvim-rulebook--usage|
   - Configuration                 |nvim-rulebook-nvim-rulebook--configuration|
   - Customize builtin sources|nvim-rulebook-nvim-rulebook--customize-builtin-sources|
   - Limitations                     |nvim-rulebook-nvim-rulebook--limitations|
@@ -130,32 +131,41 @@ efm-langserver <https://github.com/mattn/efm-langserver> or nvim-lint
 
 >lua
     -- lazy.nvim
-    {
-        "chrisgrieser/nvim-rulebook",
-        keys = {
-            { "<leader>ri", function() require("rulebook").ignoreRule() end },
-            { "<leader>rl", function() require("rulebook").lookupRule() end },
-            { "<leader>ry", function() require("rulebook").yankDiagnosticCode() end },
-            { "<leader>sf", function() require("rulebook").suppressFormatter() end, mode = {"n", "x"} },
-        }
-    },
-<
-
->lua
+    { "chrisgrieser/nvim-rulebook" },
+    
     -- packer
     use { "chrisgrieser/nvim-rulebook" }
-    
-    -- in your config
+<
+
+
+USAGE                                     *nvim-rulebook-nvim-rulebook--usage*
+
+You can use the commands via lua functions:
+
+>lua
     vim.keymap.set("n", "<leader>ri", function() require("rulebook").ignoreRule() end)
     vim.keymap.set("n", "<leader>rl", function() require("rulebook").lookupRule() end)
     vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticCode() end)
-    vim.keymap.set({ "n", "x" }, "<leader>sf", function() require("rulebook").suppressFormatter() end)
+    vim.keymap.set({ "n", "x" }, "<leader>rf", function() require("rulebook").suppressFormatter() end)
 <
+
+Alternatively, you can use the `:Rulebook` ex-command:
+
+>vim
+    :Rulebook ignoreRule
+    :Rulebook lookupRule
+    :Rulebook yankDiagnosticCode
+    :Rulebook suppressFormatter
+<
+
+Note that `:Rulebook suppressFormatter` only supports normal mode. To add
+formatter-ignore comments for a line range, you need to use the lua function
+`require("rulebook").suppressFormatter()` from visual mode.
 
 
 CONFIGURATION                     *nvim-rulebook-nvim-rulebook--configuration*
 
-The configuration is optional. You only need to add a config when you want to
+The `.setup()` call is optional. You only need to add a config when you want to
 add or customize sources.
 
 When adding your own source, you must add the exact, case-sensitive source
