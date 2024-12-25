@@ -1,4 +1,4 @@
-*nvim-rulebook.txt*          For Neovim          Last change: 2024 November 26
+*nvim-rulebook.txt*          For Neovim          Last change: 2024 December 25
 
 ==============================================================================
 Table of Contents                            *nvim-rulebook-table-of-contents*
@@ -30,7 +30,7 @@ linters and LSPs that don’t.
     - |nvim-rulebook-suppress-formatting|
 - |nvim-rulebook-installation|
 - |nvim-rulebook-configuration|
-- |nvim-rulebook-customize-built-in-sources|
+- |nvim-rulebook-customize-builtin-sources|
 - |nvim-rulebook-limitations|
 - |nvim-rulebook-api|
     - |nvim-rulebook-availability-of-rule-lookup|
@@ -116,18 +116,17 @@ SUPPRESS FORMATTING ~
 
 - stylua <https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file>
 - prettier <https://prettier.io/docs/en/ignore.html>
-- black <https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections> / ruff <https://docs.astral.sh/ruff/formatter/#format-suppression>
+- black <https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections>
+    / ruff <https://docs.astral.sh/ruff/formatter/#format-suppression>
 - clang-format <https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code>
 
 
 INSTALLATION                       *nvim-rulebook-nvim-rulebook--installation*
 
-This plugin requires diagnostics provided by a source that supports Neovim’s
-built-in diagnostics system. (nvim’s built-in LSP client, efm-langserver
-<https://github.com/mattn/efm-langserver> or nvim-lint
+**Requirements** - nvim 0.10+ - Diagnostics provided by a source that supports
+Neovim’s built-in diagnostics system. (nvim’s built-in LSP client,
+efm-langserver <https://github.com/mattn/efm-langserver> or nvim-lint
 <https://github.com/mfussenegger/nvim-lint> are such sources.)
-
-In addition, nvim 0.10 is required.
 
 >lua
     -- lazy.nvim
