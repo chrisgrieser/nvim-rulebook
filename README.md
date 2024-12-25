@@ -106,7 +106,6 @@ missing.
 - [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code)
 
 ## Installation
-
 **Requirements**
 - nvim 0.10+
 - Diagnostics provided by a source that supports Neovim's built-in diagnostics
@@ -116,30 +115,24 @@ missing.
 
 ```lua
 -- lazy.nvim
-{
-	"chrisgrieser/nvim-rulebook",
-	keys = {
-		{ "<leader>ri", function() require("rulebook").ignoreRule() end },
-		{ "<leader>rl", function() require("rulebook").lookupRule() end },
-		{ "<leader>ry", function() require("rulebook").yankDiagnosticCode() end },
-		{ "<leader>sf", function() require("rulebook").suppressFormatter() end, mode = {"n", "x"} },
-	}
-},
-```
+{ "chrisgrieser/nvim-rulebook" },
 
-```lua
 -- packer
 use { "chrisgrieser/nvim-rulebook" }
+```
 
--- in your config
+## Usage
+You can use the commands via lua functions:
+
+```lua
 vim.keymap.set("n", "<leader>ri", function() require("rulebook").ignoreRule() end)
 vim.keymap.set("n", "<leader>rl", function() require("rulebook").lookupRule() end)
 vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticCode() end)
-vim.keymap.set({ "n", "x" }, "<leader>sf", function() require("rulebook").suppressFormatter() end)
+vim.keymap.set({ "n", "x" }, "<leader>rf", function() require("rulebook").suppressFormatter() end)
 ```
 
 ## Configuration
-The configuration is optional. You only need to add a config when you want to
+The `.setup()` call is optional. You only need to add a config when you want to
 add or customize sources.
 
 When adding your own source, you must add the exact, case-sensitive
