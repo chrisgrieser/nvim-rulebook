@@ -84,7 +84,7 @@ function actions.ignoreRule(diag)
 
 	-- used with `str.match`, this pattern will return the already ignored code(s)
 	local existingRulePattern = vim.pesc(ignoreComment[1] or ignoreComment)
-		:gsub("%%%%s", "([%%w-_, ]+)") .. "%s*$"
+		:gsub("%%%%s", "([%%w-_,%%[%%] ]+)") .. "%s*$"
 
 	-----------------------------------------------------------------------------
 	if sourceConf.location == "prevLine" then
