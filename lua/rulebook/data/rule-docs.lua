@@ -77,6 +77,7 @@ local M = {
 	Ruff = urlInDiagObj,
 	["clang-tidy"] = urlInDiagObj,
 	Pyright = urlInDiagObj,
+	["ansible-lint"] = urlInDiagObj,
 	basedpyright = urlInDiagObj,
 	biome = urlInDiagObj,
 	["quick-lint-js"] = urlInDiagObj,

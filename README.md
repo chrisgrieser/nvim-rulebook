@@ -54,6 +54,7 @@ missing.
 - `Lua Diagnostics.`
 - `Pyright`
 - `Ruff`
+- `ansible-lint`
 - `basedpyright`
 - `biome`
 - `clang-tidy`
@@ -76,6 +77,7 @@ missing.
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
 - [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
 - [alex](https://github.com/get-alex/alex#control)
+- [ansible-lint](https://ansible.readthedocs.io/projects/lint/usage/#muting-warnings-to-avoid-false-positives)
 - [basedpyright](https://microsoft.github.io/pyright/#/comments)
 - [biome](https://biomejs.dev/linter/#ignore-code)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)

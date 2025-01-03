@@ -128,6 +128,13 @@ M = {
 		docs = "https://github.com/ravibrock/spellwarn.nvim#usage",
 		doesNotUseCodes = true,
 	},
+	["ansible-lint"] = {
+		comment = "# noqa: %s",
+		location = "sameLine",
+		docs = "https://ansible.readthedocs.io/projects/lint/usage/#muting-warnings-to-avoid-false-positives",
+		multiRuleIgnore = true,
+		multiRuleSeparator = " ",
+	},
 }
 
 M.tsserver = M.typescript -- typescript-tools.nvim
