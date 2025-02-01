@@ -33,8 +33,8 @@ and LSPs that don't.
   some-rule`. Supports previous line, same line, and enclosing lines.
 - Suppress formatting with via ignore comments of the respective formatter, such
   as `// prettier-ignore`.
-- QoL: auto-select a rule if it is the only one in the current line; if the line
-  has no diagnostic, search forward to the next line that does.
+- Quality-of-life: auto-select a rule if it is the only one in the current line;
+  if the line has no diagnostic, search forward to the next line that does.
 - Includes built-in support for various linters and formatters. No plugin
   configuration required if you only need to use built-in sources.
 - Customizing built-in sources or adding your own sources is easy. PRs to add
@@ -42,7 +42,7 @@ and LSPs that don't.
 
 ## Supported sources
 You easily add a custom source via the [plugin configuration](#configuration).
-Though, please consider making a PR to add support for a source if it is
+However, please consider making a PR to add support for a source if it is
 missing.
 
 [Rule data for built-in support of linters and formatters](./lua/rulebook/data)
@@ -59,6 +59,7 @@ missing.
 - `biome`
 - `clang-tidy`
 - `eslint`
+- `ltex_plus`
 - `markdownlint`
 - `pylint`
 - `quick-lint-js`
@@ -84,6 +85,8 @@ missing.
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
 - [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines)
 - [eslint](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1)
+- [ltex_plus](https://valentjn.github.io/ltex/advanced-usage.html)
+- [markdownlint](https://github.com/DavidAnson/markdownlint#configuration)
 - [pylint](https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html)
 - [selene](https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file)
 - [shellcheck](https://www.shellcheck.net/wiki/Ignore)
@@ -228,7 +231,7 @@ The plugin uses
 appearance of the rule selection can be customized by using a UI-plugin like
 [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
-## Customize builtin sources
+## Customize built-in sources
 Built-in sources be customized by overwriting them in the configuration:
 
 ```lua
