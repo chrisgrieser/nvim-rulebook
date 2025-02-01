@@ -135,6 +135,12 @@ M = {
 		multiRuleIgnore = true,
 		multiRuleSeparator = " ",
 	},
+	markdownlint = {
+		comment = "<!-- markdownlint-disable-next-line %s -->",
+		location = "prevLine",
+		docs = "https://github.com/DavidAnson/markdownlint#configuration",
+		multiRuleIgnore = false, -- apparently not supported
+	},
 }
 
 M.tsserver = M.typescript -- typescript-tools.nvim
