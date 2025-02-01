@@ -88,7 +88,7 @@ local M = {
 M.tsserver = M.typescript -- typescript-tools.nvim
 M.ts = M.typescript -- vtsls
 M.stylelintplus = M.stylelint -- stylelint-lsp
-M.ltex_plus = M.ltex -- ltex fork
+M.ltex_plus = M.LTeX -- ltex fork
 
 --------------------------------------------------------------------------------
 return M

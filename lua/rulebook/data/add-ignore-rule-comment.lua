@@ -142,7 +142,7 @@ M.ts = M.typescript -- vtsls
 M["vale-ls"] = M.vale -- lsp and linter have separate source names
 M.stylelintplus = M.stylelint -- stylelint-lsp
 M.basedpyright = M.Pyright -- pyright fork
-M.ltex_plus = M.ltex -- ltex fork
+M.ltex_plus = M.LTeX -- ltex fork
 
 --------------------------------------------------------------------------------
 return M
