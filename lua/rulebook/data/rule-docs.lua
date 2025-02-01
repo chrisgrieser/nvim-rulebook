@@ -69,8 +69,10 @@ local M = {
 	-- urls use rule-name, not rule-id, so this is the closest we can get
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
 
-	-- no reliable linking possible, so the website itself is best we can do
-	markdownlint = "https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md",
+	markdownlint = function (diag)
+		local code = diag.code:lower() -- code reported uppercased, but URL needs lowercase
+		return ("https://github.com/DavidAnson/markdownlint/blob/main/doc/%s.md"):format(code)
+	end,
 
 	-----------------------------------------------------------------------------
 
