@@ -136,7 +136,11 @@ M = {
 		multiRuleSeparator = " ",
 	},
 	markdownlint = {
-		comment = "<!-- markdownlint-disable-next-line %s -->",
+		comment = function(diag)
+			local code = tostring(diag.code)
+			if not vim.startswith(code, "MD") then code = "MD" .. code end
+			return ("<!-- markdownlint-disable-next-line %s -->"):format(code)
+		end,
 		location = "prevLine",
 		docs = "https://github.com/DavidAnson/markdownlint#configuration",
 		multiRuleIgnore = false, -- apparently not supported

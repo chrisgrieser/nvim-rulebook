@@ -71,7 +71,8 @@ local M = {
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
 
 	markdownlint = function(diag)
-		local code = diag.code:lower() -- code reported uppercased, but URL needs lowercase
+		local code = tostring(diag.code):lower() -- code reported uppercased, but URL needs lowercase
+		if not vim.startswith(code, "md") then code = "md" .. code end
 		return ("https://github.com/DavidAnson/markdownlint/blob/main/doc/%s.md"):format(code)
 	end,
 
