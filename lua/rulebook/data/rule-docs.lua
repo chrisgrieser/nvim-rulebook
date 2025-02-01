@@ -1,12 +1,13 @@
--- INFO the key must be named exactly like diagnostic.source (case-sensitive!)
--- - string value: "%s" will be replaced with the rule id
--- - function value: will be called with the diagnostic object
+-- INFO the key must be named exactly like `diagnostic.source` (case-sensitive!)
+-- * string value: `%s` will be replaced with the rule id
+-- * function value: will be called with the diagnostic object
 --------------------------------------------------------------------------------
 
--- some providers save the links to the docs in the diagnostic object
-local urlInDiagObj = function(diag) return diag.user_data.lsp.codeDescription.href end
+---some providers save the links to the docs in the diagnostic object
+---@param diag vim.Diagnostic
+local function urlInDiagObj(diag) return diag.user_data.lsp.codeDescription.href end
 
----@type table<string, string|function>
+---@type table<string, string|fun(diag: vim.Diagnostic): string?>
 local M = {
 	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
 
@@ -15,8 +16,8 @@ local M = {
 	eslint = function(diag)
 		if not diag or not diag.code then return end
 
-		local plugin = vim.fs.dirname(diag.code)
-		local rule = vim.fs.basename(diag.code)
+		local plugin = vim.fs.dirname(tostring(diag.code))
+		local rule = vim.fs.basename(tostring(diag.code))
 
 		local pluginDocUrls = {
 			["."] = "https://eslint.org/docs/latest/rules/%s",
@@ -69,7 +70,7 @@ local M = {
 	-- urls use rule-name, not rule-id, so this is the closest we can get
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
 
-	markdownlint = function (diag)
+	markdownlint = function(diag)
 		local code = diag.code:lower() -- code reported uppercased, but URL needs lowercase
 		return ("https://github.com/DavidAnson/markdownlint/blob/main/doc/%s.md"):format(code)
 	end,
