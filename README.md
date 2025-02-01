@@ -17,11 +17,12 @@ and LSPs that don't.
 	* [Add ignore comment](#add-ignore-comment)
 	* [Suppress formatting](#suppress-formatting)
 - [Installation](#installation)
+- [Usage](#usage)
 - [Configuration](#configuration)
-- [Customize builtin sources](#customize-builtin-sources)
-- [Limitations](#limitations)
-- [API](#api)
-	* [Availability of rule lookup](#availability-of-rule-lookup)
+	* [Base configuration](#base-configuration)
+	* [Customize built-in sources](#customize-built-in-sources)
+	* [Correctly configured diagnostic providers](#correctly-configured-diagnostic-providers)
+- [API: Availability of rule lookup](#api-availability-of-rule-lookup)
 - [Credits](#credits)
 
 <!-- tocstop -->
@@ -150,6 +151,8 @@ formatter-ignore comments for a line range, you need to use the lua function
 `require("rulebook").suppressFormatter()` from visual mode.
 
 ## Configuration
+
+### Base configuration
 The `.setup()` call is optional. You only need to add a config when you want to
 add or customize sources.
 
@@ -231,7 +234,7 @@ The plugin uses
 appearance of the rule selection can be customized by using a UI-plugin like
 [dressing.nvim](https://github.com/stevearc/dressing.nvim).
 
-## Customize built-in sources
+### Customize built-in sources
 Built-in sources be customized by overwriting them in the configuration:
 
 ```lua
@@ -246,20 +249,37 @@ require("rulebook").setup = {
 }
 ```
 
-## Limitations
-- The diagnostics have to contain the necessary data, [that is a diagnostic code
-  and diagnostic
-  source](https://neovim.io/doc/user/diagnostic.html#diagnostic-structure). Most
-  LSPs and most linters configured for `nvim-lint`/`efm` do that, but some diagnostic
-  sources do not (for example, `efm` with incorrectly defined `errorformat`).
-  Please open an issue at the diagnostics provider to fix such
-  issues.
-- This plugin does not hook into `vim.lsp.buf.code_action`, but provides its own
-  selector.
+### Correctly configured diagnostic providers
+The plugin requires that the diagnostic providers (the LSP or a
+linter-integration tool like `nvim-lint` or `efm`) provide the **source and code
+for the diagnostic**. In case of a linter integration tool, this requires the
+correct configuration for the respective linter. For example, when using `efm`
+to integrate `markdownlint`, the [`%n` item is required to parse the diagnostic
+code](https://neovim.io/doc/user/quickfix.html#errorformat):
 
-## API
+```lua
+require("nvim-lspconfig").efm.setup({
+	filetypes = { "markdown" },
+	settings = { 
+		languages = {
+			markdown = {
+				{
+					lintSource = "markdownlint",
+					lintCommand = "markdownlint $'{INPUT}'",
+					lintStdin = false,
+					lintIgnoreExitCode = true,
+					lintFormats = { 
+						"%f:%l:%c MD%n/%m", 
+						"%f:%l MD%n/%m"
+					},
+				},
+			},
+		},
+	},
+}
+```
 
-### Availability of rule lookup
+## API: Availability of rule lookup
 The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object
 and returns a boolean whether `nvim-rulebook` documentation for the respective
 diagnostic available. One use case for this is to add a visual indicator if
