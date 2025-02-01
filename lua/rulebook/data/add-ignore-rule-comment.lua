@@ -137,9 +137,9 @@ M = {
 	},
 	markdownlint = {
 		comment = function(diag)
-			local code = tostring(diag.code)
-			if not vim.startswith(code, "MD") then code = "MD" .. code end
-			return ("<!-- markdownlint-disable-next-line %s -->"):format(code)
+			local code = tostring(diag.code):gsub("^MD", "")
+			if #code == 2 then code = "0" .. code end -- `efm` removes leading 0, but markdownlint needs it
+			return ("<!-- markdownlint-disable-next-line MD%s -->"):format(code)
 		end,
 		location = "prevLine",
 		docs = "https://github.com/DavidAnson/markdownlint#configuration",

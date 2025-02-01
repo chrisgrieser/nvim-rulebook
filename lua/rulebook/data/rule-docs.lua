@@ -71,9 +71,9 @@ local M = {
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
 
 	markdownlint = function(diag)
-		local code = tostring(diag.code):lower() -- code reported uppercased, but URL needs lowercase
-		if not vim.startswith(code, "md") then code = "md" .. code end
-		return ("https://github.com/DavidAnson/markdownlint/blob/main/doc/%s.md"):format(code)
+		local code = tostring(diag.code):gsub("^MD", "")
+		if #code == 2 then code = "0" .. code end -- efm removes leading 0, but markdownlint needs it
+		return ("https://github.com/DavidAnson/markdownlint/blob/main/doc/md%s.md"):format(code)
 	end,
 
 	-----------------------------------------------------------------------------
