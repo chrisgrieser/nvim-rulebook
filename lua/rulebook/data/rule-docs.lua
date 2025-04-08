@@ -76,6 +76,8 @@ local M = {
 		return ("https://github.com/DavidAnson/markdownlint/blob/main/doc/md%s.md"):format(code)
 	end,
 
+	swiftlint = "https://realm.github.io/SwiftLint/%s.html",
+
 	-----------------------------------------------------------------------------
 
 	Ruff = urlInDiagObj,

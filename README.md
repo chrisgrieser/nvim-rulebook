@@ -68,6 +68,7 @@ missing.
 - `shellcheck`
 - `stylelint`
 - `stylelintplus`
+- `swiftlint`
 - `ts`
 - `tsserver`
 - `typescript`
@@ -94,6 +95,7 @@ missing.
 - [spellwarn](https://github.com/ravibrock/spellwarn.nvim#usage)
 - [stylelint](https://stylelint.io/user-guide/ignore-code/)
 - [stylelintplus](https://stylelint.io/user-guide/ignore-code/)
+- [swiftlint](https://realm.github.io/SwiftLint/#Disable-rules-in-code)
 - [ts](https://www.typescriptlang.org/)
 - [tsserver](https://www.typescriptlang.org/)
 - [typescript](https://www.typescriptlang.org/)

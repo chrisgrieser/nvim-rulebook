@@ -145,6 +145,13 @@ M = {
 		docs = "https://github.com/DavidAnson/markdownlint#configuration",
 		multiRuleIgnore = false, -- apparently not supported
 	},
+	swiftlint = {
+		comment = "// swiftlint:disable:next %s",
+		location = "prevLine",
+		docs = "https://realm.github.io/SwiftLint/#Disable-rules-in-code",
+		multiRuleSeparator = " ",
+		multiRuleIgnore = true,
+	},
 }
 
 M.tsserver = M.typescript -- typescript-tools.nvim
