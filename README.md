@@ -88,6 +88,7 @@ missing.
 - [biome](https://biomejs.dev/linter/#ignore-code)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
+- [cspell](https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code)
 - [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines)
 - [eslint](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1)
 - [ltex_plus](https://valentjn.github.io/ltex/advanced-usage.html)

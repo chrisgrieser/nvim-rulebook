@@ -168,6 +168,13 @@ M = {
 		multiRuleIgnore = false,
 		doesNotUseCodes = true,
 	},
+	cspell = {
+		comment = function() return vim.bo.commentstring:format("cspell:disable-next-line") end,
+		location = "prevLine",
+		docs = "https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code",
+		multiRuleIgnore = false,
+		doesNotUseCodes = true,
+	},
 }
 
 --------------------------------------------------------------------------------
