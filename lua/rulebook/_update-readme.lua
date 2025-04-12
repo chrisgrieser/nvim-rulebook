@@ -47,14 +47,14 @@ for source, _ in pairs(ruleDocs) do
 		table.insert(ruleDocsSources, newLine)
 	end
 end
-table.sort(ruleDocsSources)
+table.sort(ruleDocsSources, function(a, b) return string.lower(a) < string.lower(b) end)
 
 local ignoreComments = require("rulebook.data.add-ignore-rule-comment")
 for source, data in pairs(ignoreComments) do
 	local newLine = ("- [%s](%s)"):format(source, data.docs)
 	table.insert(ignoreCommentSources, newLine)
 end
-table.sort(ignoreCommentSources)
+table.sort(ignoreCommentSources, function(a, b) return string.lower(a) < string.lower(b) end)
 
 -- write new file
 local newContent = table.concat(beforePart, "\n")

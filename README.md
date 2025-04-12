@@ -53,19 +53,19 @@ missing.
 <!-- INFO use `just update-readme` to automatically update this section -->
 <!-- auto-generated: start -->
 ### Rule lookup
-- `LTeX`
-- `Lua Diagnostics.`
-- `Pyright`
-- `Ruff`
 - `ansible-lint`
 - `basedpyright`
 - `biome`
 - `clang-tidy`
 - `eslint`
 - `ltex_plus`
+- `LTeX`
+- `Lua Diagnostics.`
 - `markdownlint`
 - `pylint`
+- `Pyright`
 - `quick-lint-js`
+- `Ruff`
 - `selene`
 - `shellcheck`
 - `stylelint`
@@ -77,11 +77,6 @@ missing.
 - `yamllint`
 
 ### Add ignore comment
-- [Harper](https://writewithharper.com/docs/integrations/language-server#Ignore-Comments)
-- [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
-- [Lua Diagnostics.](https://luals.github.io/wiki/annotations/#diagnostic)
-- [Pyright](https://microsoft.github.io/pyright/#/comments)
-- [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
 - [alex](https://github.com/get-alex/alex#control)
 - [ansible-lint](https://ansible.readthedocs.io/projects/lint/usage/#muting-warnings-to-avoid-false-positives)
 - [basedpyright](https://microsoft.github.io/pyright/#/comments)
@@ -91,9 +86,14 @@ missing.
 - [cspell](https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code)
 - [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines)
 - [eslint](https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1)
+- [Harper](https://writewithharper.com/docs/integrations/language-server#Ignore-Comments)
+- [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
 - [ltex_plus](https://valentjn.github.io/ltex/advanced-usage.html)
+- [Lua Diagnostics.](https://luals.github.io/wiki/annotations/#diagnostic)
 - [markdownlint](https://github.com/DavidAnson/markdownlint#configuration)
 - [pylint](https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html)
+- [Pyright](https://microsoft.github.io/pyright/#/comments)
+- [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
 - [selene](https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file)
 - [shellcheck](https://www.shellcheck.net/wiki/Ignore)
 - [spellwarn](https://github.com/ravibrock/spellwarn.nvim#usage)
