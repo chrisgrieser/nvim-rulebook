@@ -9,6 +9,8 @@ Add inline-comments to ignore rules, or lookup rule documentation online.
 Some LSPs provide code actions for that – this plugin adds commands for linters
 and LSPs that don't.
 
+## Table of Content
+
 <!-- toc -->
 
 - [Features](#features)
@@ -75,6 +77,7 @@ missing.
 - `yamllint`
 
 ### Add ignore comment
+- [Harper](https://writewithharper.com/docs/integrations/language-server#Ignore-Comments)
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
 - [Lua Diagnostics.](https://luals.github.io/wiki/annotations/#diagnostic)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)

@@ -161,6 +161,13 @@ M = {
 		multiRuleSeparator = " ",
 		multiRuleIgnore = true,
 	},
+	Harper = { -- LSP name is capitalized
+		comment = function() return vim.bo.commentstring:format("harper: ignore") end,
+		location = "prevLine",
+		docs = "https://writewithharper.com/docs/integrations/language-server#Ignore-Comments",
+		multiRuleIgnore = false,
+		doesNotUseCodes = true,
+	},
 }
 
 --------------------------------------------------------------------------------
