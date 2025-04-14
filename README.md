@@ -256,14 +256,30 @@ require("rulebook").setup = {
 ```
 
 ### Correctly configured diagnostic providers
-The plugin requires that the diagnostic providers (the LSP or a
-linter-integration tool like `nvim-lint` or `efm`) provide the **source and code
-for the diagnostic**. In case of a linter integration tool, this requires the
-correct configuration for the respective linter. For example, when using `efm`
-to integrate `markdownlint`, the [`%n` item is required to parse the diagnostic
-code](https://neovim.io/doc/user/quickfix.html#errorformat):
+The plugin requires that the diagnostic providers (the LSP or a linter
+integration tool like [nvim-lint](https://github.com/mfussenegger/nvim-lint)
+or [efm langserver](https://github.com/mattn/efm-langserver)) provide the
+**source and code for the diagnostic**.
+- Make sure that the **source** is named the same in the diagnostic source and in
+  the `nvim-rulebook` config, including casing.
+- For `nvim-lint`, most linters should already be configured out of the box.
+- For `efm langserver`, you have to set `lintSource` for the source name, and
+  correctly configure the
+  [errorformat](https://neovim.io/doc/user/quickfix.html#errorformat). Other
+  than `%l` & `%c` (line number & column), this requires `%n` which `efm
+  langserver` uses to fill in the diagnostic code. You can also use
+  [efmls-configs-nvim](https://github.com/creativenull/efmls-configs-nvim) to
+  configure those linters for you.
+
+> [!IMPORTANT]
+> Note that vim's `errorformat` only matches numbers for `%n`, meaning it is not
+> possible to parse diagnostic codes that do consist of letters, for example
+> with the linter `selene`. In those cases, it is not possible to use `efm
+> langserver` with this `nvim-rulebook`; you will have to use `nvim-lint` which
+> allows more flexible parsing.
 
 ```lua
+-- example: configuring efm langserver with markdownlint
 require("nvim-lspconfig").efm.setup({
 	filetypes = { "markdown" },
 	settings = { 
