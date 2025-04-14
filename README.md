@@ -4,12 +4,13 @@
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img
 alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
-Add inline-comments to ignore rules, or lookup rule documentation online.
+Add inline-comments to ignore rules or suppress formatters. Lookup rule
+documentation online.
 
-Some LSPs provide code actions for that – this plugin adds commands for linters
-and LSPs that don't.
+Some LSPs provide code actions for that; this plugin is for linters and LSPs
+that do not have such code actions.
 
-## Table of Content
+## Table of contents
 
 <!-- toc -->
 
@@ -238,7 +239,7 @@ require("rulebook").setup = ({
 The plugin uses
 [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the
 appearance of the rule selection can be customized by using a UI-plugin like
-[dressing.nvim](https://github.com/stevearc/dressing.nvim).
+[snacks.nvim](https://github.com/folke/snacks.nvim).
 
 ### Customize built-in sources
 Built-in sources be customized by overwriting them in the configuration:
@@ -258,12 +259,12 @@ require("rulebook").setup = {
 ### Correctly configured diagnostic providers
 The plugin requires that the diagnostic providers (the LSP or a linter
 integration tool like [nvim-lint](https://github.com/mfussenegger/nvim-lint)
-or [efm langserver](https://github.com/mattn/efm-langserver)) provide the
+or [efm-langserver](https://github.com/mattn/efm-langserver)) provide the
 **source and code for the diagnostic**.
 - Make sure that the **source** is named the same in the diagnostic source and in
   the `nvim-rulebook` config, including casing.
 - For `nvim-lint`, most linters should already be configured out of the box.
-- For `efm langserver`, you have to set `lintSource` for the source name, and
+- For `efm-langserver`, you have to set `lintSource` for the source name, and
   correctly configure the
   [errorformat](https://neovim.io/doc/user/quickfix.html#errorformat). Other
   than `%l` & `%c` (line number & column), this requires `%n` which `efm
@@ -273,10 +274,10 @@ or [efm langserver](https://github.com/mattn/efm-langserver)) provide the
 
 > [!IMPORTANT]
 > Note that vim's `errorformat` only matches numbers for `%n`, meaning it is not
-> possible to parse diagnostic codes that do consist of letters, for example
-> with the linter `selene`. In those cases, it is not possible to use `efm
-> langserver` with this `nvim-rulebook`; you will have to use `nvim-lint` which
-> allows more flexible parsing.
+> possible to parse diagnostic codes that consist of letters. This is for
+> example the case for the linter `selene`. To use those linters with
+> `nvim-rulebook` you will have to use `nvim-lint` which allows more flexible
+> parsing.
 
 ```lua
 -- example: configuring efm langserver with markdownlint
