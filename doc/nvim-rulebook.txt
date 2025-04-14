@@ -1,16 +1,16 @@
-*nvim-rulebook.txt*            For Neovim           Last change: 2025 April 12
+*nvim-rulebook.txt*            For Neovim           Last change: 2025 April 14
 
 ==============================================================================
 Table of Contents                            *nvim-rulebook-table-of-contents*
 
 1. nvim-rulebook                                |nvim-rulebook-nvim-rulebook-|
-  - Table of Content           |nvim-rulebook-nvim-rulebook--table-of-content|
+  - Table of contents         |nvim-rulebook-nvim-rulebook--table-of-contents|
   - Features                           |nvim-rulebook-nvim-rulebook--features|
   - Supported sources         |nvim-rulebook-nvim-rulebook--supported-sources|
   - Installation                   |nvim-rulebook-nvim-rulebook--installation|
   - Usage                                 |nvim-rulebook-nvim-rulebook--usage|
   - Configuration                 |nvim-rulebook-nvim-rulebook--configuration|
-  - API:Availability of rule lookup|nvim-rulebook-nvim-rulebook--api:availability-of-rule-lookup|
+  - API: Availability of rule lookup|nvim-rulebook-nvim-rulebook--api:-availability-of-rule-lookup|
   - Credits                             |nvim-rulebook-nvim-rulebook--credits|
 
 ==============================================================================
@@ -18,13 +18,14 @@ Table of Contents                            *nvim-rulebook-table-of-contents*
 
 
 
-Addinline-comments to ignore rules, or lookup rule documentation online.
+Addinline-comments to ignore rules or suppress formatters. Lookup rule
+documentation online.
 
-Some LSPs provide code actions for that – this plugin adds commands for
-linters and LSPs that don’t.
+Some LSPs provide code actions for that; this plugin is for linters and LSPs
+that do not have such code actions.
 
 
-TABLE OF CONTENT               *nvim-rulebook-nvim-rulebook--table-of-content*
+TABLE OF CONTENTS             *nvim-rulebook-nvim-rulebook--table-of-contents*
 
 - |nvim-rulebook-features|
 - |nvim-rulebook-supported-sources|
@@ -257,8 +258,8 @@ name, for example, `clang-tidy`, not `clang`.
 <
 
 The plugin uses |vim.ui.select|, so the appearance of the rule selection can be
-customized by using a UI-plugin like dressing.nvim
-<https://github.com/stevearc/dressing.nvim>.
+customized by using a UI-plugin like snacks.nvim
+<https://github.com/folke/snacks.nvim>.
 
 
 CUSTOMIZE BUILT-IN SOURCES ~
@@ -280,14 +281,27 @@ Built-in sources be customized by overwriting them in the configuration:
 
 CORRECTLY CONFIGURED DIAGNOSTIC PROVIDERS ~
 
-The plugin requires that the diagnostic providers (the LSP or a
-linter-integration tool like `nvim-lint` or `efm`) provide the **source and
-code for the diagnostic**. In case of a linter integration tool, this requires
-the correct configuration for the respective linter. For example, when using
-`efm` to integrate `markdownlint`, the |`%n` item is required to parse the
-diagnostic code|
+The plugin requires that the diagnostic providers (the LSP or a linter
+integration tool like nvim-lint <https://github.com/mfussenegger/nvim-lint> or
+efm-langserver <https://github.com/mattn/efm-langserver>) provide the **source
+and code for the diagnostic**. - Make sure that the **source** is named the
+same in the diagnostic source and in the `nvim-rulebook` config, including
+casing. - For `nvim-lint`, most linters should already be configured out of the
+box. - For `efm-langserver`, you have to set `lintSource` for the source name,
+and correctly configure the |errorformat|. Other than `%l` & `%c` (line number
+& column), this requires `%n` which `efm langserver` uses to fill in the
+diagnostic code. You can also use efmls-configs-nvim
+<https://github.com/creativenull/efmls-configs-nvim> to configure those linters
+for you.
 
+
+  [!IMPORTANT] Note that vim’s `errorformat` only matches numbers for `%n`,
+  meaning it is not possible to parse diagnostic codes that consist of letters.
+  This is for example the case for the linter `selene`. To use those linters with
+  `nvim-rulebook` you will have to use `nvim-lint` which allows more flexible
+  parsing.
 >lua
+    -- example: configuring efm langserver with markdownlint
     require("nvim-lspconfig").efm.setup({
         filetypes = { "markdown" },
         settings = { 
@@ -310,7 +324,7 @@ diagnostic code|
 <
 
 
-API:AVAILABILITY OF RULE LOOKUP*nvim-rulebook-nvim-rulebook--api:availability-of-rule-lookup*
+API: AVAILABILITY OF RULE LOOKUP*nvim-rulebook-nvim-rulebook--api:-availability-of-rule-lookup*
 
 The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object
 and returns a boolean whether `nvim-rulebook` documentation for the respective
