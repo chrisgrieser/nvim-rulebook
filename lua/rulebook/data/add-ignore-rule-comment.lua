@@ -6,7 +6,7 @@
 ---@field multiRuleIgnore boolean whether multiple rules can be ignored with one comment, defaults to `false`
 ---@field multiRuleSeparator? string defaults to ", "
 
----INFO the key must be named like the exact, case-sensitive `diagnostic.source`
+-- INFO the key must be named like the exact, case-sensitive `diagnostic.source`
 --------------------------------------------------------------------------------
 
 ---@type table<string, ruleIgnoreConfig>
@@ -163,7 +163,7 @@ M = {
 	},
 	Harper = { -- LSP name is capitalized
 		comment = function() return vim.bo.commentstring:format("harper: ignore") end,
-		location = "prevLine",
+		location = "sameLine",
 		docs = "https://writewithharper.com/docs/integrations/language-server#Ignore-Comments",
 		multiRuleIgnore = false,
 		doesNotUseCodes = true,
