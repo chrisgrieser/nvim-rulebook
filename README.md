@@ -112,7 +112,6 @@ missing.
 - [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
 <!-- auto-generated: end -->
 
-<!-- TODO: auto-generate this section as well? -->
 ### Suppress formatting
 - [stylua](https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file)
 - [prettier](https://prettier.io/docs/en/ignore.html)

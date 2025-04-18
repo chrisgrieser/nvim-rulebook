@@ -4,22 +4,22 @@
 ---@field docs string used for auto-generated docs
 ---@field doesNotUseCodes? boolean the linter does not use codes/rule-ids
 ---@field multiRuleIgnore boolean whether multiple rules can be ignored with one comment, defaults to `false`
----@field multiRuleSeparator? string defaults to ", "
+---@field multiRuleSeparator? string defaults to ", " (with space)
 
--- INFO the key must be named like the exact, case-sensitive `diagnostic.source`
 --------------------------------------------------------------------------------
 
+---INFO the key must be the exact case-sensitive `diagnostic.source`
 ---@type table<string, ruleIgnoreConfig>
 M = {
 	["ast-grep"] = {
 		comment = function(diag)
-			local ignoreText = ("ast-grep-ignore: %s"):format(diag.code)
+			local ignoreText = "ast-grep-ignore: " .. diag.code
 			return vim.bo.commentstring:format(ignoreText)
 		end,
 		location = "prevLine",
 		docs = "https://ast-grep.github.io/guide/project/severity.html#ignore-linting-error",
 		multiRuleIgnore = true,
-		multiRuleSeparator = ",",
+		multiRuleSeparator = ",", -- no space
 	},
 	shellcheck = {
 		comment = "# shellcheck disable=%s",
@@ -97,7 +97,7 @@ M = {
 	biome = {
 		-- biome works for css and js, so the comment syntax is dependent on the filetype
 		comment = function(diag)
-			local ignoreText = ("biome-ignore %s: <explanation>"):format(diag.code)
+			local ignoreText = ("biome-ignore %s: _explanation_"):format(diag.code)
 			return vim.bo.commentstring:format(ignoreText)
 		end,
 		location = "prevLine",
@@ -177,7 +177,7 @@ M = {
 		multiRuleSeparator = " ",
 		multiRuleIgnore = true,
 	},
-	Harper = { -- LSP name is capitalized
+	Harper = {
 		comment = function() return vim.bo.commentstring:format("harper: ignore") end,
 		location = "sameLine",
 		docs = "https://writewithharper.com/docs/integrations/language-server#Ignore-Comments",
