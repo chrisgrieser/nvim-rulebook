@@ -1,4 +1,4 @@
-*nvim-rulebook.txt*            For Neovim           Last change: 2025 April 14
+*nvim-rulebook.txt*            For Neovim           Last change: 2025 April 18
 
 ==============================================================================
 Table of Contents                            *nvim-rulebook-table-of-contents*
@@ -102,6 +102,7 @@ ADD IGNORE COMMENT ~
 - codespell <https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455>
 - cspell <https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code>
 - editorconfig-checker <https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines>
+- EmmyLua <https://github.com/EmmyLuaLs/emmylua-analyzer-rust/blob/main/docs/features/features_EN.md#code-checks>
 - eslint <https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1>
 - Harper <https://writewithharper.com/docs/integrations/language-server#Ignore-Comments>
 - LTeX <https://valentjn.github.io/ltex/advanced-usage.html>
