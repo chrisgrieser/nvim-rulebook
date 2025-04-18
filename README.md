@@ -80,6 +80,7 @@ missing.
 ### Add ignore comment
 - [alex](https://github.com/get-alex/alex#control)
 - [ansible-lint](https://ansible.readthedocs.io/projects/lint/usage/#muting-warnings-to-avoid-false-positives)
+- [ast-grep](https://ast-grep.github.io/guide/project/severity.html#ignore-linting-error)
 - [basedpyright](https://microsoft.github.io/pyright/#/comments)
 - [biome](https://biomejs.dev/linter/#ignore-code)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)

@@ -11,6 +11,13 @@
 
 ---@type table<string, ruleIgnoreConfig>
 M = {
+	["ast-grep"] = {
+		comment = "// ast-grep-ignore: %s",
+		location = "prevLine",
+		docs = "https://ast-grep.github.io/guide/project/severity.html#ignore-linting-error",
+		multiRuleIgnore = true,
+		multiRuleSeparator = ",",
+	},
 	shellcheck = {
 		comment = "# shellcheck disable=%s",
 		location = "prevLine",
