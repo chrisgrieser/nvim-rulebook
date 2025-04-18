@@ -12,7 +12,10 @@
 ---@type table<string, ruleIgnoreConfig>
 M = {
 	["ast-grep"] = {
-		comment = "// ast-grep-ignore: %s",
+		comment = function(diag)
+			local ignoreText = ("ast-grep-ignore: %s"):format(diag.code)
+			return vim.bo.commentstring:format(ignoreText)
+		end,
 		location = "prevLine",
 		docs = "https://ast-grep.github.io/guide/project/severity.html#ignore-linting-error",
 		multiRuleIgnore = true,
