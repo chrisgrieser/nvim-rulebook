@@ -30,6 +30,12 @@ M = {
 		docs = "https://luals.github.io/wiki/annotations/#diagnostic",
 		multiRuleIgnore = true,
 	},
+	EmmyLua = {
+		comment = "---@diagnostic disable-line: %s", -- uses same syntax as `lua_ls`
+		location = "sameLine", -- prevLine already available via code action
+		docs = "https://github.com/EmmyLuaLs/emmylua-analyzer-rust/blob/main/docs/features/features_EN.md#code-checks",
+		multiRuleIgnore = true,
+	},
 	yamllint = {
 		comment = "# yamllint disable-line rule:%s",
 		location = "prevLine",
