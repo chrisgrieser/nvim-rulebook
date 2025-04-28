@@ -211,8 +211,8 @@ require("rulebook").setup = ({
 		-- Search URL when no documentation definition is available for a
 		-- diagnostic source. `%s` will be replaced with the diagnostic source and 
 		-- the code/message.
-		-- Default is the DDG "Ducky Search" (automatically opening first result).
-		fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+		-- Default is a Google search
+		fallback = "https://www.google.com/search?q=%s",
 
 		-- the value of the rule documentations accept either a string or a function
 		-- * if a string, `%s` will be replaced with rule-id (or the message, if missing)

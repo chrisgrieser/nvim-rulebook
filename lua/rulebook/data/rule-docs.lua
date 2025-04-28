@@ -9,7 +9,7 @@ local function urlInDiagObj(diag) return diag.user_data.lsp.codeDescription.href
 
 ---@type table<string, string|fun(diag: vim.Diagnostic): string?>
 local M = {
-	fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
+	fallback = "https://www.google.com/search?q=%s",
 
 	selene = "https://kampfkarren.github.io/selene/lints/%s.html",
 	yamllint = "https://yamllint.readthedocs.io/en/stable/rules.html#module-yamllint.rules.%s",
