@@ -31,23 +31,22 @@ that do not have such code actions.
 <!-- tocstop -->
 
 ## Features
-- Look up official rule documentation, falling back to a web search if the
-  source does not have rule documentation.
+- Look up official rule documentation, falling back to a customizable web search
+  if the source does not have rule documentation.
 - Add inline-comments to ignore rules like `// eslint disable-next-line
   some-rule`. Supports previous line, same line, and enclosing lines.
 - Suppress formatting with via ignore comments of the respective formatter, such
   as `// prettier-ignore`.
 - Quality-of-life: auto-select a rule if it is the only one in the current line;
   if the line has no diagnostic, search forward to the next line that does.
-- Includes built-in support for various linters and formatters. No plugin
-  configuration required if you only need to use built-in sources.
+- Includes built-in support for dozens of linters and formatters. Thus, zero is
+  plugin configuration required if you only use common tooling.
 - Customizing built-in sources or adding your own sources is easy. PRs to add
   more built-ins are welcome.
 
 ## Supported sources
 You easily add a custom source via the [plugin configuration](#configuration).
-However, please consider making a PR to add support for a source if it is
-missing.
+Please consider making a PR to add support for a source if it is missing.
 
 [Rule data for built-in support of linters and formatters](./lua/rulebook/data)
 
@@ -232,7 +231,7 @@ require("rulebook").setup = ({
 			location = "prevLine",
 
 			-- visual mode
-			ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore start" },
+			ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore end" },
 		},
 	}
 })
