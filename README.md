@@ -213,7 +213,6 @@ require("rulebook").setup = ({
 		-- Search URL when no documentation definition is available for a
 		-- diagnostic source. `%s` will be replaced with the diagnostic source and 
 		-- the code/message.
-		-- Default is a Google search
 		fallback = "https://www.google.com/search?q=%s",
 
 		-- the value of the rule documentations accept either a string or a function
@@ -262,15 +261,20 @@ require("rulebook").setup = {
 ## FAQ
 
 ### How to directly ask an LLM about a rule
-Simply use a URL that opens a chat with the LLM as rule documentation site. `%s`
-will be replaced with the diagnostic source and code (or message, if no code is
-available).
+Use a URL that opens a chat with the LLM as fallback.
+
+For `fallback`, the `%s` placeholder will be replaced with the diagnostic source
+and the quoted code (or message, if no code is available), both URL-encoded.
 
 ```lua
 require("rulebook").setup = ({
 	ruleDocs = {
-		fallback = "https://chatgpt.com/?q=%s"
-		nameOfDiagnosticSource = "https://chatgpt.com/?q=%s"
+		fallback = "https://chatgpt.com/?q=Explain%20the%20following%20diagnostic%20error%3A%20%s"
+
+		-- To use the fallback instead of the builtin rule docs, overwrite it
+		-- with `false`. (For all other sources, `%s` will be replaced with just
+		-- the diagnostic code.)
+		typescript = false,
 	}
 })
 ```

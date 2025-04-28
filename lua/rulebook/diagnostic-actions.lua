@@ -58,18 +58,19 @@ function actions.lookupRule(diag)
 	local docResolver = config.ruleDocs[diag.source]
 	local urlToOpen
 	if type(docResolver) == "string" and docResolver:find("%%s") then
+		if not validDiagObj(diag) then return end
 		urlToOpen = docResolver:format(diag.code)
 	elseif type(docResolver) == "string" then
 		-- for cases where a specific rule cannot be linked, copy the code to
 		-- the clipboard, so it is easier at the rule index page
-		vim.fn.setreg("+", diag.code)
+		vim.fn.setreg("+", diagnosticInfo)
 		urlToOpen = docResolver
 	elseif type(docResolver) == "function" then
 		urlToOpen = docResolver(diag)
 	else
-		-- use fallback url
-		local query = urlEncode(diagnosticInfo .. " " .. diag.source)
-		urlToOpen = config.ruleDocs.fallback:format(query)
+		docResolver = config.ruleDocs.fallback
+		local query = ("%q (%s)"):format(diagnosticInfo, diag.source)
+		urlToOpen = docResolver:format(urlEncode(query))
 	end
 
 	vim.ui.open(urlToOpen)

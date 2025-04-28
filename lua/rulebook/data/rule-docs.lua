@@ -1,13 +1,14 @@
 -- INFO the key must be named exactly like `diagnostic.source` (case-sensitive!)
 -- * string value: `%s` will be replaced with the rule id
 -- * function value: will be called with the diagnostic object
+-- * `false`: disable rule docs, just use the fallback
 --------------------------------------------------------------------------------
 
 ---some providers save the links to the docs in the diagnostic object
 ---@param diag vim.Diagnostic
 local function urlInDiagObj(diag) return diag.user_data.lsp.codeDescription.href end
 
----@type table<string, string|fun(diag: vim.Diagnostic): string?>
+---@type table<string, string|false|fun(diag: vim.Diagnostic): string?>
 local M = {
 	fallback = "https://www.google.com/search?q=%s",
 
