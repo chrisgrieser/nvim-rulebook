@@ -183,13 +183,13 @@ local function selectRule(operation)
 
 	-- select from multiple diagnostics
 	local title
-	if operation == "ignoreRule" then title = "Ignore Rule:" end
-	if operation == "lookupRule" then title = "Lookup Rule:" end
-	if operation == "yankDiagnosticCode" then title = "Yank Diagnostic Code:" end
+	if operation == "ignoreRule" then title = "Ignore rule:" end
+	if operation == "lookupRule" then title = "Lookup rule:" end
+	if operation == "yankDiagnosticCode" then title = "Yank diagnostic code:" end
 
 	vim.ui.select(diagsAtLine, {
 		prompt = title,
-		kind = "rule_selection",
+		kind = "rulebook.diagnostic_selection",
 		format_item = function(diag)
 			local msg = vim.trim((diag.message or ""):sub(1, 50))
 			if not diag.source then return ("[ No source] %s %s"):format(diag.code or "", msg) end
