@@ -39,6 +39,15 @@ local function moveCursorToDiagnostic(diag)
 	vim.api.nvim_win_set_cursor(0, { diag.lnum + 1, diag.col })
 end
 
+---@param unencoded string
+local function urlEncode(unencoded)
+	local encoded = unencoded:gsub(
+		"([^%w%-_.~])",
+		function(c) return string.format("%%%02X", string.byte(c)) end
+	)
+	return encoded
+end
+
 --------------------------------------------------------------------------------
 
 ---@param diag vim.Diagnostic
@@ -51,7 +60,7 @@ function actions.lookupRule(diag)
 	local urlToOpen
 	if type(docResolver) == "string" and docResolver:find("%%s") then
 		urlToOpen = docResolver:format(diag.code)
-	elseif type(docResolver) == "string" and not docResolver:find("%%s") then
+	elseif type(docResolver) == "string" then
 		-- for cases where a specific rule cannot be linked, copy the code to
 		-- the clipboard, so it is easier at the rule index page
 		vim.fn.setreg("+", diag.code)
@@ -60,8 +69,8 @@ function actions.lookupRule(diag)
 		urlToOpen = docResolver(diag)
 	else
 		-- fallback
-		local escapedQuery = (diag.code .. " " .. diag.source):gsub(" ", "%%20")
-		urlToOpen = config.ruleDocs.fallback:format(escapedQuery)
+		local query = (diag.code or diag.message):gsub("\n", " ") .. " " .. diag.source
+		urlToOpen = config.ruleDocs.fallback:format(urlEncode(query))
 	end
 
 	vim.ui.open(urlToOpen)
