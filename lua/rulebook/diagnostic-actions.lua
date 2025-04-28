@@ -57,14 +57,11 @@ function actions.lookupRule(diag)
 
 	local template = config.ruleDocs[diag.source]
 	local urlToOpen
-	if type(template) == "string" and template:find("%%s") then
+	if type(template) == "string" then
 		if not validDiagObj(diag) then return end
+		-- `:format` can fail if there are other common `%` placeholders in the
+		-- template, thus using `:gsub`
 		urlToOpen = template:gsub("%%s", diag.code)
-	elseif type(template) == "string" then
-		-- for cases where a specific rule cannot be linked, copy the code to
-		-- the clipboard, so it is easier at the rule index page
-		vim.fn.setreg("+", diagnosticInfo)
-		urlToOpen = template
 	elseif type(template) == "function" then
 		urlToOpen = template(diag)
 	else
