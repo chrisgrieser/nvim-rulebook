@@ -8,7 +8,10 @@
 ---@param diag vim.Diagnostic
 local function urlInDiagObj(diag) return diag.user_data.lsp.codeDescription.href end
 
----@type table<string, string|false|fun(diag: vim.Diagnostic): string?>
+--------------------------------------------------------------------------------
+---@alias ruleTemplate string|false|fun(diag: vim.Diagnostic): string?
+
+---@type table<string, ruleTemplate>
 local M = {
 	fallback = "https://www.google.com/search?q=%s",
 

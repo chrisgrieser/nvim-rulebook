@@ -27,7 +27,7 @@ end
 
 ---@class rulebook.config
 ---@field ignoreComments table<string, ruleIgnoreConfig>
----@field ruleDocs table<string, string|function>
+---@field ruleDocs table<string, ruleTemplate>
 ---@field suppressFormatter table<string, formatterSuppressConfig>
 ---@field forwSearchLines number
 
