@@ -55,22 +55,24 @@ function actions.lookupRule(diag)
 	local config = require("rulebook.config").config
 	local diagnosticInfo = (diag.code or diag.message):gsub("[\n\r]", " ")
 
-	local docResolver = config.ruleDocs[diag.source]
+	local template = config.ruleDocs[diag.source]
 	local urlToOpen
-	if type(docResolver) == "string" and docResolver:find("%%s") then
+	if type(template) == "string" and template:find("%%s") then
 		if not validDiagObj(diag) then return end
-		urlToOpen = docResolver:format(diag.code)
-	elseif type(docResolver) == "string" then
+		urlToOpen = template:gsub("%%s", diag.code)
+	elseif type(template) == "string" then
 		-- for cases where a specific rule cannot be linked, copy the code to
 		-- the clipboard, so it is easier at the rule index page
 		vim.fn.setreg("+", diagnosticInfo)
-		urlToOpen = docResolver
-	elseif type(docResolver) == "function" then
-		urlToOpen = docResolver(diag)
+		urlToOpen = template
+	elseif type(template) == "function" then
+		urlToOpen = template(diag)
 	else
-		docResolver = config.ruleDocs.fallback
+		template = config.ruleDocs.fallback
 		local query = ("%q (%s)"):format(diagnosticInfo, diag.source)
-		urlToOpen = docResolver:format(urlEncode(query))
+		local encoded = urlEncode(query)
+		local escaped = encoded:gsub("%%", "%%%%") -- avoid `%1` in replacement making `gsub` fail
+		urlToOpen = template:gsub("%%s", escaped)
 	end
 
 	vim.ui.open(urlToOpen)
