@@ -24,8 +24,10 @@ that do not have such code actions.
 - [Configuration](#configuration)
 	* [Base configuration](#base-configuration)
 	* [Customize built-in sources](#customize-built-in-sources)
-	* [Correctly configured diagnostic providers](#correctly-configured-diagnostic-providers)
-- [API: Availability of rule lookup](#api-availability-of-rule-lookup)
+- [FAQ](#faq)
+	* [How to directly ask an LLM about a rule](#how-to-directly-ask-an-llm-about-a-rule)
+	* [How to correctly configure diagnostic providers](#how-to-correctly-configure-diagnostic-providers)
+	* [How to display the availability of rule lookup](#how-to-display-the-availability-of-rule-lookup)
 - [Credits](#credits)
 
 <!-- tocstop -->
@@ -257,7 +259,23 @@ require("rulebook").setup = {
 }
 ```
 
-### Correctly configured diagnostic providers
+## FAQ
+
+### How to directly ask an LLM about a rule
+Simply use a URL that opens a chat with the LLM as rule documentation site. `%s`
+will be replaced with the diagnostic source and code (or message, if no code is
+available).
+
+```lua
+require("rulebook").setup = ({
+	ruleDocs = {
+		fallback = "https://chatgpt.com/?q=%s"
+		nameOfDiagnosticSource = "https://chatgpt.com/?q=%s"
+	}
+})
+```
+
+### How to correctly configure diagnostic providers
 The plugin requires that the diagnostic providers (the LSP or a linter
 integration tool like [nvim-lint](https://github.com/mfussenegger/nvim-lint)
 or [efm-langserver](https://github.com/mattn/efm-langserver)) provide the
@@ -303,7 +321,7 @@ require("nvim-lspconfig").efm.setup({
 }
 ```
 
-## API: Availability of rule lookup
+### How to display the availability of rule lookup
 The function `require("rulebook").hasDocs(diag)`, expects a diagnostic object
 and returns a boolean whether `nvim-rulebook` documentation for the respective
 diagnostic available. One use case for this is to add a visual indicator if
