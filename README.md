@@ -210,12 +210,13 @@ require("rulebook").setup = ({
 		-- ... (full list of supported sources can be found in the README)
 
 		-- Search URL when no documentation definition is available for a
-		-- diagnostic source. `%s` will be replaced with the diagnostic source & code.
+		-- diagnostic source. `%s` will be replaced with the diagnostic source and 
+		-- the code/message.
 		-- Default is the DDG "Ducky Search" (automatically opening first result).
 		fallback = "https://duckduckgo.com/?q=%s+%%21ducky&kl=en-us",
 
 		-- the value of the rule documentations accept either a string or a function
-		-- * if a string, `%s` will be replaced with rule-id
+		-- * if a string, `%s` will be replaced with rule-id (or the message, if missing)
 		-- * if a function, takes a `:h diagnostic-structure` as argument & return a url
 		yourCustomSource = "https://my-docs/%s.hthml",
 		anotherCustomSource = function(diag)
