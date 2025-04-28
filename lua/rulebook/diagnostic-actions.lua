@@ -66,6 +66,11 @@ function actions.lookupRule(diag)
 		urlToOpen = template(diag)
 	else
 		template = config.ruleDocs.fallback
+		if type(template) ~= "string" and type(template) ~= "function" then
+			notify("The `fallback` for `ruleDocs` needs to be a string or a function.", "error")
+			---@cast template string
+			return
+		end
 		local query = ("%q (%s)"):format(diagnosticInfo, diag.source)
 		local encoded = urlEncode(query)
 		local escaped = encoded:gsub("%%", "%%%%") -- avoid `%1` in replacement making `gsub` fail
