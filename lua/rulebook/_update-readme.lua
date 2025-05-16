@@ -52,6 +52,7 @@ table.sort(ruleDocsSources, function(a, b) return string.lower(a) < string.lower
 local ignoreComments = require("rulebook.data.add-ignore-rule-comment")
 for source, data in pairs(ignoreComments) do
 	local newLine = ("- [%s](%s)"):format(source, data.docs)
+	if data.workaround then newLine = newLine .. ("\n  (%s)"):format(data.workaround) end
 	table.insert(ignoreCommentSources, newLine)
 end
 table.sort(ignoreCommentSources, function(a, b) return string.lower(a) < string.lower(b) end)

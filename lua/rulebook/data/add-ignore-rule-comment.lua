@@ -2,6 +2,7 @@
 ---@field comment string|string[]|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
 ---@field location "prevLine"|"sameLine"|"encloseLine" "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field docs string used for auto-generated docs
+---@field workaround? string used for auto-generated docs
 ---@field doesNotUseCodes? boolean the linter does not use codes/rule-ids
 ---@field multiRuleIgnore boolean whether multiple rules can be ignored with one comment, defaults to `false`
 ---@field multiRuleSeparator? string defaults to ", " (with space)
@@ -120,8 +121,8 @@ M = {
 	codespell = {
 		comment = function(_) return vim.bo.commentstring:format("codespell-ignore") end,
 		location = "sameLine",
-		-- HACK uses workaround via `codespell --ignore-regex`
 		docs = "https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455",
+		workaround = "requires `--ignore-regex` to define `codespell-ignore`",
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
 	},
