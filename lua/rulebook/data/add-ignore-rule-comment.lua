@@ -126,6 +126,14 @@ M = {
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
 	},
+	typos = {
+		comment = function(_) return vim.bo.commentstring:format("typos:ignore-next-line") end,
+		location = "prevLine",
+		docs = "https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780",
+		workaround = "requires `default.extend-ignore-re` to define `typos:ignore-next-line`",
+		doesNotUseCodes = true,
+		multiRuleIgnore = false,
+	},
 	["clang-tidy"] = {
 		comment = "// NOLINT(%s)",
 		location = "sameLine",

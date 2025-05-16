@@ -108,6 +108,8 @@ Please consider making a PR to add support for a source if it is missing.
 - [ts](https://www.typescriptlang.org/)
 - [tsserver](https://www.typescriptlang.org/)
 - [typescript](https://www.typescriptlang.org/)
+- [typos](https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780)
+  (requires `default.extend-ignore-re` to define `typos:ignore-next-line`)
 - [vale-ls](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [woke](https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring)
