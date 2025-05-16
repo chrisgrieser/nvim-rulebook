@@ -1,4 +1,4 @@
-*nvim-rulebook.txt*             For Neovim            Last change: 2025 May 03
+*nvim-rulebook.txt*             For Neovim            Last change: 2025 May 16
 
 ==============================================================================
 Table of Contents                            *nvim-rulebook-table-of-contents*
@@ -102,6 +102,7 @@ ADD IGNORE COMMENT ~
 - biome <https://biomejs.dev/linter/#ignore-code>
 - clang-tidy <https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics>
 - codespell <https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455>
+    (requires `--ignore-regex` to define `codespell-ignore`)
 - cspell <https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code>
 - editorconfig-checker <https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines>
 - EmmyLua <https://github.com/EmmyLuaLs/emmylua-analyzer-rust/blob/main/docs/features/features_EN.md#code-checks>
@@ -123,6 +124,8 @@ ADD IGNORE COMMENT ~
 - ts <https://www.typescriptlang.org/>
 - tsserver <https://www.typescriptlang.org/>
 - typescript <https://www.typescriptlang.org/>
+- typos <https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780>
+    (requires `default.extend-ignore-re` to define `typos:ignore-next-line`)
 - vale-ls <https://vale.sh/docs/topics/config/#markup-based-configuration>
 - vale <https://vale.sh/docs/topics/config/#markup-based-configuration>
 - woke <https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring>
