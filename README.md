@@ -5,10 +5,7 @@
 alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
 Add inline-comments to ignore rules or suppress formatters. Lookup rule
-documentation online.
-
-Some LSPs provide code actions for that; this plugin is for linters and LSPs
-that do not have such code actions.
+documentation online. Built-in configuration for 35+ linters and LSPs.
 
 ## Table of contents
 
@@ -26,7 +23,7 @@ that do not have such code actions.
 	* [Customize built-in sources](#customize-built-in-sources)
 - [FAQ](#faq)
 	* [How to directly ask an LLM about a rule](#how-to-directly-ask-an-llm-about-a-rule)
-	* [How to correctly configure diagnostic providers](#how-to-correctly-configure-diagnostic-providers)
+	* [How to configure diagnostic providers](#how-to-configure-diagnostic-providers)
 	* [How to display the availability of rule lookup](#how-to-display-the-availability-of-rule-lookup)
 - [Credits](#credits)
 
@@ -41,8 +38,8 @@ that do not have such code actions.
   as `// prettier-ignore`.
 - Quality-of-life: auto-select a rule if it is the only one in the current line;
   if the line has no diagnostic, search forward to the next line that does.
-- Includes built-in support for dozens of linters and formatters. Thus, zero is
-  plugin configuration required if you only use common tooling.
+- Includes built-in support for dozens of linters and formatters. Thus, zero
+  plugin configuration is required if you only use common tooling.
 - Customizing built-in sources or adding your own sources is easy. PRs to add
   more built-ins are welcome.
 
@@ -86,7 +83,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [biome](https://biomejs.dev/linter/#ignore-code)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
-  (requires `--ignore-regex` to define `codespell-ignore`)
+  (requires setting `--ignore-regex` to `codespell-ignore`)
 - [cspell](https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code)
 - [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines)
 - [EmmyLua](https://github.com/EmmyLuaLs/emmylua-analyzer-rust/blob/main/docs/features/features_EN.md#code-checks)
@@ -109,7 +106,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [tsserver](https://www.typescriptlang.org/)
 - [typescript](https://www.typescriptlang.org/)
 - [typos](https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780)
-  (requires `default.extend-ignore-re` to define `typos:ignore-next-line`)
+  (requires setting `default.extend-ignore-re` to `typos: ignore-next-line`)
 - [vale-ls](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [woke](https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring)
@@ -169,7 +166,7 @@ The `.setup()` call is optional. You only need to add a config when you want to
 add or customize sources.
 
 When adding your own source, you must add the exact, case-sensitive
-source name, for example, `clang-tidy`, not `clang`.
+source name (for example, `clang-tidy`, not `clang`).
 
 ```lua
 require("rulebook").setup = ({
@@ -243,7 +240,7 @@ require("rulebook").setup = ({
 
 The plugin uses
 [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the
-appearance of the rule selection can be customized by using a UI-plugin like
+appearance of the rule selection can be customized by using a UI plugin like
 [snacks.nvim](https://github.com/folke/snacks.nvim).
 
 ### Customize built-in sources
@@ -282,8 +279,8 @@ require("rulebook").setup = ({
 })
 ```
 
-### How to correctly configure diagnostic providers
-The plugin requires that the diagnostic providers (the LSP or a linter
+### How to configure diagnostic providers
+This plugin requires that the diagnostic providers (the LSP or a linter
 integration tool like [nvim-lint](https://github.com/mfussenegger/nvim-lint)
 or [efm-langserver](https://github.com/mattn/efm-langserver)) provide the
 **source and code for the diagnostic**.
@@ -299,14 +296,13 @@ or [efm-langserver](https://github.com/mattn/efm-langserver)) provide the
   configure those linters for you.
 
 > [!IMPORTANT]
-> Note that vim's `errorformat` only matches numbers for `%n`, meaning it is not
-> possible to parse diagnostic codes that consist of letters. This is for
-> example the case for the linter `selene`. To use those linters with
-> `nvim-rulebook` you will have to use `nvim-lint` which allows more flexible
-> parsing.
+> Note that vim's `errorformat` only matches numbers for `%n`, which means it is
+> not possible to parse diagnostic codes that consist of letters. One such case
+> is the linter `selene`. To use those linters with `nvim-rulebook` you need to
+> use `nvim-lint` which allows more flexible parsing.
 
 ```lua
--- example: configuring efm langserver with markdownlint
+-- example: configuring efm langserver for `markdownlint`
 require("nvim-lspconfig").efm.setup({
 	filetypes = { "markdown" },
 	settings = { 
