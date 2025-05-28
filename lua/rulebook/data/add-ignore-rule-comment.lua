@@ -12,6 +12,13 @@
 ---INFO the key must be the exact case-sensitive `diagnostic.source`
 ---@type table<string, ruleIgnoreConfig>
 M = {
+	clippy = {
+		comment = "#[expect(%s)]",
+		location = "prevLine",
+		multiRuleIgnore = true,
+		multiRuleSeparator = ", ",
+		docs = "https://doc.rust-lang.org/reference/attributes/diagnostics.html#r-attributes.diagnostics.expect",
+	},
 	["ast-grep"] = {
 		comment = function(diag)
 			local ignoreText = "ast-grep-ignore: " .. diag.code
@@ -210,6 +217,7 @@ M["vale-ls"] = M.vale -- lsp and linter have separate source names
 M.stylelintplus = M.stylelint -- stylelint-lsp
 M.basedpyright = M.Pyright -- pyright fork
 M.ltex_plus = M.LTeX -- ltex fork
+M["rust-analyzer"] = M.clippy -- they use the same Rust attribute syntax
 
 --------------------------------------------------------------------------------
 return M
