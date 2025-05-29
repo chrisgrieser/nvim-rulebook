@@ -214,6 +214,13 @@ M = {
 		multiRuleIgnore = true,
 		multiRuleSeparator = ", ",
 	},
+	mypy = {
+		comment = "# type: ignore[%s]",
+		docs = "https://mypy.readthedocs.io/en/stable/error_codes.html#silencing-errors-based-on-error-codes",
+		location = "sameLine",
+		multiRuleIgnore = true,
+		multiRuleSeparator = ", ",
+	},
 }
 
 --------------------------------------------------------------------------------

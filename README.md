@@ -94,6 +94,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [ltex_plus](https://valentjn.github.io/ltex/advanced-usage.html)
 - [Lua Diagnostics.](https://luals.github.io/wiki/annotations/#diagnostic)
 - [markdownlint](https://github.com/DavidAnson/markdownlint#configuration)
+- [mypy](https://mypy.readthedocs.io/en/stable/error_codes.html#silencing-errors-based-on-error-codes)
 - [pylint](https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
 - [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
