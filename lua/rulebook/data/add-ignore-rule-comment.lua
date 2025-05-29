@@ -2,7 +2,7 @@
 ---@field comment string|string[]|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
 ---@field location "prevLine"|"sameLine"|"encloseLine" "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field docs string used for auto-generated docs
----@field workaround? string used for auto-generated docs
+---@field info? string used for auto-generated docs
 ---@field doesNotUseCodes? boolean the linter does not use codes/rule-ids
 ---@field multiRuleIgnore boolean whether multiple rules can be ignored with one comment, defaults to `false`
 ---@field multiRuleSeparator? string defaults to ", " (with space)
@@ -129,7 +129,7 @@ M = {
 		comment = function(_) return vim.bo.commentstring:format("codespell-ignore") end,
 		location = "sameLine",
 		docs = "https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455",
-		workaround = "requires setting `--ignore-regex` to `codespell-ignore`",
+		info = "requires setting `--ignore-regex` to `codespell-ignore`",
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
 	},
@@ -137,7 +137,7 @@ M = {
 		comment = function(_) return vim.bo.commentstring:format("typos: ignore-next-line") end,
 		location = "prevLine",
 		docs = "https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780",
-		workaround = "requires setting `default.extend-ignore-re` to `typos: ignore-next-line`",
+		info = "requires setting `default.extend-ignore-re` to `typos: ignore-next-line`",
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
 	},
