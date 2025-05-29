@@ -62,6 +62,7 @@ Please consider making a PR to add support for a source if it is missing.
 - `Lua Diagnostics.`
 - `markdownlint`
 - `pylint`
+- `Pyrefly`
 - `Pyright`
 - `quick-lint-js`
 - `Ruff`

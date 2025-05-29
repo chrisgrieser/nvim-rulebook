@@ -73,6 +73,7 @@ local M = {
 
 	-- urls use rule-name, not rule-id, so this is the closest we can get
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
+	Pyrefly = "https://pyrefly.org/en/docs/error-kinds/#%s",
 
 	markdownlint = function(diag)
 		local code = tostring(diag.code):gsub("^MD", "")
