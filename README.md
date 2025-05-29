@@ -5,7 +5,7 @@
 alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
 Add inline-comments to ignore rules or suppress formatters. Lookup rule
-documentation online. Built-in configuration for 35+ linters and LSPs.
+documentation online. Built-in configuration for more than 45 tools.
 
 ## Table of contents
 
@@ -97,6 +97,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [markdownlint](https://github.com/DavidAnson/markdownlint#configuration)
 - [mypy](https://mypy.readthedocs.io/en/stable/error_codes.html#silencing-errors-based-on-error-codes)
 - [pylint](https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html)
+- [Pyrefly](https://pyrefly.org/en/docs/error-suppressions/)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
 - [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
 - [rust-analyzer](https://doc.rust-lang.org/reference/attributes/diagnostics.html#r-attributes.diagnostics.expect)

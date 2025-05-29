@@ -221,6 +221,12 @@ M = {
 		multiRuleIgnore = true,
 		multiRuleSeparator = ", ",
 	},
+	Pyrefly = {
+		comment = "# pyrefly: ignore",
+		docs = "https://pyrefly.org/en/docs/error-suppressions/",
+		location = "sameLine",
+		multiRuleIgnore = false,
+	},
 }
 
 --------------------------------------------------------------------------------
