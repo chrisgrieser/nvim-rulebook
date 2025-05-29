@@ -105,6 +105,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [swiftlint](https://realm.github.io/SwiftLint/#Disable-rules-in-code)
 - [ts](https://www.typescriptlang.org/)
 - [tsserver](https://www.typescriptlang.org/)
+- [ty](https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments)
 - [typescript](https://www.typescriptlang.org/)
 - [typos](https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780)
   (requires setting `default.extend-ignore-re` to `typos: ignore-next-line`)

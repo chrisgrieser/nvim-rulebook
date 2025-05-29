@@ -207,6 +207,13 @@ M = {
 		multiRuleIgnore = false,
 		doesNotUseCodes = true,
 	},
+	ty = {
+		comment = "# ty: ignore[%s]",
+		docs = "https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments",
+		location = "sameLine",
+		multiRuleIgnore = true,
+		multiRuleSeparator = ", ",
+	},
 }
 
 --------------------------------------------------------------------------------
