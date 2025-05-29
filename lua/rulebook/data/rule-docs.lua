@@ -91,6 +91,7 @@ local M = {
 	basedpyright = urlInDiagObj,
 	biome = urlInDiagObj,
 	["quick-lint-js"] = urlInDiagObj,
+	ty = urlInDiagObj,
 }
 
 --------------------------------------------------------------------------------

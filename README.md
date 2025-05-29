@@ -72,6 +72,7 @@ Please consider making a PR to add support for a source if it is missing.
 - `swiftlint`
 - `ts`
 - `tsserver`
+- `ty`
 - `typescript`
 - `yamllint`
 
