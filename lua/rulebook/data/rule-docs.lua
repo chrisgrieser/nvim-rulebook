@@ -51,6 +51,7 @@ end
 -- * function value: will be called with the diagnostic object
 -- * `false`: disable rule docs, just use the fallback
 ---@alias ruleTemplate string|false|fun(diag: vim.Diagnostic): string?
+
 ---@type table<string, ruleTemplate>
 local M = {
 	fallback = "https://www.google.com/search?q=%s",
@@ -99,6 +100,7 @@ local M = {
 
 --------------------------------------------------------------------------------
 
+-- TOOLS THAT INHERIT THE CONFIGURATION OF OTHER TOOLS
 M.tsserver = M.typescript -- typescript-tools.nvim
 M.ts = M.typescript -- vtsls
 M.stylelintplus = M.stylelint -- stylelint-lsp

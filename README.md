@@ -95,6 +95,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [LTeX](https://valentjn.github.io/ltex/advanced-usage.html)
 - [ltex_plus](https://valentjn.github.io/ltex/advanced-usage.html)
 - [Lua Diagnostics.](https://luals.github.io/wiki/annotations/#diagnostic)
+  (source name for `lua_ls`)
 - [markdownlint](https://github.com/DavidAnson/markdownlint#configuration)
 - [mypy](https://mypy.readthedocs.io/en/stable/error_codes.html#silencing-errors-based-on-error-codes)
 - [pylint](https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html)
@@ -108,10 +109,10 @@ Please consider making a PR to add support for a source if it is missing.
 - [stylelint](https://stylelint.io/user-guide/ignore-code/)
 - [stylelintplus](https://stylelint.io/user-guide/ignore-code/)
 - [swiftlint](https://realm.github.io/SwiftLint/#Disable-rules-in-code)
-- [ts](https://www.typescriptlang.org/)
-- [tsserver](https://www.typescriptlang.org/)
+- [ts](https://typescript-eslint.io/rules/prefer-ts-expect-error/)
+- [tsserver](https://typescript-eslint.io/rules/prefer-ts-expect-error/)
 - [ty](https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments)
-- [typescript](https://www.typescriptlang.org/)
+- [typescript](https://typescript-eslint.io/rules/prefer-ts-expect-error/)
 - [typos](https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780)
   (requires setting `default.extend-ignore-re` to `typos: ignore-next-line`)
 - [vale-ls](https://vale.sh/docs/topics/config/#markup-based-configuration)
@@ -187,10 +188,10 @@ require("rulebook").setup = ({
 			multiRuleIgnore = true,
 			multiRuleSeparator = ",",
 		},
-		-- ... (full list of sources with builtin support can be found in the README)
+		-- ... (a full list of sources with builtin support can be found in the README)
 
 		yourCustomSource = { -- exact, case-sensitive source-name
-			-- `%s` will be replaced with rule-id
+			---@type string|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
 			comment = "// disabling-comment %s",
 
 			---@type "prevLine"|"sameLine"|"encloseLine"
@@ -199,32 +200,34 @@ require("rulebook").setup = ({
 			-- whether multiple rules can be ignored with one comment, defaults to `false`
 			multiRuleIgnore = true,
 
-			-- separator for multiple rule-ids, defaults to ", "
+			-- separator for multiple rule-ids, defaults to ", " (with space)
 			multiRuleSeparator = ",",
 		}
 
-		-- if location is "encloseLine", needs to be a list of two strings
+		-- if location is `encloseLine`, the comment needs to be a list of two strings
 		anotherCustomSource = {
+			location = "encloseLine",
 			comment = { 
 				"// disable-rule %s", 
 				"// enable-rule %s",
 			},
-			location = "encloseLine",
 		}
 	},
 
 	ruleDocs = {
 		selene = "https://kampfkarren.github.io/selene/lints/%s.html"
-		-- ... (full list of supported sources can be found in the README)
+		-- ... (a full list of sources with builtin support can be found in the README)
 
 		-- Search URL when no documentation definition is available for a
 		-- diagnostic source. `%s` will be replaced with the diagnostic source and 
 		-- the code/message.
 		fallback = "https://www.google.com/search?q=%s",
 
-		-- the value of the rule documentations accept either a string or a function
-		-- * if a string, `%s` will be replaced with rule-id (or the message, if missing)
-		-- * if a function, takes a `:h diagnostic-structure` as argument & return a url
+		-- the key must be named exactly like `diagnostic.source` (case-sensitive!)
+		-- * string value: `%s` will be replaced with the rule id
+		-- * function value: will be called with the diagnostic object
+		-- * `false`: disable rule docs, just use the fallback
+		---@type string|false|fun(diag: vim.Diagnostic): string?
 		yourCustomSource = "https://my-docs/%s.hthml",
 		anotherCustomSource = function(diag)
 			-- ...
@@ -267,25 +270,6 @@ require("rulebook").setup = {
 
 ## FAQ
 
-### How to directly ask an LLM about a rule
-Use a URL that opens a chat with the LLM as fallback.
-
-For `fallback`, the `%s` placeholder will be replaced with the diagnostic source
-and the quoted code (or message, if no code is available), both URL-encoded.
-
-```lua
-require("rulebook").setup = ({
-	ruleDocs = {
-		fallback = "https://chatgpt.com/?q=Explain%20the%20following%20diagnostic%20error%3A%20%s"
-
-		-- To use the fallback instead of the builtin rule docs, overwrite it
-		-- with `false`. (For all other sources, `%s` will be replaced with just
-		-- the diagnostic code.)
-		typescript = false,
-	}
-})
-```
-
 ### How to configure diagnostic providers
 This plugin requires that the diagnostic providers (the LSP or a linter
 integration tool like [nvim-lint](https://github.com/mfussenegger/nvim-lint)
@@ -309,8 +293,8 @@ or [efm-langserver](https://github.com/mattn/efm-langserver)) provide the
 > use `nvim-lint` which allows more flexible parsing.
 
 ```lua
--- example: configuring efm langserver for `markdownlint`
-require("nvim-lspconfig").efm.setup({
+-- example: configuring efm langserver for `markdownlint` in `/lsp/efm.lua`
+return {
 	filetypes = { "markdown" },
 	settings = { 
 		languages = {
@@ -329,6 +313,27 @@ require("nvim-lspconfig").efm.setup({
 		},
 	},
 }
+```
+
+### How to directly ask an LLM about a rule
+To ask an LLM about a rule, use a URL that opens a chat it for
+`ruleDocs.fallback`.
+
+For `ruleDocs.fallback`, the `%s` placeholder will be replaced with the
+diagnostic source and the quoted code (or message, if no code is available),
+both URL-encoded.
+
+```lua
+-- example to use ChatGPT for rule lookup
+require("rulebook").setup = ({
+	ruleDocs = {
+		fallback = "https://chatgpt.com/?q=Explain%20the%20following%20diagnostic%20error%3A%20%s"
+
+		-- To use `fallback` instead of the builtin rule docs, overwrite the
+		-- builtin one with `false`.
+		typescript = false,
+	}
+})
 ```
 
 ### How to display the availability of rule lookup

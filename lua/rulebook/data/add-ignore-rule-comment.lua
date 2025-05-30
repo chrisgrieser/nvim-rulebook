@@ -9,7 +9,7 @@
 
 --------------------------------------------------------------------------------
 
----INFO the key must be the exact case-sensitive `diagnostic.source`
+---INFO the key must exactly match `diagnostic.source` (case-sensitive)
 ---@type table<string, ruleIgnoreConfig>
 M = {
 	clippy = {
@@ -46,6 +46,7 @@ M = {
 		comment = "---@diagnostic disable-line: %s",
 		location = "sameLine", -- prevLine already available via code action
 		docs = "https://luals.github.io/wiki/annotations/#diagnostic",
+		info = "(source name for `lua_ls`)",
 		multiRuleIgnore = true,
 	},
 	EmmyLua = {
@@ -103,19 +104,18 @@ M = {
 		multiRuleIgnore = true,
 	},
 	biome = {
-		-- biome works for css and js, so the comment syntax is dependent on the filetype
 		comment = function(diag)
-			local ignoreText = ("biome-ignore %s: _explanation_"):format(diag.code)
+			local ignoreText = ("biome-ignore %s: explanation"):format(diag.code)
 			return vim.bo.commentstring:format(ignoreText)
 		end,
 		location = "prevLine",
 		docs = "https://biomejs.dev/linter/#ignore-code",
-		multiRuleIgnore = false, -- apparently not supported
+		multiRuleIgnore = false,
 	},
 	typescript = {
-		comment = "// @ts-expect-error", -- https://typescript-eslint.io/rules/prefer-ts-expect-error/
+		comment = "// @ts-expect-error",
 		location = "prevLine",
-		docs = "https://www.typescriptlang.org/", -- no docs found that are more specific
+		docs = "https://typescript-eslint.io/rules/prefer-ts-expect-error/",
 		multiRuleIgnore = false,
 	},
 	["editorconfig-checker"] = {
@@ -129,7 +129,7 @@ M = {
 		comment = function(_) return vim.bo.commentstring:format("codespell-ignore") end,
 		location = "sameLine",
 		docs = "https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455",
-		info = "requires setting `--ignore-regex` to `codespell-ignore`",
+		info = "(requires setting `--ignore-regex` to `codespell-ignore`)",
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
 	},
@@ -137,7 +137,7 @@ M = {
 		comment = function(_) return vim.bo.commentstring:format("typos: ignore-next-line") end,
 		location = "prevLine",
 		docs = "https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780",
-		info = "requires setting `default.extend-ignore-re` to `typos: ignore-next-line`",
+		info = "(requires setting `default.extend-ignore-re` to `typos: ignore-next-line`)",
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
 	},
@@ -184,7 +184,7 @@ M = {
 		end,
 		location = "prevLine",
 		docs = "https://github.com/DavidAnson/markdownlint#configuration",
-		multiRuleIgnore = false, -- apparently not supported
+		multiRuleIgnore = false,
 	},
 	swiftlint = {
 		comment = "// swiftlint:disable:next %s",
@@ -231,6 +231,7 @@ M = {
 
 --------------------------------------------------------------------------------
 
+-- TOOLS THAT INHERIT THE CONFIGURATION OF OTHER TOOLS
 M.tsserver = M.typescript -- typescript-tools.nvim
 M.ts = M.typescript -- vtsls
 M["vale-ls"] = M.vale -- lsp and linter have separate source names
