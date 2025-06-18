@@ -5,7 +5,7 @@
 alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
 Add inline-comments to ignore rules or suppress formatters. Lookup rule
-documentation online. Built-in configuration for more than 45 tools.
+documentation online. Built-in configuration for more than 50 tools.
 
 ## Table of contents
 
@@ -22,8 +22,8 @@ documentation online. Built-in configuration for more than 45 tools.
 	* [Base configuration](#base-configuration)
 	* [Customize built-in sources](#customize-built-in-sources)
 - [FAQ](#faq)
-	* [How to directly ask an LLM about a rule](#how-to-directly-ask-an-llm-about-a-rule)
 	* [How to configure diagnostic providers](#how-to-configure-diagnostic-providers)
+	* [How to directly ask an LLM about a rule](#how-to-directly-ask-an-llm-about-a-rule)
 	* [How to display the availability of rule lookup](#how-to-display-the-availability-of-rule-lookup)
 - [Credits](#credits)
 
@@ -119,14 +119,18 @@ Please consider making a PR to add support for a source if it is missing.
 - [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [woke](https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring)
 - [yamllint](https://yamllint.readthedocs.io/en/stable/disable_with_comments.html)
-<!-- auto-generated: end -->
 
 ### Suppress formatting
-- [stylua](https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file)
-- [prettier](https://prettier.io/docs/en/ignore.html)
-- [black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections)
-  / [ruff](https://docs.astral.sh/ruff/formatter/#format-suppression)
-- [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code)
+- [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code):
+  `c`, `cpp`
+- [prettier](https://prettier.io/docs/en/ignore.html#css):
+  `css`, `html`, `javascript`, `javascriptreact`, `markdown`, `scss`, `svelte`,
+  `typescript`, `typescriptreact`, `vue`, `yaml`
+- [ruff / black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections):
+  `python`
+- [stylua](https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file):
+  `lua`
+<!-- auto-generated: end -->
 
 ## Installation
 **Requirements**

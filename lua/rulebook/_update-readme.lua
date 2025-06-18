@@ -36,35 +36,76 @@ for line in io.lines(readmePath) do
 	end
 end
 
--- insert new lines
-local ruleDocsSources = {}
-local ignoreCommentSources = {}
+--------------------------------------------------------------------------------
 
-local ruleDocs = require("rulebook.data.rule-docs")
-for source, _ in pairs(ruleDocs) do
+-- default sorting puts all uppercase letters before lowercase ones
+---@param list table mutates the list
+local function sortAlphabeticallyCaseInsensitive(list)
+	table.sort(list, function(a, b) return string.lower(a) < string.lower(b) end)
+end
+
+-- insert new lines
+local ruleDocsLines = {}
+for source, _ in pairs(require("rulebook.data.rule-docs")) do
 	if source ~= "fallback" then
 		local newLine = ("- `%s`"):format(source)
-		table.insert(ruleDocsSources, newLine)
+		table.insert(ruleDocsLines, newLine)
 	end
 end
-table.sort(ruleDocsSources, function(a, b) return string.lower(a) < string.lower(b) end)
+sortAlphabeticallyCaseInsensitive(ruleDocsLines)
 
-local ignoreComments = require("rulebook.data.add-ignore-rule-comment")
-for source, data in pairs(ignoreComments) do
+local ignoreCommentLines = {}
+for source, data in pairs(require("rulebook.data.add-ignore-rule-comment")) do
 	local newLine = ("- [%s](%s)"):format(source, data.docs)
 	if data.info then newLine = newLine .. ("\n  %s"):format(data.info) end
-	table.insert(ignoreCommentSources, newLine)
+	table.insert(ignoreCommentLines, newLine)
 end
-table.sort(ignoreCommentSources, function(a, b) return string.lower(a) < string.lower(b) end)
+sortAlphabeticallyCaseInsensitive(ignoreCommentLines)
+
+-- formatter-data is organized by filetype, for the README, we want to organize
+-- the info by tool instead though.
+local formatterLines = {}
+local toolInfo = {}
+for filetype, tool in pairs(require("rulebook.data.suppress-formatter-comment")) do
+	if not toolInfo[tool.formatterName] then
+		toolInfo[tool.formatterName] = {
+			filetypes = {},
+			docs = tool.docs,
+		}
+	end
+	table.insert(toolInfo[tool.formatterName].filetypes, filetype)
+end
+for toolName, tool in pairs(toolInfo) do
+	sortAlphabeticallyCaseInsensitive(tool.filetypes)
+	local ftStr = vim.iter(tool.filetypes)
+		:map(function(ft) return ("`%s`"):format(ft) end)
+		:join(", ")
+
+	-- respect max-line-length for markdownlint
+	local maxLineLen = 80
+	maxLineLen = maxLineLen - 2 -- 2 spaces indent
+	if #ftStr > maxLineLen then
+		ftStr = vim.trim(ftStr:sub(1, maxLineLen)) .. "\n  " .. ftStr:sub(maxLineLen + 1, -1)
+	end
+
+	local newEntry = ("- [%s](%s):\n  %s"):format(toolName, tool.docs, ftStr)
+	table.insert(formatterLines, newEntry)
+end
+sortAlphabeticallyCaseInsensitive(formatterLines)
+
+--------------------------------------------------------------------------------
 
 -- write new file
-local newContent = table.concat(beforePart, "\n")
-	.. "\n"
-	.. "### Rule lookup\n"
-	.. table.concat(ruleDocsSources, "\n")
-	.. "\n\n"
-	.. "### Add ignore comment\n"
-	.. table.concat(ignoreCommentSources, "\n")
-	.. "\n"
-	.. table.concat(afterPart, "\n")
-writeToFile(readmePath, newContent)
+local newContent = {
+	table.concat(beforePart, "\n"),
+	"### Rule lookup",
+	table.concat(ruleDocsLines, "\n"),
+	"",
+	"### Add ignore comment",
+	table.concat(ignoreCommentLines, "\n"),
+	"",
+	"### Suppress formatting",
+	table.concat(formatterLines, "\n"),
+	table.concat(afterPart, "\n"),
+}
+writeToFile(readmePath, table.concat(newContent, "\n"))
