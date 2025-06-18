@@ -53,10 +53,10 @@ function M.setup(userConfig)
 			notify(("Ignore comment config for %q: %s"):format(linterName, errorMsg), "error")
 		end
 	end
-	for ftName, ftConfig in pairs(M.config.suppressFormatter) do
-		local errorMsg = validateIgnoreComment(ftConfig, "ignoreBlock")
+	for fmtName, fmtConfig in pairs(M.config.suppressFormatter) do
+		local errorMsg = validateIgnoreComment(fmtConfig, "ignoreBlock")
 		if errorMsg then
-			notify(("Suppress formatter config for %q: %s"):format(ftName, errorMsg), "error")
+			notify(("Suppress formatter config for %q: %s"):format(fmtName, errorMsg), "error")
 		end
 	end
 end
