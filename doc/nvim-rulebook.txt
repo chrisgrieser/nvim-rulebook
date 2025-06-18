@@ -1,4 +1,4 @@
-*nvim-rulebook.txt*            For Neovim            Last change: 2025 June 16
+*nvim-rulebook.txt*            For Neovim            Last change: 2025 June 18
 
 ==============================================================================
 Table of Contents                            *nvim-rulebook-table-of-contents*
@@ -19,7 +19,7 @@ Table of Contents                            *nvim-rulebook-table-of-contents*
 
 
 Addinline-comments to ignore rules or suppress formatters. Lookup rule
-documentation online. Built-in configuration for more than 45 tools.
+documentation online. Built-in configuration for more than 50 tools.
 
 
 TABLE OF CONTENTS             *nvim-rulebook-nvim-rulebook--table-of-contents*
@@ -35,8 +35,8 @@ TABLE OF CONTENTS             *nvim-rulebook-nvim-rulebook--table-of-contents*
     - |nvim-rulebook-base-configuration|
     - |nvim-rulebook-customize-built-in-sources|
 - |nvim-rulebook-faq|
-    - |nvim-rulebook-how-to-directly-ask-an-llm-about-a-rule|
     - |nvim-rulebook-how-to-configure-diagnostic-providers|
+    - |nvim-rulebook-how-to-directly-ask-an-llm-about-a-rule|
     - |nvim-rulebook-how-to-display-the-availability-of-rule-lookup|
 - |nvim-rulebook-credits|
 
@@ -139,16 +139,20 @@ ADD IGNORE COMMENT ~
 
 SUPPRESS FORMATTING ~
 
-- stylua <https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file>
-- prettier <https://prettier.io/docs/en/ignore.html>
-- black <https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections>
-    / ruff <https://docs.astral.sh/ruff/formatter/#format-suppression>
 - clang-format <https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code>
+    `c`,`cpp`
+- prettier <https://prettier.io/docs/en/ignore.html#css>
+    `css`,`html`, `javascript`, `javascriptreact`, `markdown`, `scss`, `svelte`,
+    `typescript`, `typescriptreact`, `vue`, `yaml`
+- ruff / black <https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections>
+    `python`
+- stylua <https://github.com/JohnnyMorganz/StyLua#ignoring-parts-of-a-file>
+    `lua`
 
 
 INSTALLATION                       *nvim-rulebook-nvim-rulebook--installation*
 
-**Requirements** - nvim 0.10+ - Diagnostics provided by a source that supports
+**Requirements** -nvim 0.10+ - Diagnostics provided by a source that supports
 Neovim’s built-in diagnostics system. (nvim’s built-in LSP client,
 efm-langserver <https://github.com/mattn/efm-langserver> or nvim-lint
 <https://github.com/mfussenegger/nvim-lint> are such sources.)
