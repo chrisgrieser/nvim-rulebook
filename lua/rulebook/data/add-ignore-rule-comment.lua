@@ -20,10 +20,7 @@ M = {
 		docs = "https://doc.rust-lang.org/reference/attributes/diagnostics.html#r-attributes.diagnostics.expect",
 	},
 	["ast-grep"] = {
-		comment = function(diag)
-			local ignoreText = "ast-grep-ignore: " .. diag.code
-			return vim.bo.commentstring:format(ignoreText)
-		end,
+		comment = function(diag) return vim.bo.commentstring:format("ast-grep-ignore: " .. diag.code) end,
 		location = "prevLine",
 		docs = "https://ast-grep.github.io/guide/project/severity.html#ignore-linting-error",
 		multiRuleIgnore = true,
@@ -154,10 +151,7 @@ M = {
 		multiRuleIgnore = false,
 	},
 	woke = {
-		comment = function(diag)
-			local ignoreText = "wokeignore:rule=" .. diag.code
-			return vim.bo.commentstring:format(ignoreText)
-		end,
+		comment = function(diag) return vim.bo.commentstring:format("wokeignore:rule=" .. diag.code) end,
 		location = "sameLine",
 		docs = "https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring",
 		multiRuleIgnore = false,
