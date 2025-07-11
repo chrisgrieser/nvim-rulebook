@@ -1,11 +1,14 @@
----@class formatterSuppressConfig
+---@class Rulebook.FormatterSuppressConfig
 ---@field ignoreBlock string|string[] used in normal mode
----@field location "prevLine"|"sameLine"|"encloseLine" where `ignoreBlock` is inserted. "encloseLine" is a list with two strings, one to be inserted before and one after
+---@field location Rulebook.Location where `ignoreBlock` is inserted. "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field ignoreRange? string[] list of two strings (start and end), will surround the visual mode selection
----@field docs string only used for auto-generated docs
----@field formatterName string only used for auto-generated docs
+---@field docs string used for auto-generated docs
+---@field formatterName string used for auto-generated docs
 
----@type table<string, formatterSuppressConfig>
+--------------------------------------------------------------------------------
+
+---INFO the key must exactly match the `vim.bo.filetype`
+---@type table<string, Rulebook.FormatterSuppressConfig>
 M = {
 	lua = {
 		ignoreBlock = "-- stylua: ignore",

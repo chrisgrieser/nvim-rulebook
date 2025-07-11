@@ -1,16 +1,19 @@
----@class ruleIgnoreConfig
+---"encloseLine" is a list with two strings, one to be inserted before and one after
+---@alias Rulebook.Location "prevLine"|"sameLine"|"encloseLine"|"inlineBeforeDiagnostic"
+
+---@class Rulebook.RuleIgnoreConfig
 ---@field comment string|string[]|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
----@field location "prevLine"|"sameLine"|"encloseLine"|"inlineBeforeDiagnostic" "encloseLine" is a list with two strings, one to be inserted before and one after
+---@field location Rulebook.Location
 ---@field docs string used for auto-generated docs
 ---@field info? string used for auto-generated docs
----@field doesNotUseCodes? boolean the linter does not use codes/rule-ids
+---@field doesNotUseCodes? boolean linter does not use codes/rule-ids
 ---@field multiRuleIgnore boolean whether multiple rules can be ignored with one comment, defaults to `false`
 ---@field multiRuleSeparator? string defaults to ", " (with space)
 
 --------------------------------------------------------------------------------
 
 ---INFO the key must exactly match `diagnostic.source` (case-sensitive)
----@type table<string, ruleIgnoreConfig>
+---@type table<string, Rulebook.RuleIgnoreConfig>
 M = {
 	clippy = {
 		comment = "#[expect(%s)]",

@@ -2,15 +2,18 @@ local M = {}
 local notify = require("rulebook.utils").notify
 --------------------------------------------------------------------------------
 
----@param config ruleIgnoreConfig|formatterSuppressConfig
+---@param config Rulebook.RuleIgnoreConfig|Rulebook.FormatterSuppressConfig
 ---@param commentKeyName string
 ---@return string errorMsg
 local function validateIgnoreComment(config, commentKeyName)
 	local comment = config[commentKeyName]
 	local location = config.location
 	local comType = type(comment)
-	local errorMsg
+
+	---@type Rulebook.Location[]
 	local validLocations = { "prevLine", "sameLine", "encloseLine", "inlineBeforeDiagnostic" }
+
+	local errorMsg
 	if not (vim.tbl_contains(validLocations, location)) then
 		errorMsg = "`location` must be one of `prevLine`, `sameLine` or `encloseLine`."
 	elseif location == "encloseLine" and comType ~= "table" and #comment ~= 2 then
@@ -26,13 +29,13 @@ end
 
 --------------------------------------------------------------------------------
 
----@class rulebook.config
----@field ignoreComments table<string, ruleIgnoreConfig>
----@field ruleDocs table<string, ruleTemplate>
----@field suppressFormatter table<string, formatterSuppressConfig>
+---@class Rulebook.Config
+---@field ignoreComments table<string, Rulebook.RuleIgnoreConfig>
+---@field ruleDocs table<string, Rulebook.RuleDocsTemplate>
+---@field suppressFormatter table<string, Rulebook.FormatterSuppressConfig>
 ---@field forwSearchLines number
 
----@type rulebook.config
+---@type Rulebook.Config
 local defaultConfig = {
 	ignoreComments = require("rulebook.data.add-ignore-rule-comment"),
 	ruleDocs = require("rulebook.data.rule-docs"),

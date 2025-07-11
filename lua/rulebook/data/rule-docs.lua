@@ -50,9 +50,9 @@ end
 -- * string value: `%s` will be replaced with the rule id
 -- * function value: will be called with the diagnostic object
 -- * `false`: disable rule docs, just use the fallback
----@alias ruleTemplate string|false|fun(diag: vim.Diagnostic): string?
+---@alias Rulebook.RuleDocsTemplate string|false|fun(diag: vim.Diagnostic): string?
 
----@type table<string, ruleTemplate>
+---@type table<string, Rulebook.RuleDocsTemplate>
 local M = {
 	fallback = "https://www.google.com/search?q=%s",
 

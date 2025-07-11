@@ -82,7 +82,7 @@ end
 
 ---@param diag vim.Diagnostic
 function actions.ignoreRule(diag)
-	---@type ruleIgnoreConfig
+	---@type Rulebook.RuleIgnoreConfig
 	local sourceConf = require("rulebook.config").config.ignoreComments[diag.source]
 	if not sourceConf then
 		notify(("No ignore comment configured for %q."):format(diag.source), "warn")
