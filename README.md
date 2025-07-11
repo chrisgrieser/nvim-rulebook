@@ -86,7 +86,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
 - [clippy](https://doc.rust-lang.org/reference/attributes/diagnostics.html#r-attributes.diagnostics.expect)
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
-  (requires setting `--ignore-regex` to `codespell-ignore`)
+  (requires setting `--ignore-regex` to `ignore-regex=".*codespell-ignore$"`)
 - [cspell](https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code)
 - [editorconfig-checker](https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines)
 - [EmmyLua](https://github.com/EmmyLuaLs/emmylua-analyzer-rust/blob/main/docs/features/features_EN.md#code-checks)
@@ -114,7 +114,8 @@ Please consider making a PR to add support for a source if it is missing.
 - [ty](https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments)
 - [typescript](https://typescript-eslint.io/rules/prefer-ts-expect-error/)
 - [typos](https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780)
-  (requires setting `default.extend-ignore-re` to `typos: ignore-next-line`)
+  (requires setting `default.extend-ignore-re` to `[default] extend-ignore-re = ["[^\
+]*typos: ignore-line[^\n]*\n"]`)
 - [vale-ls](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [woke](https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring)
