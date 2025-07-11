@@ -1,6 +1,6 @@
 ---@class Rulebook.FormatterSuppressConfig
 ---@field ignoreBlock string|string[] used in normal mode
----@field location Rulebook.Location where `ignoreBlock` is inserted. "encloseLine" is a list with two strings, one to be inserted before and one after
+---@field location Rulebook.Location|fun(): Rulebook.Location
 ---@field ignoreRange? string[] list of two strings (start and end), will surround the visual mode selection
 ---@field docs string used for auto-generated docs
 ---@field formatterName string used for auto-generated docs

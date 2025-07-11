@@ -3,7 +3,7 @@
 
 ---@class Rulebook.RuleIgnoreConfig
 ---@field comment string|string[]|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
----@field location Rulebook.Location
+---@field location Rulebook.Location|fun(vim.Diagnostic): Rulebook.Location
 ---@field docs string used for auto-generated docs
 ---@field info? string used for auto-generated docs
 ---@field doesNotUseCodes? boolean linter does not use codes/rule-ids

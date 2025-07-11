@@ -3,26 +3,34 @@ local notify = require("rulebook.utils").notify
 --------------------------------------------------------------------------------
 
 ---@param config Rulebook.RuleIgnoreConfig|Rulebook.FormatterSuppressConfig
----@param commentKeyName string
----@return string errorMsg
-local function validateIgnoreComment(config, commentKeyName)
-	local comment = config[commentKeyName]
+---@param commentKey string
+---@return string|nil errorMsg
+local function validateIgnoreComment(config, commentKey)
+	local comment = config[commentKey]
 	local location = config.location
 	local comType = type(comment)
 
 	---@type Rulebook.Location[]
 	local validLocations = { "prevLine", "sameLine", "encloseLine", "inlineBeforeDiagnostic" }
 
-	local errorMsg
-	if not (vim.tbl_contains(validLocations, location)) then
-		errorMsg = "`location` must be one of `prevLine`, `sameLine` or `encloseLine`."
-	elseif location == "encloseLine" and comType ~= "table" and #comment ~= 2 then
-		errorMsg = "`encloseLine` requires 'comment' to be a list of two strings."
-	elseif location ~= "encloseLine" and comType ~= "string" and comType ~= "function" then
-		errorMsg = ("`%s` requires `%s` to be a string or function"):format(location, commentKeyName)
+	local errorMsg = nil
+
+	if not (vim.tbl_contains(validLocations, location) or type(location) == "function") then
+		errorMsg = "`location` must be `prevLine`, `sameLine`, `encloseLine`, "
+			.. "`inlineBeforeDiagnostic`, or a function returning one of those."
 	end
-	if location == "encloseLine" and config.multiRuleIgnore then
-		errorMsg = "`encloseLine` does not support `multiRuleIgnore`."
+	if commentKey == "ignoreBlock" and location == "inlineBeforeDiagnostic" then
+		errorMsg = "`suppressFormatter` does not support `inlineBeforeDiagnostic`."
+	end
+	if location == "encloseLine" then
+		if comType ~= "table" and #comment ~= 2 then
+			errorMsg = "`encloseLine` requires 'comment' to be a list of two strings."
+		elseif comType ~= "string" and comType ~= "function" then
+			errorMsg = ("`%s` requires `%s` to be a string or function"):format(location, commentKey)
+		end
+		if config.multiRuleIgnore then
+			errorMsg = "`encloseLine` does not support `multiRuleIgnore`."
+		end
 	end
 	return errorMsg
 end

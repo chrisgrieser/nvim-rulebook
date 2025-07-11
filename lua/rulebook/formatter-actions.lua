@@ -18,16 +18,19 @@ function M.suppress()
 		return
 	end
 
+	local location = type(ftConfig.location) == "function" and ftConfig.location()
+		or ftConfig.location ---@cast location Rulebook.Location
+
 	local indent = vim.api.nvim_get_current_line():match("^%s*")
 	local prevLnum = vim.api.nvim_win_get_cursor(0)[1] - 1
 
 	if mode == "n" then
-		if ftConfig.location == "prevLine" then
+		if location == "prevLine" then
 			vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { indent .. suppressText })
-		elseif ftConfig.location == "sameLine" then
+		elseif location == "sameLine" then
 			local curLine = vim.api.nvim_get_current_line():gsub("%s+$", "")
 			vim.api.nvim_set_current_line(curLine .. " " .. suppressText)
-		elseif ftConfig.location == "encloseLine" then
+		elseif location == "encloseLine" then
 			local nextLnum = prevLnum + 1
 			-- next line first to not shift the line number
 			vim.api.nvim_buf_set_lines(0, nextLnum, nextLnum, false, { indent .. suppressText[1] })

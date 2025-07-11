@@ -198,7 +198,7 @@ require("rulebook").setup = ({
 			---@type string|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
 			comment = "// disabling-comment %s",
 
-			---@type "prevLine"|"sameLine"|"encloseLine"
+			---@type "prevLine"|"sameLine"|"encloseLine"|"inlineBeforeDiagnostic"|fun(vim.Diagnostic): string
 			location = "sameLine",
 
 			-- whether multiple rules can be ignored with one comment, defaults to `false`
@@ -241,11 +241,13 @@ require("rulebook").setup = ({
 
 	suppressFormatter = {
 		lua = {
-			-- normal mode
+			-- used for normal mode
 			ignoreBlock = "-- stylua: ignore",
+
+			---@type "prevLine"|"sameLine"|"encloseLine"|fun(): string
 			location = "prevLine",
 
-			-- visual mode
+			-- use for visual mode
 			ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore end" },
 		},
 	}

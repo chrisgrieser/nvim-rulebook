@@ -97,16 +97,18 @@ function actions.ignoreRule(diag)
 	local ignoreComment = sourceConf.comment
 	if type(ignoreComment) == "function" then ignoreComment = ignoreComment(diag) end
 	---@cast ignoreComment string
+	local code = diag.code
+	local location = type(sourceConf.location) == "function" and sourceConf.location(diag)
+		or sourceConf.location ---@cast location Rulebook.Location
 
 	-- consider multi-rule-ignore
-	local code = diag.code
 	if sourceConf.multiRuleIgnore then
 		-- used with `str.match`, this pattern will return the already ignored code(s)
 		local existingRulePattern = vim.pesc(ignoreComment):gsub("%%%%s", "([%%w-_,%%[%%] ]+)")
 			.. "%s*$"
 		local sep = sourceConf.multiRuleSeparator or ", "
 
-		if sourceConf.location == "sameLine" or sourceConf.location == "inlineBeforeDiagnostic" then
+		if location == "location" or location == "inlineBeforeDiagnostic" then
 			local oldCode = curLine:match(existingRulePattern)
 			if oldCode then
 				code = oldCode .. sep .. code
@@ -114,7 +116,7 @@ function actions.ignoreRule(diag)
 					:gsub(existingRulePattern, "") -- remove old ignore comment
 					:gsub("%s+$", "")
 			end
-		elseif sourceConf.location == "prevLine" then
+		elseif location == "prevLine" then
 			local prevLine = vim.api.nvim_buf_get_lines(0, prevLnum - 1, prevLnum, false)[1]
 			local oldCode = prevLine:match(existingRulePattern)
 			if oldCode then
@@ -128,15 +130,16 @@ function actions.ignoreRule(diag)
 
 	-- insert comment
 	local comment = ignoreComment:format(code)
-	if sourceConf.location == "prevLine" then
+
+	if location == "prevLine" then
 		vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { indent .. comment })
-	elseif sourceConf.location == "sameLine" then
+	elseif location == "sameLine" then
 		local extraSpace = vim.bo.filetype == "python" and " " or "" -- formatters expect an extra space
 		vim.api.nvim_set_current_line(vim.trim(curLine) .. " " .. extraSpace .. comment)
-	elseif sourceConf.location == "inlineBeforeDiagnostic" then
+	elseif location == "inlineBeforeDiagnostic" then
 		local updatedLine = curLine:sub(1, diag.col) .. comment .. curLine:sub(diag.col + 1)
 		vim.api.nvim_set_current_line(updatedLine)
-	elseif sourceConf.location == "encloseLine" then
+	elseif location == "encloseLine" then
 		---@cast ignoreComment string[]
 		local comment1 = indent .. ignoreComment[1]:format(code)
 		local comment2 = indent .. ignoreComment[2]:format(code)
