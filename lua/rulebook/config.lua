@@ -15,7 +15,7 @@ local function validateIgnoreComment(config, commentKey)
 
 	local errorMsg = nil
 
-	if not (vim.tbl_contains(validLocations, location) or type(location) == "function") then
+	if not (vim.list_contains(validLocations, location) or type(location) == "function") then
 		errorMsg = "`location` must be `prevLine`, `sameLine`, `encloseLine`, "
 			.. "`inlineBeforeDiagnostic`, or a function returning one of those."
 	end
@@ -23,10 +23,8 @@ local function validateIgnoreComment(config, commentKey)
 		errorMsg = "`suppressFormatter` does not support `inlineBeforeDiagnostic`."
 	end
 	if location == "encloseLine" then
-		if comType ~= "table" and #comment ~= 2 then
-			errorMsg = "`encloseLine` requires 'comment' to be a list of two strings."
-		elseif comType ~= "string" and comType ~= "function" then
-			errorMsg = ("`%s` requires `%s` to be a string or function"):format(location, commentKey)
+		if comType == "table" and #comment ~= 2 then
+			errorMsg = "`encloseLine` requires `comment` to be a list of two strings."
 		end
 		if config.multiRuleIgnore then
 			errorMsg = "`encloseLine` does not support `multiRuleIgnore`."
