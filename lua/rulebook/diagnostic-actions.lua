@@ -151,7 +151,7 @@ end
 function actions.yankDiagnosticCode(diag)
 	if not validDiagObj(diag) then return end
 	vim.fn.setreg("+", diag.code)
-	notify(("Diagnostic code copied: \n%s"):format(diag.code), "info")
+	notify("Diagnostic code copied: \n" .. diag.code)
 end
 
 --------------------------------------------------------------------------------
