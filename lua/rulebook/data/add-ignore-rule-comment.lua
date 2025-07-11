@@ -192,7 +192,11 @@ M = {
 	},
 	Harper = {
 		comment = function() return vim.bo.commentstring:format("harper: ignore") end,
-		location = "sameLine",
+		location = function(diag)
+			-- in markdown, harper only works properly with ignore directions in the same line
+			local ft = vim.bo[diag.bufnr or 0].filetype
+			return ft == "markdown" and "inlineBeforeDiagnostic" or "prevLine"
+		end,
 		docs = "https://writewithharper.com/docs/integrations/language-server#Ignore-Comments",
 		multiRuleIgnore = false,
 		doesNotUseCodes = true,
