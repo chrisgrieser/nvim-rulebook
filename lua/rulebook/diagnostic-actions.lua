@@ -94,6 +94,7 @@ function actions.ignoreRule(diag)
 	local prevLn = vim.api.nvim_win_get_cursor(0)[1] - 1
 	local ignoreComment = sourceConf.comment
 	if type(ignoreComment) == "function" then ignoreComment = ignoreComment(diag) end
+	---@cast ignoreComment string
 
 	-- used with `str.match`, this pattern will return the already ignored code(s)
 	local existingRulePattern = vim.pesc(ignoreComment[1] or ignoreComment)
@@ -101,8 +102,6 @@ function actions.ignoreRule(diag)
 
 	-----------------------------------------------------------------------------
 	if sourceConf.location == "prevLine" then
-		---@cast ignoreComment string
-
 		if sourceConf.multiRuleIgnore then
 			local prevLine = vim.api.nvim_buf_get_lines(0, prevLn - 1, prevLn, false)[1]
 			local oldCode = prevLine:match(existingRulePattern)
@@ -118,7 +117,6 @@ function actions.ignoreRule(diag)
 		vim.api.nvim_buf_set_lines(0, prevLn, prevLn, false, { comment })
 	-----------------------------------------------------------------------------
 	elseif sourceConf.location == "sameLine" then
-		---@cast ignoreComment string
 		local curLine = vim.api.nvim_get_current_line():gsub("%s+$", "")
 
 		if sourceConf.multiRuleIgnore then
@@ -135,6 +133,13 @@ function actions.ignoreRule(diag)
 		local comment = ignoreComment:format(diag.code)
 		local extraSpace = vim.bo.filetype == "python" and " " or "" -- formatters expect an extra space
 		vim.api.nvim_set_current_line(curLine .. " " .. extraSpace .. comment)
+	-----------------------------------------------------------------------------
+	elseif sourceConf.location == "inlineBeforeDiagnostic" then
+		local curLine = vim.api.nvim_get_current_line()
+		local comment = ignoreComment:format(diag.code)
+		local updatedLine = curLine:sub(1, diag.col) .. comment .. curLine:sub(diag.col + 1)
+		vim.api.nvim_set_current_line(updatedLine)
+
 	-----------------------------------------------------------------------------
 	elseif sourceConf.location == "encloseLine" then
 		---@cast ignoreComment string[]

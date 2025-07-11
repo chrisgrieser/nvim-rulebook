@@ -1,6 +1,6 @@
 ---@class ruleIgnoreConfig
 ---@field comment string|string[]|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
----@field location "prevLine"|"sameLine"|"encloseLine" "encloseLine" is a list with two strings, one to be inserted before and one after
+---@field location "prevLine"|"sameLine"|"encloseLine"|"inlineBeforeDiagnostic" "encloseLine" is a list with two strings, one to be inserted before and one after
 ---@field docs string used for auto-generated docs
 ---@field info? string used for auto-generated docs
 ---@field doesNotUseCodes? boolean the linter does not use codes/rule-ids

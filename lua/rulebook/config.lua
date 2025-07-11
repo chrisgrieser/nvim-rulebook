@@ -10,7 +10,8 @@ local function validateIgnoreComment(config, commentKeyName)
 	local location = config.location
 	local comType = type(comment)
 	local errorMsg
-	if not (vim.tbl_contains({ "prevLine", "sameLine", "encloseLine" }, location)) then
+	local validLocations = { "prevLine", "sameLine", "encloseLine", "inlineBeforeDiagnostic" }
+	if not (vim.tbl_contains(validLocations, location)) then
 		errorMsg = "`location` must be one of `prevLine`, `sameLine` or `encloseLine`."
 	elseif location == "encloseLine" and comType ~= "table" and #comment ~= 2 then
 		errorMsg = "`encloseLine` requires 'comment' to be a list of two strings."
