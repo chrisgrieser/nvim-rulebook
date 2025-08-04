@@ -82,7 +82,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [ansible-lint](https://ansible.readthedocs.io/projects/lint/usage/#muting-warnings-to-avoid-false-positives)
 - [ast-grep](https://ast-grep.github.io/guide/project/severity.html#ignore-linting-error)
 - [basedpyright](https://microsoft.github.io/pyright/#/comments)
-- [biome](https://biomejs.dev/linter/#ignore-code)
+- [biome](https://biomejs.dev/analyzer/suppressions/#suppression-syntax)
 - [clang-tidy](https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics)
 - [clippy](https://doc.rust-lang.org/reference/attributes/diagnostics.html#r-attributes.diagnostics.expect)
 - [codespell](https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455)
@@ -124,7 +124,7 @@ Please consider making a PR to add support for a source if it is missing.
 ### Suppress formatting
 - [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code):
   `c`, `cpp`
-- [prettier](https://prettier.io/docs/en/ignore.html#css):
+- [prettier](https://prettier.io/docs/ignore.html#yaml):
   `css`, `html`, `javascript`, `javascriptreact`, `markdown`, `scss`, `svelte`,
   `typescript`, `typescriptreact`, `vue`, `yaml`
 - [ruff / black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections):

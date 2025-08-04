@@ -109,7 +109,7 @@ M = {
 			return vim.bo.commentstring:format(ignoreText)
 		end,
 		location = "prevLine",
-		docs = "https://biomejs.dev/linter/#ignore-code",
+		docs = "https://biomejs.dev/analyzer/suppressions/#suppression-syntax",
 		multiRuleIgnore = false,
 	},
 	typescript = {
