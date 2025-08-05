@@ -53,7 +53,7 @@ end
 ---@param diag vim.Diagnostic
 function actions.lookupRule(diag)
 	local config = require("rulebook.config").config
-	local diagnosticInfo = (diag.code or diag.message):gsub("[\n\r]", " ")
+	local diagnosticInfo = tostring(diag.code or diag.message):gsub("[\n\r]", " ")
 
 	local template = config.ruleDocs[diag.source]
 	local urlToOpen
