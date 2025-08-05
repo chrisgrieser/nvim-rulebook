@@ -53,10 +53,9 @@ end
 ---@param diag vim.Diagnostic
 function actions.lookupRule(diag)
 	local config = require("rulebook.config").config
-	local diagnosticInfo = tostring(diag.code or diag.message):gsub("[\n\r]", " ")
-
 	local template = config.ruleDocs[diag.source]
 	local urlToOpen
+
 	if type(template) == "string" then
 		if not validDiagObj(diag) then return end
 		-- `:format` can fail if there are other common `%` placeholders in the
@@ -66,12 +65,13 @@ function actions.lookupRule(diag)
 		urlToOpen = template(diag)
 	else
 		template = config.ruleDocs.fallback
-		if type(template) ~= "string" and type(template) ~= "function" then
-			notify("The `fallback` for `ruleDocs` needs to be a string or a function.", "error")
-			---@cast template string
+		if type(template) == "function" then template = template(diag) end
+		if not template then
+			notify("Neither docs nor fallback are configured for " .. diag.source, "warn")
 			return
 		end
-		local query = ("%q (%s)"):format(diagnosticInfo, diag.source)
+
+		local query = ("%s (%s): %q"):format(diag.code or "", diag.source, diag.message or "")
 		local encoded = urlEncode(query)
 		local escaped = encoded:gsub("%%", "%%%%") -- avoid `%1` in replacement making `gsub` fail
 		urlToOpen = template:gsub("%%s", escaped)
