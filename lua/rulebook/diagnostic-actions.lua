@@ -251,12 +251,13 @@ local function selectRule(operation)
 		prompt = title,
 		kind = "rulebook.diagnostic_selection",
 		format_item = function(diag)
+			local msgMaxLen = 40
 			local msg = diag.message or ""
-			if #msg > 30 then msg = vim.trim(diag.message:sub(1, 30)) .. "…" end
+			if #msg > msgMaxLen then msg = vim.trim(diag.message:sub(1, msgMaxLen)) .. "…" end
 			if not diag.source then return ("[ No source] %s %s"):format(diag.code or "", msg) end
 
 			local display = ("%s: %s"):format(diag.source, diag.code or msg)
-			if diag.code and type(diag.code) == "number" then
+			if type(diag.code) == "number" then
 				-- make diagnostics with unverbose codes like `typescript 1234` more readable
 				display = ("%s: %s | %s"):format(diag.source, diag.code, msg)
 			end
