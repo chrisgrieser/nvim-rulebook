@@ -20,9 +20,15 @@ local function writeToFile(filePath, str)
 	file:close()
 end
 
+-- default sorting puts all uppercase letters before lowercase ones
+---@param list table mutates the list
+local function sortAlphabeticallyCaseInsensitive(list)
+	table.sort(list, function(a, b) return string.lower(a) < string.lower(b) end)
+end
+
 --------------------------------------------------------------------------------
 
--- remove old lines
+-- REMOVE OLD LINES
 local beforePart, afterPart = {}, {}
 local removeActive = nil
 for line in io.lines(readmePath) do
@@ -38,14 +44,10 @@ end
 
 --------------------------------------------------------------------------------
 
--- default sorting puts all uppercase letters before lowercase ones
----@param list table mutates the list
-local function sortAlphabeticallyCaseInsensitive(list)
-	table.sort(list, function(a, b) return string.lower(a) < string.lower(b) end)
-end
-
--- insert new lines
+-- INSERT NEW LINES
 local ruleDocsLines = {}
+
+-- RULE LOOKUP
 for source, _ in pairs(require("rulebook.data.rule-docs")) do
 	if source ~= "fallback" then
 		local newLine = ("- `%s`"):format(source)
@@ -54,6 +56,7 @@ for source, _ in pairs(require("rulebook.data.rule-docs")) do
 end
 sortAlphabeticallyCaseInsensitive(ruleDocsLines)
 
+-- IGNORE COMMENT
 local ignoreCommentLines = {}
 for source, data in pairs(require("rulebook.data.add-ignore-rule-comment")) do
 	local newLine = ("- [%s](%s)"):format(source, data.docs)
@@ -62,6 +65,7 @@ for source, data in pairs(require("rulebook.data.add-ignore-rule-comment")) do
 end
 sortAlphabeticallyCaseInsensitive(ignoreCommentLines)
 
+-- FORMATTER SUPPRESSION
 -- formatter-data is organized by filetype, for the README, we want to organize
 -- the info by tool instead though.
 local formatterLines = {}
@@ -95,7 +99,7 @@ sortAlphabeticallyCaseInsensitive(formatterLines)
 
 --------------------------------------------------------------------------------
 
--- write new file
+-- WRITE NEW FILE
 local newContent = {
 	table.concat(beforePart, "\n"),
 	"### Rule lookup",
