@@ -207,10 +207,16 @@ local function selectRule(operation)
 		prompt = title,
 		kind = "rulebook.diagnostic_selection",
 		format_item = function(diag)
-			local msg = vim.trim((diag.message or ""):sub(1, 50))
+			local msg = diag.message or ""
+			if #msg > 30 then msg = vim.trim(diag.message:sub(1, 30)) .. "…" end
 			if not diag.source then return ("[ No source] %s %s"):format(diag.code or "", msg) end
 
-			local display = diag.source .. ": " .. (diag.code or msg)
+			local display = ("%s: %s"):format(diag.source, diag.code or msg)
+			if diag.code and type(diag.code) == "number" then
+				-- make diagnostics with unverbose codes like `typescript 1234` more readable
+				display = ("%s: %s | %s"):format(diag.source, diag.code, msg)
+			end
+
 			if operation == "ignoreRule" then
 				local configForSource = require("rulebook.config").config.ignoreComments[diag.source]
 				if not configForSource then display = "[ No config] " .. display end
