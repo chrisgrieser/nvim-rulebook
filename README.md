@@ -133,7 +133,7 @@ Please consider making a PR to add support for a source if it is missing.
 ### Suppress formatting
 - [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code):
   `c`, `cpp`
-- [prettier](https://prettier.io/docs/ignore.html#javascript):
+- [prettier](https://prettier.io/docs/ignore.html):
   `css`, `html`, `javascript`, `javascriptreact`, `markdown`, `scss`, `svelte`,
   `typescript`, `typescriptreact`, `vue`, `yaml`
 - [ruff / black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections):
