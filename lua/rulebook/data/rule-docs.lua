@@ -69,9 +69,8 @@ local M = {
 		return "https://www.shellcheck.net/wiki/SC" .. code
 	end,
 
-	-- typescript has no official docs, therefore using community docs, even
-	-- though they, too, are not complete.
-	typescript = "https://tswhy.deno.dev/ts%s",
+	-- ts has no official docs, therefore unofficial docs
+	typescript = "https://typescript.tv/errors/#ts%s",
 
 	-- urls use rule-name, not rule-id, so this is the closest we can get
 	pylint = "https://pylint.readthedocs.io/en/stable/search.html?q=%s",
