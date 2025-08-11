@@ -4,18 +4,41 @@
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img
 alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
-Add inline-comments to ignore rules or suppress formatters. Lookup rule
-documentation online. Built-in configuration for more than 50 tools.
+All-around helper for dealing with errors and diagnostics.
+
+## Features
+- **Look up** official rule documentation
+- **Prettify** unwieldy `TypeScript` error messages. Code blocks in the error
+  are also formatted if with `prettier` or `biome` if available.
+- Add **inline-comments to ignore rules** like `// eslint disable-next-line
+  some-rule`. Supports previous line, same line, and enclosing lines.
+- **Suppress formatting** with via ignore comments of the respective formatter,
+  such as `// prettier-ignore`.
+- Includes **built-in support for more than 50 tools**. Thus, zero plugin
+  configuration is required if you only use common tooling.
+
+<!-- markdownlint-disable MD033 -->
+<table>
+	<tr>
+		<th>Before error prettification</th>
+		<th>After error prettification</th>
+	</tr>
+	<tr>
+		<td><img alt="showcase: before prettification" src="https://github.com/user-attachments/assets/4ff0fc67-37d2-4cf4-a9e2-e2546626453e"/></td>
+		<td><img alt="showcase: after prettification"  src="https://github.com/user-attachments/assets/46b656da-a0fc-470a-aee8-badb4499fad3"/></td>
+	</tr>
+ </table>
+<!-- markdownlint-disable MD033 -->
 
 ## Table of contents
 
 <!-- toc -->
 
-- [Features](#features)
 - [Supported sources](#supported-sources)
 	* [Rule lookup](#rule-lookup)
 	* [Add ignore comment](#add-ignore-comment)
 	* [Suppress formatting](#suppress-formatting)
+	* [Prettify errors](#prettify-errors)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
@@ -28,20 +51,6 @@ documentation online. Built-in configuration for more than 50 tools.
 - [Credits](#credits)
 
 <!-- tocstop -->
-
-## Features
-- Look up official rule documentation, falling back to a customizable web search
-  if the source does not have rule documentation.
-- Add inline-comments to ignore rules like `// eslint disable-next-line
-  some-rule`. Supports previous line, same line, and enclosing lines.
-- Suppress formatting with via ignore comments of the respective formatter, such
-  as `// prettier-ignore`.
-- Quality-of-life: auto-select a rule if it is the only one in the current line;
-  if the line has no diagnostic, search forward to the next line that does.
-- Includes built-in support for dozens of linters and formatters. Thus, zero
-  plugin configuration is required if you only use common tooling.
-- Customizing built-in sources or adding your own sources is easy. PRs to add
-  more built-ins are welcome.
 
 ## Supported sources
 You easily add a custom source via the [plugin configuration](#configuration).
@@ -124,7 +133,7 @@ Please consider making a PR to add support for a source if it is missing.
 ### Suppress formatting
 - [clang-format](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code):
   `c`, `cpp`
-- [prettier](https://prettier.io/docs/ignore.html#yaml):
+- [prettier](https://prettier.io/docs/ignore.html#javascript):
   `css`, `html`, `javascript`, `javascriptreact`, `markdown`, `scss`, `svelte`,
   `typescript`, `typescriptreact`, `vue`, `yaml`
 - [ruff / black](https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections):
@@ -133,13 +142,26 @@ Please consider making a PR to add support for a source if it is missing.
   `lua`
 <!-- auto-generated: end -->
 
+### Prettify errors
+Currently only supports the TypeScript LSP (`ts_ls`).
+
+Take a look at [this file](./lua/rulebook/data/prettify-error.lua) to see how to
+<!-- harper: ignore -->add prettifier functions for other sources. PRs are welcome.
+
 ## Installation
 **Requirements**
 - nvim 0.10+
 - Diagnostics provided by a source that supports Neovim's built-in diagnostics
-  system. (nvim's built-in LSP client,
+  system. (`nvim` built-in LSP client,
   [efm-langserver](https://github.com/mattn/efm-langserver) or
   [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
+
+**Recommended for error prettifying**
+- treesitter parsers: `TSInstall markdown markdown_inline`
+- a markdown rendering plugin such as
+  [render-markdown](https://github.com/MeanderingProgrammer/render-markdown.nvim)
+  or [markview.nvim](https://github.com/OXY2DEV/markview.nvim)
+- `prettier` or `biome` available in PATH.
 
 ```lua
 -- lazy.nvim
@@ -153,10 +175,32 @@ use { "chrisgrieser/nvim-rulebook" }
 You can use the commands via lua functions:
 
 ```lua
+require("rulebook").ignoreRule()
+require("rulebook").prettifyError()
+require("rulebook").yankDiagnosticCode()
+require("rulebook").suppressFormatter()
+require("rulebook").prettifyError()
+```
+
+```lua
+-- snippets to create keymaps, for your convenience
 vim.keymap.set("n", "<leader>ri", function() require("rulebook").ignoreRule() end)
 vim.keymap.set("n", "<leader>rl", function() require("rulebook").lookupRule() end)
 vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticCode() end)
 vim.keymap.set({ "n", "x" }, "<leader>rf", function() require("rulebook").suppressFormatter() end)
+
+vim.api.nvim_create_autocmd("Filetype", {
+	pattern = { "typescript", "javascript" },
+	group = vim.api.nvim_create_augroup("rulebook.prettify-ts-error", { clear = true }),
+	callback = function(ctx)
+		vim.keymap.set(
+			"n",
+			"<leader>rp",
+			function() require("rulebook").prettifyError() end,
+			{ buffer = ctx.buf }
+		)
+	end,
+})
 ```
 
 Alternatively, you can use the `:Rulebook` ex-command:
@@ -166,6 +210,7 @@ Alternatively, you can use the `:Rulebook` ex-command:
 :Rulebook lookupRule
 :Rulebook yankDiagnosticCode
 :Rulebook suppressFormatter
+:Rulebook prettifyError
 ```
 
 Note that `:Rulebook suppressFormatter` only supports normal mode. To add
@@ -251,6 +296,12 @@ require("rulebook").setup = ({
 			-- use for visual mode
 			ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore end" },
 		},
+	}
+
+	prettifyError = {
+		---@type fun(vim.Diagnostic): string[]
+		typescript = function(diag)
+		end,
 	}
 })
 ```

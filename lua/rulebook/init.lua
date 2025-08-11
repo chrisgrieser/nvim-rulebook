@@ -7,9 +7,10 @@ end
 
 local M = {}
 
----@param userConfig? table
+---@param userConfig? Rulebook.Config
 function M.setup(userConfig) require("rulebook.config").setup(userConfig) end
 
+-- redirect to from the `require("rulebook")` to the correct module
 setmetatable(M, {
 	__index = function(_, key)
 		return function()
@@ -29,8 +30,7 @@ setmetatable(M, {
 ---@return boolean hasDocs
 function M.hasDocs(diag)
 	local config = require("rulebook.config").config
-	local hasDocumentations = config.ruleDocs[diag.source] ~= nil
-	return hasDocumentations
+	return config.ruleDocs[diag.source] ~= nil
 end
 
 --------------------------------------------------------------------------------

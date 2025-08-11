@@ -12,9 +12,7 @@ local function validateIgnoreComment(config, commentKey)
 
 	---@type Rulebook.Location[]
 	local validLocations = { "prevLine", "sameLine", "encloseLine", "inlineBeforeDiagnostic" }
-
-	local errorMsg = nil
-
+	local errorMsg
 	if not (vim.list_contains(validLocations, location) or type(location) == "function") then
 		errorMsg = "`location` must be `prevLine`, `sameLine`, `encloseLine`, "
 			.. "`inlineBeforeDiagnostic`, or a function returning one of those."
@@ -36,21 +34,23 @@ end
 --------------------------------------------------------------------------------
 
 ---@class Rulebook.Config
+---@field forwSearchLines number
 ---@field ignoreComments table<string, Rulebook.RuleIgnoreConfig>
 ---@field ruleDocs table<string, Rulebook.RuleDocsTemplate>
 ---@field suppressFormatter table<string, Rulebook.FormatterSuppressConfig>
----@field forwSearchLines number
+---@field prettifyError table<string, Rulebook.ErrorPrettifierFunc>
 
 ---@type Rulebook.Config
 local defaultConfig = {
+	forwSearchLines = 10,
 	ignoreComments = require("rulebook.data.add-ignore-rule-comment"),
 	ruleDocs = require("rulebook.data.rule-docs"),
 	suppressFormatter = require("rulebook.data.suppress-formatter-comment"),
-	forwSearchLines = 10,
+	prettifyError = require("rulebook.data.prettify-error"),
 }
+M.config = defaultConfig -- if user does not call setup, use default
 
--- if user does not call setup, use default
-M.config = defaultConfig
+--------------------------------------------------------------------------------
 
 ---@param userConfig? table
 function M.setup(userConfig)
