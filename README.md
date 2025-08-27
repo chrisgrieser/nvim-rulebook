@@ -9,13 +9,13 @@ All-around helper for dealing with errors and diagnostics.
 ## Features
 - **Look up** official rule documentation
 - **Prettify** unwieldy `TypeScript` error messages. Code blocks in the error
-  are also formatted if with `prettier` or `biome` if available.
+  message are formatted with `prettier` or `biome` if available.
 - Add **inline-comments to ignore rules** like `// eslint disable-next-line
   some-rule`. Supports previous line, same line, and enclosing lines.
-- **Suppress formatting** with via ignore comments of the respective formatter,
+- **Suppress formatting** with inline comments of the respective formatter,
   such as `// prettier-ignore`.
-- Includes **built-in support for more than 50 tools**. Thus, zero plugin
-  configuration is required if you only use common tooling.
+- **Built-in support for more than 50 tools**. Thus, this plugin requires 
+  zero configuration for most users.
 
 <!-- markdownlint-disable MD033 -->
 <table>
@@ -145,8 +145,8 @@ Please consider making a PR to add support for a source if it is missing.
 ### Prettify errors
 Currently only supports the TypeScript LSP (`ts_ls`).
 
-Take a look at [this file](./lua/rulebook/data/prettify-error.lua) to see how to
-<!-- harper: ignore -->add prettifier functions for other sources. PRs are welcome.
+Take a look at [this file](./lua/rulebook/data/prettify-error.lua) to see how to 
+add prettifiers for other sources. PRs are welcome.
 
 ## Installation
 **Requirements**
