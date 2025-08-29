@@ -228,7 +228,7 @@ source name (for example, `clang-tidy`, not `clang`).
 
 ```lua
 require("rulebook").setup = ({
-	-- if no diagnostic is found in current line, search this many lines forward
+	-- if no diagnostic is found in the current line, search this many lines forward
 	forwSearchLines = 10,
 
 	ignoreComments = {
@@ -274,9 +274,9 @@ require("rulebook").setup = ({
 		fallback = "https://www.google.com/search?q=%s",
 
 		-- the key must be named exactly like `diagnostic.source` (case-sensitive!)
-		-- * string value: `%s` will be replaced with the rule id
-		-- * function value: will be called with the diagnostic object
-		-- * `false`: disable rule docs, just use the fallback
+		-- * string: `%s` will be replaced with the rule id
+		-- * function: will be called with the diagnostic object
+		-- * `false`: disable rule docs, will use the fallback
 		---@type string|false|fun(diag: vim.Diagnostic): string?
 		yourCustomSource = "https://my-docs/%s.hthml",
 		anotherCustomSource = function(diag)
@@ -293,7 +293,7 @@ require("rulebook").setup = ({
 			---@type "prevLine"|"sameLine"|"encloseLine"|fun(): string
 			location = "prevLine",
 
-			-- use for visual mode
+			-- used for visual mode
 			ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore end" },
 		},
 	}
@@ -301,18 +301,19 @@ require("rulebook").setup = ({
 	prettifyError = {
 		---@type fun(vim.Diagnostic): string[]
 		typescript = function(diag)
+      -- ...
 		end,
 	}
 })
 ```
 
-The plugin uses
+`nvim-rulebook` uses
 [vim.ui.select](https://neovim.io/doc/user/lua.html#vim.ui.select()), so the
 appearance of the rule selection can be customized by using a UI plugin like
 [snacks.nvim](https://github.com/folke/snacks.nvim).
 
 ### Customize built-in sources
-Built-in sources be customized by overwriting them in the configuration:
+Built-in sources can be customized by overwriting them in the configuration:
 
 ```lua
 -- example: use `disable-line` instead of the default `disable-next-line` for eslint
