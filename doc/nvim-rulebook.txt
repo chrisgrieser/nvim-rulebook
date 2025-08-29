@@ -1,11 +1,11 @@
-*nvim-rulebook.txt*           For Neovim           Last change: 2025 August 12
+*nvim-rulebook.txt*           For Neovim           Last change: 2025 August 29
 
 ==============================================================================
 Table of Contents                            *nvim-rulebook-table-of-contents*
 
 1. nvim-rulebook                                |nvim-rulebook-nvim-rulebook-|
-  - Table of contents         |nvim-rulebook-nvim-rulebook--table-of-contents|
   - Features                           |nvim-rulebook-nvim-rulebook--features|
+  - Table of contents         |nvim-rulebook-nvim-rulebook--table-of-contents|
   - Supported sources         |nvim-rulebook-nvim-rulebook--supported-sources|
   - Installation                   |nvim-rulebook-nvim-rulebook--installation|
   - Usage                                 |nvim-rulebook-nvim-rulebook--usage|
@@ -18,17 +18,28 @@ Table of Contents                            *nvim-rulebook-table-of-contents*
 
 
 
-Addinline-comments to ignore rules or suppress formatters. Lookup rule
-documentation online. Built-in configuration for more than 50 tools.
+All-aroundhelper for dealing with errors and diagnostics.
 
 
+FEATURES                               *nvim-rulebook-nvim-rulebook--features*
+
+- **Look up** official rule documentation
+- **Prettify** unwieldy `TypeScript` error messages. Code blocks in the error
+    message are formatted with `prettier` or `biome` if available.
+- Add **inline-comments to ignore rules** like `// eslint disable-next-line   some-rule`. Supports previous line, same line, and enclosing lines.
+- **Suppress formatting** with inline comments of the respective formatter,
+    such as `// prettier-ignore`.
+- **Built-in support for more than 50 tools**. Thus, this plugin requires
+    zero configuration for most users.
+
+Before error prettificationAfter error prettification
 TABLE OF CONTENTS             *nvim-rulebook-nvim-rulebook--table-of-contents*
 
-- |nvim-rulebook-features|
 - |nvim-rulebook-supported-sources|
     - |nvim-rulebook-rule-lookup|
     - |nvim-rulebook-add-ignore-comment|
     - |nvim-rulebook-suppress-formatting|
+    - |nvim-rulebook-prettify-errors|
 - |nvim-rulebook-installation|
 - |nvim-rulebook-usage|
 - |nvim-rulebook-configuration|
@@ -39,21 +50,6 @@ TABLE OF CONTENTS             *nvim-rulebook-nvim-rulebook--table-of-contents*
     - |nvim-rulebook-how-to-directly-ask-an-llm-about-a-rule|
     - |nvim-rulebook-how-to-display-the-availability-of-rule-lookup|
 - |nvim-rulebook-credits|
-
-
-FEATURES                               *nvim-rulebook-nvim-rulebook--features*
-
-- Look up official rule documentation, falling back to a customizable web search
-    if the source does not have rule documentation.
-- Add inline-comments to ignore rules like `// eslint disable-next-line   some-rule`. Supports previous line, same line, and enclosing lines.
-- Suppress formatting with via ignore comments of the respective formatter, such
-    as `// prettier-ignore`.
-- Quality-of-life: auto-select a rule if it is the only one in the current line;
-    if the line has no diagnostic, search forward to the next line that does.
-- Includes built-in support for dozens of linters and formatters. Thus, zero
-    plugin configuration is required if you only use common tooling.
-- Customizing built-in sources or adding your own sources is easy. PRs to add
-    more built-ins are welcome.
 
 
 SUPPORTED SOURCES             *nvim-rulebook-nvim-rulebook--supported-sources*
@@ -141,7 +137,7 @@ SUPPRESS FORMATTING ~
 
 - clang-format <https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code>
     `c`,`cpp`
-- prettier <https://prettier.io/docs/ignore.html#yaml>
+- prettier <https://prettier.io/docs/ignore.html>
     `css`,`html`, `javascript`, `javascriptreact`, `markdown`, `scss`, `svelte`,
     `typescript`, `typescriptreact`, `vue`, `yaml`
 - ruff / black <https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html#ignoring-sections>
@@ -150,12 +146,26 @@ SUPPRESS FORMATTING ~
     `lua`
 
 
+PRETTIFYERRORS ~
+
+Currently only supports the TypeScript LSP (`ts_ls`).
+
+Take a look at this file <./lua/rulebook/data/prettify-error.lua> to see how to
+add prettifiers for other sources. PRs are welcome.
+
+
 INSTALLATION                       *nvim-rulebook-nvim-rulebook--installation*
 
-**Requirements** -nvim 0.10+ - Diagnostics provided by a source that supports
-Neovim’s built-in diagnostics system. (nvim’s built-in LSP client,
+**Requirements** - nvim 0.10+ - Diagnostics provided by a source that supports
+Neovim’s built-in diagnostics system. (`nvim` built-in LSP client,
 efm-langserver <https://github.com/mattn/efm-langserver> or nvim-lint
 <https://github.com/mfussenegger/nvim-lint> are such sources.)
+
+**Recommended for error prettifying** - treesitter parsers: `TSInstall markdown
+markdown_inline` - a markdown rendering plugin such as render-markdown
+<https://github.com/MeanderingProgrammer/render-markdown.nvim> or markview.nvim
+<https://github.com/OXY2DEV/markview.nvim> - `prettier` or `biome` available in
+PATH.
 
 >lua
     -- lazy.nvim
@@ -171,10 +181,32 @@ USAGE                                     *nvim-rulebook-nvim-rulebook--usage*
 You can use the commands via lua functions:
 
 >lua
+    require("rulebook").ignoreRule()
+    require("rulebook").prettifyError()
+    require("rulebook").yankDiagnosticCode()
+    require("rulebook").suppressFormatter()
+    require("rulebook").prettifyError()
+<
+
+>lua
+    -- snippets to create keymaps, for your convenience
     vim.keymap.set("n", "<leader>ri", function() require("rulebook").ignoreRule() end)
     vim.keymap.set("n", "<leader>rl", function() require("rulebook").lookupRule() end)
     vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticCode() end)
     vim.keymap.set({ "n", "x" }, "<leader>rf", function() require("rulebook").suppressFormatter() end)
+    
+    vim.api.nvim_create_autocmd("Filetype", {
+        pattern = { "typescript", "javascript" },
+        group = vim.api.nvim_create_augroup("rulebook.prettify-ts-error", { clear = true }),
+        callback = function(ctx)
+            vim.keymap.set(
+                "n",
+                "<leader>rp",
+                function() require("rulebook").prettifyError() end,
+                { buffer = ctx.buf }
+            )
+        end,
+    })
 <
 
 Alternatively, you can use the `:Rulebook` ex-command:
@@ -184,6 +216,7 @@ Alternatively, you can use the `:Rulebook` ex-command:
     :Rulebook lookupRule
     :Rulebook yankDiagnosticCode
     :Rulebook suppressFormatter
+    :Rulebook prettifyError
 <
 
 Note that `:Rulebook suppressFormatter` only supports normal mode. To add
@@ -273,6 +306,12 @@ When adding your own source, you must add the exact, case-sensitive source name
                 ignoreRange = { "-- stylua: ignore start", "-- stylua: ignore end" },
             },
         }
+    
+        prettifyError = {
+            ---@type fun(vim.Diagnostic): string[]
+            typescript = function(diag)
+            end,
+        }
     })
 <
 
@@ -325,7 +364,7 @@ for you.
     -- example: configuring efm langserver for `markdownlint` in `/lsp/efm.lua`
     return {
         filetypes = { "markdown" },
-        settings = { 
+        settings = {
             languages = {
                 markdown = {
                     {
@@ -333,9 +372,9 @@ for you.
                         lintCommand = "markdownlint $'{INPUT}'",
                         lintStdin = false,
                         lintIgnoreExitCode = true,
-                        lintFormats = { 
-                            "%f:%l:%c MD%n/%m", 
-                            "%f:%l MD%n/%m"
+                        lintFormats = {
+                            "%f:%l:%c MD%n/%m",
+                            "%f:%l MD%n/%m",
                         },
                     },
                 },
