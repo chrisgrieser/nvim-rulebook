@@ -228,6 +228,12 @@ M = {
 		location = "sameLine",
 		multiRuleIgnore = false,
 	},
+	Tombi = {
+		comment = "# tombi: lint.rules.%s.disabled = true",
+		docs = "https://tombi-toml.github.io/tombi/docs/comment-directive/",
+		location = "prevLine",
+		multiRuleIgnore = false,
+	},
 }
 
 --------------------------------------------------------------------------------

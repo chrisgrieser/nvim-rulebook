@@ -118,6 +118,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [stylelint](https://stylelint.io/user-guide/ignore-code/)
 - [stylelintplus](https://stylelint.io/user-guide/ignore-code/)
 - [swiftlint](https://realm.github.io/SwiftLint/#Disable-rules-in-code)
+- [Tombi](https://tombi-toml.github.io/tombi/docs/comment-directive/)
 - [ts](https://typescript-eslint.io/rules/prefer-ts-expect-error/)
 - [tsserver](https://typescript-eslint.io/rules/prefer-ts-expect-error/)
 - [ty](https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments)
