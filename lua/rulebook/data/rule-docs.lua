@@ -79,7 +79,8 @@ local M = {
 
 	markdownlint = function(diag)
 		local code = tostring(diag.code):gsub("^MD", "")
-		if #code == 2 then code = "0" .. code end -- efm removes leading 0, but markdownlint needs it
+		-- efm removes leading 0, but it's needed for the correct filename
+		if #code == 2 then code = "0" .. code end
 		return ("https://github.com/DavidAnson/markdownlint/blob/main/doc/md%s.md"):format(code)
 	end,
 
