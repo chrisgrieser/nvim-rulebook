@@ -9,7 +9,7 @@ M.typescript = function(diag) ---@param diag vim.Diagnostic
 	-- pretty-print the message in markdown
 	local msg = diag
 		.message
-		:gsub("'({.-}%[?]?)'", "\n```ts\n%1\n```\n") -- types to codeblocks
+		:gsub("'({.-}%[?]?)'", "\n```typescript\n%1\n```\n") -- types to codeblocks
 		:gsub("'", "`") -- single quote to inline code
 		:gsub("\n +", "\n") -- remove indent
 		:gsub("\nType", "\n\nType") -- add padding
