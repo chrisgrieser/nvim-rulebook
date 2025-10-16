@@ -47,5 +47,9 @@ M.typescript = function(diag) ---@param diag vim.Diagnostic
 	return lines
 end
 
+-- TOOLS THAT INHERIT THE CONFIGURATION OF OTHER TOOLS
+M.tsserver = M.typescript -- typescript-tools.nvim
+M.ts = M.typescript -- vtsls
+
 --------------------------------------------------------------------------------
 return M
