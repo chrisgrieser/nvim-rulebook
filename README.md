@@ -161,7 +161,7 @@ add prettifiers for other sources. PRs are welcome.
 
 **Recommended for error prettifying**
 - treesitter parsers: `TSInstall markdown markdown_inline`
-- a markdown rendering plugin such as
+- a Markdown rendering plugin such as
   [render-markdown](https://github.com/MeanderingProgrammer/render-markdown.nvim)
   or [markview.nvim](https://github.com/OXY2DEV/markview.nvim)
 - `prettier` or `biome` available in PATH.
@@ -175,7 +175,7 @@ use { "chrisgrieser/nvim-rulebook" }
 ```
 
 ## Usage
-You can use the commands via lua functions:
+You can use the commands via Lua functions:
 
 ```lua
 require("rulebook").ignoreRule()
@@ -217,7 +217,7 @@ Alternatively, you can use the `:Rulebook` ex-command:
 ```
 
 Note that `:Rulebook suppressFormatter` only supports normal mode. To add
-formatter-ignore comments for a line range, you need to use the lua function
+formatter-ignore comments for a line range, you need to use the Lua function
 `require("rulebook").suppressFormatter()` from visual mode.
 
 ## Configuration
