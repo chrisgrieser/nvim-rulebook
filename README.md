@@ -46,6 +46,7 @@ All-around helper for dealing with errors and diagnostics.
 	* [Customize built-in sources](#customize-built-in-sources)
 - [FAQ](#faq)
 	* [How to configure diagnostic providers](#how-to-configure-diagnostic-providers)
+	* [Configuring `efm-langserver`](#configuring-efm-langserver)
 	* [How to directly ask an LLM about a rule](#how-to-directly-ask-an-llm-about-a-rule)
 	* [How to display the availability of rule lookup](#how-to-display-the-availability-of-rule-lookup)
 - [Credits](#credits)
@@ -336,40 +337,48 @@ require("rulebook").setup = {
 This plugin requires that the diagnostic providers (the LSP or a linter
 integration tool like [nvim-lint](https://github.com/mfussenegger/nvim-lint)
 or [efm-langserver](https://github.com/mattn/efm-langserver)) provide the
-**source and code for the diagnostic**.
-- Make sure that the **source** is named the same in the diagnostic source and in
-  the `nvim-rulebook` config, including casing.
-- For `nvim-lint`, most linters should already be configured out of the box.
-- For `efm-langserver`, you have to set `lintSource` for the source name, and
-  correctly configure the
-  [errorformat](https://neovim.io/doc/user/quickfix.html#errorformat). Other
-  than `%l` & `%c` (line number & column), this requires `%n` which `efm
-  langserver` uses to fill in the diagnostic code. You can also use
-  [efmls-configs-nvim](https://github.com/creativenull/efmls-configs-nvim) to
-  configure those linters for you.
+**source** and **code** for the diagnostic. The **source** must be exactly the
+same case-sensitive name in the diagnostic source and in the `nvim-rulebook`
+config.
 
-> [!IMPORTANT]
-> Note that vim's `errorformat` only matches numbers for `%n`, which means it is
-> not possible to parse diagnostic codes that consist of letters. One such case
-> is the linter `selene`. To use those linters with `nvim-rulebook` you need to
-> use `nvim-lint` which allows more flexible parsing.
+For `nvim-lint`, most linters should already be configured out of the box.
+
+### Configuring `efm-langserver`
+1. For `efm-langserver`, you have to set `lintSource` for the source name, and
+   correctly configure the
+   [errorformat](https://neovim.io/doc/user/quickfix.html#errorformat). Other
+   than `%l` & `%c` (line number & column), this requires `%n` which
+   `efm-langserver` uses to fill in the diagnostic code.
+2. Note that vim's `errorformat` only matches numbers for `%n`, which means it
+   is **not possible to parse diagnostic codes that consist of letters**, such
+   as diagnostics from the Lua linter
+   [selene](https://github.com/kampfkarren/selene). To use such linters with
+   `nvim-rulebook` you need to use `nvim-lint` which allows more flexible
+   parsing.
+
+> [!TIP]
+> You can also use
+> [efmls-configs-nvim](https://github.com/creativenull/efmls-configs-nvim) to
+> configure those linters for you.
 
 ```lua
--- example: configuring efm langserver for `markdownlint` in `/lsp/efm.lua`
+-- example: configuring `efm-langserver` for `markdownlint` in `/lsp/efm.lua`
 return {
+	init_options = { documentFormatting = true },
+
 	filetypes = { "markdown" },
+	root_markers = { ".markdownlint.yaml" },
+
 	settings = {
 		languages = {
 			markdown = {
 				{
 					lintSource = "markdownlint",
-					lintCommand = "markdownlint $'{INPUT}'",
-					lintStdin = false,
+					lintCommand = "markdownlint --stdin",
+					lintStdin = true, -- caveat: linting from stdin does not support `.markdownlintignore`
 					lintIgnoreExitCode = true,
-					lintFormats = {
-						"%f:%l:%c MD%n/%m",
-						"%f:%l MD%n/%m",
-					},
+					lintFormats = { "%f:%l:%c MD%n/%m", "%f:%l MD%n/%m" },
+					rootMarkers = { ".markdownlint.yaml" },
 				},
 			},
 		},
