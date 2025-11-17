@@ -8,14 +8,14 @@ All-around helper for dealing with errors and diagnostics.
 
 ## Features
 - **Look up** official rule documentation
-- **Prettify** unwieldy `TypeScript` error messages. Code blocks in the error
-  message are formatted with `prettier` or `biome` if available.
+- **Prettify** `TypeScript` error messages. Code blocks in the error message are
+  formatted with `prettier` or `biome` if available.
 - Add **inline-comments to ignore rules** like `// eslint disable-next-line
   some-rule`. Supports previous line, same line, and enclosing lines.
-- **Suppress formatting** with inline comments of the respective formatter,
-  such as `// prettier-ignore`.
-- **Built-in support for more than 50 tools**. Thus, this plugin requires
-  zero configuration for most users.
+- **Suppress formatting** with inline comments of the respective formatter, such
+  as `// prettier-ignore`.
+- **Built-in support** for more than **50** linters, formatters, and LSPs,
+  requiring **zero** configuration for most users.
 
 <!-- markdownlint-disable MD033 -->
 <table>
@@ -25,7 +25,7 @@ All-around helper for dealing with errors and diagnostics.
 	</tr>
 	<tr>
 		<td><img alt="showcase: before prettification" src="https://github.com/user-attachments/assets/4ff0fc67-37d2-4cf4-a9e2-e2546626453e"/></td>
-		<td><img alt="showcase: after prettification"  src="https://github.com/user-attachments/assets/46b656da-a0fc-470a-aee8-badb4499fad3"/></td>
+		<td><img alt="showcase: after prettification" src="https://github.com/user-attachments/assets/46b656da-a0fc-470a-aee8-badb4499fad3"/></td>
 	</tr>
  </table>
 <!-- markdownlint-disable MD033 -->
