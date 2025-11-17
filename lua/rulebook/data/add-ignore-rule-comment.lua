@@ -246,6 +246,7 @@ M.stylelintplus = M.stylelint -- stylelint-lsp
 M.basedpyright = M.Pyright -- pyright fork
 M.ltex_plus = M.LTeX -- ltex fork
 M["rust-analyzer"] = M.clippy -- they use the same Rust attribute syntax
+M["markdownlint-cli2"] = M.markdownlint
 
 --------------------------------------------------------------------------------
 return M
