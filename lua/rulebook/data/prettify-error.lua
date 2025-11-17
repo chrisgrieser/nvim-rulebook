@@ -12,11 +12,10 @@ M.typescript = function(diag) ---@param diag vim.Diagnostic
 		:gsub("'({.-}%[?]?)'", "\n```typescript\n%1\n```\n") -- types to codeblocks
 		:gsub("'", "`") -- single quote to inline code
 		:gsub("\n +", "\n") -- remove indent
-		:gsub("\nType", "\n\nType") -- add padding
+		:gsub("\nType", "\n\nType") -- add line break for padding
 	local lines = vim.split(msg, "\n")
 
 	-- determine args for formatter, abort if no formatter is available
-	local u = require("rulebook.utils")
 	local fmtArgs
 	if vim.fn.executable("biome") == 1 then
 		fmtArgs = { "biome", "format", "--stdin-file-path=stdin.ts" }
@@ -25,14 +24,14 @@ M.typescript = function(diag) ---@param diag vim.Diagnostic
 	end
 	if not fmtArgs then return lines end -- no formatter
 
-	-- pretty-format the codeblocks
+	-- pretty-format each codeblock
 	lines = vim.iter(lines):fold({}, function(acc, line)
 		local lineIsCodeBlock = line:find("^{.-}%[?]?$") ~= nil
 		if lineIsCodeBlock then
-			line = "type dummy = " .. line
+			line = "type dummy = " .. line -- needed for formatters to work
 			local out = vim.system(fmtArgs, { stdin = line }):wait()
 			if not (out.stdout and out.code == 0) then
-				u.notify("Formatter failed. " .. out.stderr, "warn")
+				require("rulebook.utils").notify("Formatter failed. " .. out.stderr, "warn")
 				table.insert(acc, line)
 				return acc
 			end
@@ -46,6 +45,8 @@ M.typescript = function(diag) ---@param diag vim.Diagnostic
 
 	return lines
 end
+
+--------------------------------------------------------------------------------
 
 -- TOOLS THAT INHERIT THE CONFIGURATION OF OTHER TOOLS
 M.tsserver = M.typescript -- typescript-tools.nvim
