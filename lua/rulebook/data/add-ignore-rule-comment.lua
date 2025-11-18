@@ -177,7 +177,18 @@ M = {
 		comment = function(diag)
 			local code = tostring(diag.code):gsub("^MD", "")
 			if #code == 2 then code = "0" .. code end -- `efm` removes leading 0, but markdownlint needs it
-			return ("<!-- markdownlint-disable-next-line MD%s -->"):format(code)
+			local commentTemplate = "<!-- markdownlint-disable-next-line %s -->"
+			local commentWithNumber = commentTemplate:format("MD" .. code)
+
+			-- if possible, prefer rule alias instead of rule number for readability
+			if vim.fn.executable("curl") == 0 then return commentWithNumber end
+			-- stylua: ignore
+			local url = ("https://raw.githubusercontent.com/DavidAnson/markdownlint/refs/heads/main/doc/md%s.md"):format(code)
+			local out = vim.system({ "curl", url }):wait()
+			if out.code ~= 0 then return commentWithNumber end
+			local _, _, ruleAlias = out.stdout:find("Aliases: `([%w-]+)`")
+			if not ruleAlias then return commentWithNumber end
+			return commentTemplate:format(ruleAlias)
 		end,
 		location = "prevLine",
 		docs = "https://github.com/DavidAnson/markdownlint#configuration",
