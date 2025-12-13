@@ -137,7 +137,7 @@ M = {
 		comment = function(_) return vim.bo.commentstring:format("typos: ignore-line") end,
 		location = "sameLine",
 		docs = "https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780",
-		info = '(requires setting `default.extend-ignore-re` to `[default] extend-ignore-re = ["[^\\\n]*typos: ignore-line[^\\n]*\\n"]`)',
+		info = '(requires setting `[default] extend-ignore-re = ["[^\\\\n]*typos: ignore-line[^\\\\n]*\\\\n"]`)',
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
 	},
