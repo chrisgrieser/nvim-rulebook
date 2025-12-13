@@ -14,7 +14,7 @@
 
 ---INFO the key must exactly match `diagnostic.source` (case-sensitive)
 ---@type table<string, Rulebook.RuleIgnoreConfig>
-M = {
+local M = {
 	clippy = {
 		comment = "#[expect(%s)]",
 		location = "prevLine",
