@@ -1,6 +1,4 @@
-<!-- LTeX: enabled=false -->
 # nvim-rulebook 📖
-<!-- LTeX: enabled=true -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img
 alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
@@ -190,7 +188,11 @@ require("rulebook").prettifyError()
 vim.keymap.set("n", "<leader>ri", function() require("rulebook").ignoreRule() end)
 vim.keymap.set("n", "<leader>rl", function() require("rulebook").lookupRule() end)
 vim.keymap.set("n", "<leader>ry", function() require("rulebook").yankDiagnosticCode() end)
-vim.keymap.set({ "n", "x" }, "<leader>rf", function() require("rulebook").suppressFormatter() end)
+vim.keymap.set(
+	{ "n", "x" },
+	"<leader>rf",
+	function() require("rulebook").suppressFormatter() end
+)
 
 vim.api.nvim_create_autocmd("Filetype", {
 	pattern = { "typescript", "javascript" },
@@ -244,10 +246,10 @@ require("rulebook").setup = ({
 		-- ... (a full list of sources with builtin support can be found in the README)
 
 		yourCustomSource = { -- exact, case-sensitive source-name
-			---@type string|fun(vim.Diagnostic): string if string, "%s" will be replaced with the rule id
+			---@type string|string[]|fun(vim.Diagnostic): string "%s" is replaced with rule-id
 			comment = "// disabling-comment %s",
 
-			---@type "prevLine"|"sameLine"|"encloseLine"|"inlineBeforeDiagnostic"|fun(vim.Diagnostic): string
+			---@type "prevLine"|"sameLine"|"encloseLine"|"inlineBeforeDiagnostic"|fun(vim.Diagnostic):string
 			location = "sameLine",
 
 			-- whether multiple rules can be ignored with one comment, defaults to `false`

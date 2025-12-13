@@ -85,7 +85,7 @@ for toolName, tool in pairs(toolInfo) do
 		:map(function(ft) return ("`%s`"):format(ft) end)
 		:join(", ")
 
-	-- respect max-line-length for markdownlint
+	-- respect `max-line-length` for markdownlint
 	local maxLineLen = 80
 	maxLineLen = maxLineLen - 2 -- 2 spaces indent
 	if #ftStr > maxLineLen then
