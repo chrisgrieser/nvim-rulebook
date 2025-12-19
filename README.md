@@ -1,4 +1,4 @@
-# nvim-rulebook 📖
+# nvim-rulebook 📖 <!-- rumdl-disable-line MD063 -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img
 alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
@@ -17,14 +17,14 @@ All-around helper for dealing with errors and diagnostics.
 
 <!-- markdownlint-disable MD033 -->
 <table>
-	<tr>
-		<th>Before error prettification</th>
-		<th>After error prettification</th>
-	</tr>
-	<tr>
-		<td><img alt="showcase: before prettification" src="https://github.com/user-attachments/assets/4ff0fc67-37d2-4cf4-a9e2-e2546626453e"/></td>
-		<td><img alt="showcase: after prettification" src="https://github.com/user-attachments/assets/46b656da-a0fc-470a-aee8-badb4499fad3"/></td>
-	</tr>
+    <tr>
+        <th>Before error prettification</th>
+        <th>After error prettification</th>
+    </tr>
+    <tr>
+        <td><img alt="showcase: before prettification" src="https://github.com/user-attachments/assets/4ff0fc67-37d2-4cf4-a9e2-e2546626453e"/></td>
+        <td><img alt="showcase: after prettification" src="https://github.com/user-attachments/assets/46b656da-a0fc-470a-aee8-badb4499fad3"/></td>
+    </tr>
  </table>
 <!-- markdownlint-disable MD033 -->
 
@@ -33,20 +33,20 @@ All-around helper for dealing with errors and diagnostics.
 <!-- toc -->
 
 - [Supported sources](#supported-sources)
-	* [Rule lookup](#rule-lookup)
-	* [Add ignore comment](#add-ignore-comment)
-	* [Suppress formatting](#suppress-formatting)
-	* [Prettify errors](#prettify-errors)
+    - [Rule lookup](#rule-lookup)
+    - [Add ignore comment](#add-ignore-comment)
+    - [Suppress formatting](#suppress-formatting)
+    - [Prettify errors](#prettify-errors)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
-	* [Base configuration](#base-configuration)
-	* [Customize built-in sources](#customize-built-in-sources)
+    - [Base configuration](#base-configuration)
+    - [Customize built-in sources](#customize-built-in-sources)
 - [FAQ](#faq)
-	* [How to configure diagnostic providers](#how-to-configure-diagnostic-providers)
-	* [Configuring `efm-langserver`](#configuring-efm-langserver)
-	* [How to directly ask an LLM about a rule](#how-to-directly-ask-an-llm-about-a-rule)
-	* [How to display the availability of rule lookup](#how-to-display-the-availability-of-rule-lookup)
+    - [How to configure diagnostic providers](#how-to-configure-diagnostic-providers)
+    - [Configuring `efm-langserver`](#configuring-efm-langserver)
+    - [How to directly ask an LLM about a rule](#how-to-directly-ask-an-llm-about-a-rule)
+    - [How to display the availability of rule lookup](#how-to-display-the-availability-of-rule-lookup)
 - [Credits](#credits)
 
 <!-- tocstop -->
@@ -125,7 +125,8 @@ Please consider making a PR to add support for a source if it is missing.
 - [ty](https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments)
 - [typescript](https://typescript-eslint.io/rules/prefer-ts-expect-error/)
 - [typos](https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780)
-  (requires setting `[default] extend-ignore-re = ["[^\\n]*typos: ignore-line[^\\n]*\\n"]`)
+  (requires setting
+  `[default] extend-ignore-re = ["[^\\n]*typos: ignore-line[^\\n]*\\n"]`)
 - [vale-ls](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [vale](https://vale.sh/docs/topics/config/#markup-based-configuration)
 - [woke](https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring)
@@ -150,14 +151,14 @@ Take a look at [this file](./lua/rulebook/data/prettify-error.lua) to see how to
 add prettifiers for other sources. PRs are welcome.
 
 ## Installation
-**Requirements**
+**Requirements** <!-- rumdl-disable-line MD063 -->
 - nvim 0.10+
 - Diagnostics provided by a source that supports Neovim's built-in diagnostics
   system. (`nvim` built-in LSP client,
   [efm-langserver](https://github.com/mattn/efm-langserver) or
   [nvim-lint](https://github.com/mfussenegger/nvim-lint) are such sources.)
 
-**Recommended for error prettifying**
+**Recommended for error prettifying** <!-- rumdl-disable-line MD063 -->
 - treesitter parsers: `TSInstall markdown markdown_inline`
 - a Markdown rendering plugin such as
   [render-markdown](https://github.com/MeanderingProgrammer/render-markdown.nvim)
