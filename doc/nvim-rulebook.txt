@@ -1,4 +1,4 @@
-*nvim-rulebook.txt*          For Neovim          Last change: 2025 December 13
+*nvim-rulebook.txt*          For Neovim          Last change: 2025 December 19
 
 ==============================================================================
 Table of Contents                            *nvim-rulebook-table-of-contents*
@@ -18,7 +18,7 @@ Table of Contents                            *nvim-rulebook-table-of-contents*
 
 
 
-All-aroundhelper for dealing with errors and diagnostics.
+All-around helper for dealing with errors and diagnostics.
 
 
 FEATURES                               *nvim-rulebook-nvim-rulebook--features*
@@ -130,7 +130,8 @@ ADD IGNORE COMMENT ~
 - ty <https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments>
 - typescript <https://typescript-eslint.io/rules/prefer-ts-expect-error/>
 - typos <https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780>
-    (requires setting `[default] extend-ignore-re = ["[^\\n]*typos: ignore-line[^\\n]*\\n"]`)
+    (requires setting
+    `[default] extend-ignore-re = ["[^\\n]*typos: ignore-line[^\\n]*\\n"]`)
 - vale-ls <https://vale.sh/docs/topics/config/#markup-based-configuration>
 - vale <https://vale.sh/docs/topics/config/#markup-based-configuration>
 - woke <https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring>
