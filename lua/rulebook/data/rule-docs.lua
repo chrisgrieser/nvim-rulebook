@@ -88,6 +88,7 @@ local M = {
 
 	-----------------------------------------------------------------------------
 
+	rumdl = urlInDiagObj,
 	Ruff = urlInDiagObj,
 	["clang-tidy"] = urlInDiagObj,
 	Pyright = urlInDiagObj,

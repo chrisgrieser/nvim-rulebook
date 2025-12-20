@@ -75,6 +75,7 @@ Please consider making a PR to add support for a source if it is missing.
 - `Pyright`
 - `quick-lint-js`
 - `Ruff`
+- `rumdl`
 - `selene`
 - `shellcheck`
 - `stylelint`
@@ -112,6 +113,7 @@ Please consider making a PR to add support for a source if it is missing.
 - [Pyrefly](https://pyrefly.org/en/docs/error-suppressions/)
 - [Pyright](https://microsoft.github.io/pyright/#/comments)
 - [Ruff](https://docs.astral.sh/ruff/linter/#error-suppression)
+- [rumdl](https://github.com/rvben/rumdl/blob/main/docs/inline-configuration.md)
 - [rust-analyzer](https://doc.rust-lang.org/reference/attributes/diagnostics.html#r-attributes.diagnostics.expect)
 - [selene](https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file)
 - [shellcheck](https://www.shellcheck.net/wiki/Ignore)

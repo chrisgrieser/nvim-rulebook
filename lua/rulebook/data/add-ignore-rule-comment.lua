@@ -194,12 +194,19 @@ local M = {
 		docs = "https://github.com/DavidAnson/markdownlint#configuration",
 		multiRuleIgnore = false,
 	},
+	rumdl = {
+		comment = "<!-- rumdl-disable-line %s -->",
+		location = "sameLine",
+		docs = "https://github.com/rvben/rumdl/blob/main/docs/inline-configuration.md",
+		multiRuleIgnore = true,
+		multiRuleSeparator = " ",
+	},
 	swiftlint = {
 		comment = "// swiftlint:disable:next %s",
 		location = "prevLine",
 		docs = "https://realm.github.io/SwiftLint/#Disable-rules-in-code",
-		multiRuleSeparator = " ",
 		multiRuleIgnore = true,
+		multiRuleSeparator = " ",
 	},
 	Harper = {
 		comment = function() return vim.bo.commentstring:format("harper: ignore") end,
