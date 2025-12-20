@@ -5,7 +5,9 @@ local M = {}
 
 --------------------------------------------------------------------------------
 
-M.typescript = function(diag) ---@param diag vim.Diagnostic
+---@param diag vim.Diagnostic
+---@return string[] lines
+M.typescript = function(diag)
 	-- pretty-print the message in markdown
 	local msg = diag
 		.message

@@ -1,8 +1,10 @@
 ---some providers save the links to the docs in the diagnostic object
 ---@param diag vim.Diagnostic
+---@return string
 local function urlInDiagObj(diag) return diag.user_data.lsp.codeDescription.href end
 
 ---@param diag vim.Diagnostic
+---@return string?
 local function eslintPluginDocs(diag)
 	if not diag or not diag.code then return end
 

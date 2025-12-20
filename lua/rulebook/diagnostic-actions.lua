@@ -39,6 +39,7 @@ local function moveCursorToDiagnostic(diag)
 end
 
 ---@param unencoded string
+---@return string
 local function urlEncode(unencoded)
 	local encoded = unencoded:gsub(
 		"([^%w%-_.~])",

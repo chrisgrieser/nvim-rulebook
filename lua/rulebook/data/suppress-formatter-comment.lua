@@ -9,7 +9,7 @@
 
 ---INFO the key must exactly match the `vim.bo.filetype`
 ---@type table<string, Rulebook.FormatterSuppressConfig>
-M = {
+local M = {
 	lua = {
 		ignoreBlock = "-- stylua: ignore",
 		location = "prevLine",
