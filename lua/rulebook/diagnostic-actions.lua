@@ -125,18 +125,18 @@ function actions.ignoreRule(diag)
 				prevLnum = prevLnum - 1 -- account for the deleted line
 			end
 		end
-		assert(location ~= "encloseLine", "encloseLine does not support for multi-rule-ignore.")
+		assert(location ~= "encloseLine", "`encloseLine` does not support for multi-rule-ignore.")
 	end
 
-	-- insert comment
-	local comment = ignoreComment:format(code)
-
 	if location == "prevLine" then
+		local comment = ignoreComment:format(code)
 		vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { indent .. comment })
 	elseif location == "sameLine" then
+		local comment = ignoreComment:format(code)
 		local extraSpace = vim.bo.filetype == "python" and " " or "" -- formatters expect an extra space
 		vim.api.nvim_set_current_line(indent .. vim.trim(curLine) .. " " .. extraSpace .. comment)
 	elseif location == "inlineBeforeDiagnostic" then
+		local comment = ignoreComment:format(code)
 		local updatedLine = curLine:sub(1, diag.col) .. comment .. curLine:sub(diag.col + 1)
 		vim.api.nvim_set_current_line(updatedLine)
 	elseif location == "encloseLine" then
