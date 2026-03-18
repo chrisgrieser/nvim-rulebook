@@ -1,6 +1,6 @@
 # nvim-rulebook 📖 <!-- rumdl-disable-line MD063 -->
-<a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img
-alt ="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
+<a href="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook"><img alt
+="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-rulebook/shield"/></a>
 
 All-around helper for dealing with errors and diagnostics.
 
@@ -162,7 +162,7 @@ add prettifiers for other sources. PRs are welcome.
 
 **Recommended for error prettifying** <!-- rumdl-disable-line MD063 -->
 - treesitter parsers: `TSInstall markdown markdown_inline`
-- a Markdown rendering plugin such as
+- A Markdown rendering plugin such as
   [render-markdown](https://github.com/MeanderingProgrammer/render-markdown.nvim)
   or [markview.nvim](https://github.com/OXY2DEV/markview.nvim)
 - `prettier` or `biome` available in PATH.

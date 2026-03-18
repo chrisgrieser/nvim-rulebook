@@ -4,12 +4,12 @@
 ---@class Rulebook.RuleIgnoreConfig
 ---@field comment string|string[]|fun(vim.Diagnostic): string if string, "%s" is replaced with rule-id
 ---@field location Rulebook.Location|fun(vim.Diagnostic): Rulebook.Location
----@field docs string used for auto-generated docs
----@field info? string used for auto-generated docs
 ---@field spacesBeforeCommentWhenSameLine? integer when `location` is "sameLine"; defaults to 1
 ---@field doesNotUseCodes? boolean linter does not use codes/rule-ids
 ---@field multiRuleIgnore boolean whether multiple rules can be ignored with one comment, defaults to `false`
 ---@field multiRuleSeparator? string defaults to ", " (with space)
+---@field docs string used for auto-generated docs
+---@field info? string used for auto-generated docs
 
 --------------------------------------------------------------------------------
 
@@ -26,86 +26,86 @@ local M = {
 	["ast-grep"] = {
 		comment = function(diag) return vim.bo.commentstring:format("ast-grep-ignore: " .. diag.code) end,
 		location = "prevLine",
-		docs = "https://ast-grep.github.io/guide/project/severity.html#ignore-linting-error",
 		multiRuleIgnore = true,
 		multiRuleSeparator = ",", -- no space
+		docs = "https://ast-grep.github.io/guide/project/severity.html#ignore-linting-error",
 	},
 	shellcheck = {
 		comment = "# shellcheck disable=%s",
 		location = "prevLine",
-		docs = "https://www.shellcheck.net/wiki/Ignore",
 		multiRuleIgnore = true,
 		multiRuleSeparator = ",", -- with space throws this parsing error: https://www.shellcheck.net/wiki/SC1073
+		docs = "https://www.shellcheck.net/wiki/Ignore",
 	},
 	selene = {
 		comment = "-- selene: allow(%s)",
 		location = "prevLine",
-		docs = "https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file",
 		multiRuleIgnore = true,
+		docs = "https://kampfkarren.github.io/selene/usage/filtering.html#allowingdenying-lints-for-an-entire-file",
 	},
 	["Lua Diagnostics."] = { -- Lua LSP, SIC source name has a trailing `.`
 		comment = "---@diagnostic disable-line: %s",
 		location = "sameLine", -- prevLine already available via code action
+		multiRuleIgnore = true,
 		docs = "https://luals.github.io/wiki/annotations/#diagnostic",
 		info = "(source name for `lua_ls`)",
-		multiRuleIgnore = true,
 	},
 	EmmyLua = {
 		comment = "---@diagnostic disable-line: %s", -- uses same syntax as `lua_ls`
 		location = "sameLine", -- prevLine already available via code action
-		docs = "https://github.com/EmmyLuaLs/emmylua-analyzer-rust/blob/main/docs/features/features_EN.md#code-checks",
 		multiRuleIgnore = true,
+		docs = "https://github.com/EmmyLuaLs/emmylua-analyzer-rust/blob/main/docs/features/features_EN.md#code-checks",
 	},
 	yamllint = {
 		comment = "# yamllint disable-line rule:%s",
 		location = "prevLine",
-		docs = "https://yamllint.readthedocs.io/en/stable/disable_with_comments.html",
 		multiRuleIgnore = false,
+		docs = "https://yamllint.readthedocs.io/en/stable/disable_with_comments.html",
 	},
 	stylelint = {
 		comment = "/* stylelint-disable-next-line %s */",
 		location = "prevLine",
-		docs = "https://stylelint.io/user-guide/ignore-code/",
 		multiRuleIgnore = true,
+		docs = "https://stylelint.io/user-guide/ignore-code/",
 	},
 	LTeX = {
 		comment = { "<!-- LTeX: enabled=false -->", "<!-- LTeX: enabled=true -->" },
 		location = "encloseLine",
-		docs = "https://valentjn.github.io/ltex/advanced-usage.html",
 		multiRuleIgnore = false,
+		docs = "https://valentjn.github.io/ltex/advanced-usage.html",
 	},
 	vale = {
 		comment = { "<!-- vale %s = NO -->", "<!-- vale %s = YES -->" },
 		location = "encloseLine",
-		docs = "https://vale.sh/docs/topics/config/#markup-based-configuration",
 		multiRuleIgnore = false,
+		docs = "https://vale.sh/docs/topics/config/#markup-based-configuration",
 	},
 	pylint = {
 		comment = "# pylint: disable=%s",
 		location = "sameLine",
-		docs = "https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html",
 		spacesBeforeCommentWhenSameLine = 2,
 		multiRuleIgnore = true,
+		docs = "https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html",
 	},
 	Pyright = {
 		comment = "# pyright: ignore [%s]",
 		location = "sameLine",
-		docs = "https://microsoft.github.io/pyright/#/comments",
 		spacesBeforeCommentWhenSameLine = 2,
 		multiRuleIgnore = true,
+		docs = "https://microsoft.github.io/pyright/#/comments",
 	},
 	Ruff = {
 		comment = "# noqa: %s",
 		location = "sameLine",
-		docs = "https://docs.astral.sh/ruff/linter/#error-suppression",
 		spacesBeforeCommentWhenSameLine = 2, -- formatter expects 2 spaces
 		multiRuleIgnore = true,
+		docs = "https://docs.astral.sh/ruff/linter/#error-suppression",
 	},
 	eslint = {
 		comment = "// eslint-disable-next-line %s",
 		location = "prevLine",
-		docs = "https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1",
 		multiRuleIgnore = true,
+		docs = "https://eslint.org/docs/latest/use/configure/rules#using-configuration-comments-1",
 	},
 	biome = {
 		comment = function(diag)
@@ -113,69 +113,69 @@ local M = {
 			return vim.bo.commentstring:format(ignoreText)
 		end,
 		location = "prevLine",
-		docs = "https://biomejs.dev/analyzer/suppressions/#suppression-syntax",
 		multiRuleIgnore = false,
+		docs = "https://biomejs.dev/analyzer/suppressions/#suppression-syntax",
 	},
 	typescript = {
 		comment = "// @ts-expect-error",
 		location = "prevLine",
-		docs = "https://typescript-eslint.io/rules/prefer-ts-expect-error/",
 		multiRuleIgnore = false,
+		docs = "https://typescript-eslint.io/rules/prefer-ts-expect-error/",
 	},
 	["editorconfig-checker"] = {
 		comment = function(_) return vim.bo.commentstring:format("editorconfig-checker-disable-line") end,
 		location = "sameLine",
-		docs = "https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines",
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
+		docs = "https://github.com/editorconfig-checker/editorconfig-checker#excluding-lines",
 	},
 	codespell = {
 		comment = function(_) return vim.bo.commentstring:format("codespell-ignore") end,
 		location = "sameLine",
-		docs = "https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455",
-		info = '(requires setting `--ignore-regex` to `ignore-regex=".*codespell-ignore$"`)',
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
+		docs = "https://github.com/codespell-project/codespell/issues/1212#issuecomment-1721152455",
+		info = '(requires setting `--ignore-regex` to `ignore-regex=".*codespell-ignore$"`)',
 	},
 	typos = {
 		comment = function(_) return vim.bo.commentstring:format("typos: ignore-line") end,
 		location = "sameLine",
-		docs = "https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780",
-		info = '(requires setting\n  `[default] extend-ignore-re = ["[^\\\\n]*typos: ignore-line[^\\\\n]*\\\\n"]`)',
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
+		docs = "https://github.com/crate-ci/typos/issues/316#issuecomment-2886204780",
+		info = '(requires setting\n  `[default] extend-ignore-re = ["[^\\\\n]*typos: ignore-line[^\\\\n]*\\\\n"]`)',
 	},
 	["clang-tidy"] = {
 		comment = "// NOLINT(%s)",
 		location = "sameLine",
-		docs = "https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics",
 		multiRuleIgnore = true,
+		docs = "https://clang.llvm.org/extra/clang-tidy/#suppressing-undesired-diagnostics",
 	},
 	alex = {
 		comment = "<!-- alex ignore %s -->",
 		location = "prevLine",
-		docs = "https://github.com/get-alex/alex#control",
 		multiRuleIgnore = false,
+		docs = "https://github.com/get-alex/alex#control",
 	},
 	woke = {
 		comment = function(diag) return vim.bo.commentstring:format("wokeignore:rule=" .. diag.code) end,
 		location = "sameLine",
-		docs = "https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring",
 		multiRuleIgnore = false,
+		docs = "https://docs.getwoke.tech/ignore/#in-line-and-next-line-ignoring",
 	},
 	spellwarn = { -- not a linter, but a nvim plugin
 		comment = function(_) return vim.bo.commentstring:format("spellwarn:disable-line") end,
 		location = "sameLine",
-		docs = "https://github.com/ravibrock/spellwarn.nvim#usage",
 		doesNotUseCodes = true,
 		multiRuleIgnore = false,
+		docs = "https://github.com/ravibrock/spellwarn.nvim#usage",
 	},
 	["ansible-lint"] = {
 		comment = "# noqa: %s",
 		location = "sameLine",
-		docs = "https://ansible.readthedocs.io/projects/lint/usage/#muting-warnings-to-avoid-false-positives",
 		multiRuleIgnore = true,
 		multiRuleSeparator = " ",
+		docs = "https://ansible.readthedocs.io/projects/lint/usage/#muting-warnings-to-avoid-false-positives",
 	},
 	markdownlint = {
 		comment = function(diag)
@@ -195,22 +195,22 @@ local M = {
 			return commentTemplate:format(ruleAlias)
 		end,
 		location = "prevLine",
-		docs = "https://github.com/DavidAnson/markdownlint#configuration",
 		multiRuleIgnore = false,
+		docs = "https://github.com/DavidAnson/markdownlint#configuration",
 	},
 	rumdl = {
 		comment = "<!-- rumdl-disable-line %s -->",
 		location = "sameLine",
-		docs = "https://github.com/rvben/rumdl/blob/main/docs/inline-configuration.md",
 		multiRuleIgnore = true,
 		multiRuleSeparator = " ",
+		docs = "https://github.com/rvben/rumdl/blob/main/docs/inline-configuration.md",
 	},
 	swiftlint = {
 		comment = "// swiftlint:disable:next %s",
 		location = "prevLine",
-		docs = "https://realm.github.io/SwiftLint/#Disable-rules-in-code",
 		multiRuleIgnore = true,
 		multiRuleSeparator = " ",
+		docs = "https://realm.github.io/SwiftLint/#Disable-rules-in-code",
 	},
 	Harper = {
 		comment = function() return vim.bo.commentstring:format("harper: ignore") end,
@@ -219,44 +219,44 @@ local M = {
 			local ft = vim.bo[diag.bufnr or 0].filetype
 			return ft == "markdown" and "inlineBeforeDiagnostic" or "prevLine"
 		end,
-		docs = "https://writewithharper.com/docs/integrations/language-server#Ignore-Comments",
 		multiRuleIgnore = false,
 		doesNotUseCodes = true,
+		docs = "https://writewithharper.com/docs/integrations/language-server#Ignore-Comments",
 	},
 	cspell = {
 		comment = function() return vim.bo.commentstring:format("cspell:disable-next-line") end,
 		location = "prevLine",
-		docs = "https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code",
 		multiRuleIgnore = false,
 		doesNotUseCodes = true,
+		docs = "https://github.com/streetsidesoftware/cspell/blob/main/packages/cspell/README.md#enable--disable-checking-sections-of-code",
 	},
 	ty = {
 		comment = "# ty: ignore[%s]",
-		docs = "https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments",
 		location = "sameLine",
 		multiRuleIgnore = true,
 		multiRuleSeparator = ", ",
+		docs = "https://github.com/astral-sh/ty/blob/main/docs/README.md#ty-suppression-comments",
 	},
 	mypy = {
 		comment = "# type: ignore[%s]",
-		docs = "https://mypy.readthedocs.io/en/stable/error_codes.html#silencing-errors-based-on-error-codes",
-		spacesBeforeCommentWhenSameLine = 2,
 		location = "sameLine",
+		spacesBeforeCommentWhenSameLine = 2,
 		multiRuleIgnore = true,
 		multiRuleSeparator = ", ",
+		docs = "https://mypy.readthedocs.io/en/stable/error_codes.html#silencing-errors-based-on-error-codes",
 	},
 	Pyrefly = {
 		comment = "# pyrefly: ignore",
-		docs = "https://pyrefly.org/en/docs/error-suppressions/",
-		spacesBeforeCommentWhenSameLine = 2,
 		location = "sameLine",
+		spacesBeforeCommentWhenSameLine = 2,
 		multiRuleIgnore = false,
+		docs = "https://pyrefly.org/en/docs/error-suppressions/",
 	},
 	Tombi = {
 		comment = "# tombi: lint.rules.%s.disabled = true",
-		docs = "https://tombi-toml.github.io/tombi/docs/comment-directive/",
 		location = "prevLine",
 		multiRuleIgnore = false,
+		docs = "https://tombi-toml.github.io/tombi/docs/comment-directive/",
 	},
 }
 

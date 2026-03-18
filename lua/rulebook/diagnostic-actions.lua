@@ -125,7 +125,7 @@ function actions.ignoreRule(diag)
 				prevLnum = prevLnum - 1 -- account for the deleted line
 			end
 		end
-		assert(location ~= "encloseLine", "`encloseLine` does not support for multi-rule-ignore.")
+		assert(location ~= "encloseLine", "`encloseLine` does not support multi-rule-ignore.")
 	end
 
 	if location == "prevLine" then
