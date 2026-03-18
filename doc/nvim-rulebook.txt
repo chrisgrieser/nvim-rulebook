@@ -169,7 +169,7 @@ efm-langserver <https://github.com/mattn/efm-langserver> or nvim-lint
 <https://github.com/mfussenegger/nvim-lint> are such sources.)
 
 **Recommended for error prettifying** - treesitter parsers: `TSInstall markdown
-markdown_inline` - a Markdown rendering plugin such as render-markdown
+markdown_inline` - A Markdown rendering plugin such as render-markdown
 <https://github.com/MeanderingProgrammer/render-markdown.nvim> or markview.nvim
 <https://github.com/OXY2DEV/markview.nvim> - `prettier` or `biome` available in
 PATH.
