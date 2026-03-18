@@ -133,8 +133,8 @@ function actions.ignoreRule(diag)
 		vim.api.nvim_buf_set_lines(0, prevLnum, prevLnum, false, { indent .. comment })
 	elseif location == "sameLine" then
 		local comment = ignoreComment:format(code)
-		local extraSpace = vim.bo.filetype == "python" and " " or "" -- formatters expect an extra space
-		vim.api.nvim_set_current_line(indent .. vim.trim(curLine) .. " " .. extraSpace .. comment)
+		local spaces = (" "):rep(sourceConf.spacesBeforeCommentWhenSameLine or 1)
+		vim.api.nvim_set_current_line(indent .. vim.trim(curLine) .. spaces .. comment)
 	elseif location == "inlineBeforeDiagnostic" then
 		local comment = ignoreComment:format(code)
 		local updatedLine = curLine:sub(1, diag.col) .. comment .. curLine:sub(diag.col + 1)

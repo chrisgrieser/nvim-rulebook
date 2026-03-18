@@ -6,6 +6,7 @@
 ---@field location Rulebook.Location|fun(vim.Diagnostic): Rulebook.Location
 ---@field docs string used for auto-generated docs
 ---@field info? string used for auto-generated docs
+---@field spacesBeforeCommentWhenSameLine? integer when `location` is "sameLine"; defaults to 1
 ---@field doesNotUseCodes? boolean linter does not use codes/rule-ids
 ---@field multiRuleIgnore boolean whether multiple rules can be ignored with one comment, defaults to `false`
 ---@field multiRuleSeparator? string defaults to ", " (with space)
@@ -83,18 +84,21 @@ local M = {
 		comment = "# pylint: disable=%s",
 		location = "sameLine",
 		docs = "https://pylint.readthedocs.io/en/latest/user_guide/messages/message_control.html",
+		spacesBeforeCommentWhenSameLine = 2,
 		multiRuleIgnore = true,
 	},
 	Pyright = {
 		comment = "# pyright: ignore [%s]",
 		location = "sameLine",
 		docs = "https://microsoft.github.io/pyright/#/comments",
+		spacesBeforeCommentWhenSameLine = 2,
 		multiRuleIgnore = true,
 	},
 	Ruff = {
 		comment = "# noqa: %s",
 		location = "sameLine",
 		docs = "https://docs.astral.sh/ruff/linter/#error-suppression",
+		spacesBeforeCommentWhenSameLine = 2, -- formatter expects 2 spaces
 		multiRuleIgnore = true,
 	},
 	eslint = {
@@ -236,6 +240,7 @@ local M = {
 	mypy = {
 		comment = "# type: ignore[%s]",
 		docs = "https://mypy.readthedocs.io/en/stable/error_codes.html#silencing-errors-based-on-error-codes",
+		spacesBeforeCommentWhenSameLine = 2,
 		location = "sameLine",
 		multiRuleIgnore = true,
 		multiRuleSeparator = ", ",
@@ -243,6 +248,7 @@ local M = {
 	Pyrefly = {
 		comment = "# pyrefly: ignore",
 		docs = "https://pyrefly.org/en/docs/error-suppressions/",
+		spacesBeforeCommentWhenSameLine = 2,
 		location = "sameLine",
 		multiRuleIgnore = false,
 	},

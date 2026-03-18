@@ -260,6 +260,9 @@ require("rulebook").setup = ({
 
 			-- separator for multiple rule-ids, defaults to ", " (with space)
 			multiRuleSeparator = ",",
+
+         -- spaces before the comment when location is `sameLine`; defaults to 1
+         spacesBeforeCommentWhenSameLine = 2,
 		}
 
 		-- if location is `encloseLine`, the comment needs to be a list of two strings
