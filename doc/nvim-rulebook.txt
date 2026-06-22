@@ -1,4 +1,5 @@
-*nvim-rulebook.txt*            For Neovim           Last change: 2026 March 18
+*nvim-rulebook.txt*
+                                       For Neovim    Last change: 2026 June 22
 
 ==============================================================================
 Table of Contents                            *nvim-rulebook-table-of-contents*
