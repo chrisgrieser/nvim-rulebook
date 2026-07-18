@@ -88,6 +88,8 @@ local M = {
 
 	swiftlint = "https://realm.github.io/SwiftLint/%s.html",
 
+	shuck = "https://ewhauser.github.io/shuck/docs/rules/%s/",
+
 	-----------------------------------------------------------------------------
 
 	rumdl = urlInDiagObj,

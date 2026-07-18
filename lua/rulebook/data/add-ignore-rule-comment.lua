@@ -37,6 +37,13 @@ local M = {
 		multiRuleSeparator = ",", -- with space throws this parsing error: https://www.shellcheck.net/wiki/SC1073
 		docs = "https://www.shellcheck.net/wiki/Ignore",
 	},
+	shuck = {
+		comment = "# shuck: ignore=%s",
+		location = "sameLine",
+		multiRuleIgnore = true,
+		multiRuleSeparator = ",", -- no space
+		docs = "https://ewhauser.github.io/shuck/docs/suppression/",
+	},
 	selene = {
 		comment = "-- selene: allow(%s)",
 		location = "prevLine",
